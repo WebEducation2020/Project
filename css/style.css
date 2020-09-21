@@ -1,0 +1,322 @@
+
+/* import fonts from fonts.css file */ 
+@import url(./fonts.css);
+
+
+/* css variables */ 
+@import url(./partials/_variables.css);
+
+/* import global styling */ 
+@import url(./partials/_global.css);
+button.btnn{
+    border-color:rgba(161, 84, 254, 0.3); 
+    border-radius: 2rem;
+    padding: 1rem 3rem;
+    background:white ;
+    cursor: pointer;
+    font-size: 1rem; 	
+    font-family: 'Balsamiq Sans', cursive;
+}
+button.btnn:hover{
+    background:rgba(125, 77, 223, 1);
+    color:white;
+    text-decoration: none;
+}
+/* start navigation */ 
+
+.header_area .main-menu .navbar .navbar-brand{
+    padding: 0 2rem 0 5rem;
+}
+
+.header_area .main-menu .navbar{
+    padding: 1rem 20rem ;
+}
+
+.header_area .main-menu .nav-item .nav-link{
+    font: normal 500 15px/2px var(--roboto);
+    text-transform: uppercase;
+    padding: 1.7rem;
+    color: var(--title-color);
+}
+
+.header_area .main-menu .navbar-nav .active a{
+    background: var(--gradient-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header_area .main-menu .navbar-nav a:hover{
+    background: var(--gradient-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* end navigation */ 
+/* Banner Area */ 
+.site-main .site-banner {
+    background: url(../img/banner/home-banner.png) no-repeat 0% 50%;
+}
+
+.site-main .site-banner .site-title h3{
+    padding-top: 35%;
+    font-weight: 500;
+}
+
+.site-main .site-banner .site-title h3::after{
+    content: " ";
+    height: 2px;
+    width: 18vw;
+    background: black;
+    display: inline-block;
+    margin-left: 5%;
+    transform: translateY(-10px);
+}
+
+.site-main .site-banner .site-title h1{
+    font-size: 5rem;
+}
+
+.site-main .site-banner .site-title h4{
+    font-size: 1.5rem;
+}
+
+.site-main .site-banner .banner-image > img{
+    padding: 7rem 0;
+    width: 90rem;
+}
+/* End Banner Area */ 
+/* -- Blog Carousel --*/
+.container1{
+    margin: 0 5vw;
+}
+.blog{
+    background: url('../img/Abract01.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 100vh;
+    width: 100%;
+    background-size: 65%;
+}
+
+.blog .blog-post{
+    padding-top: 6rem;
+}
+.blog-post .blog-content{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 80%;
+    margin: 3rem 2rem;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+}
+.blog-content .blog-title{
+    padding: 2rem 0;
+}
+.blog-content .btn-blog{
+    padding: .7rem 2rem;
+    background: var(--sky);
+    margin: .5rem;
+}
+.blog-content span{
+    display: block;
+}
+.blog-content img{
+    width: auto;
+    height: 240px;
+}
+section .container .owl-nav{
+    position: absolute;
+    top: 0%;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.owl-nav .owl-prev .owl-nav-prev,
+.owl-nav .owl-next .owl-nav-next{
+    color: var(--text-gray);
+    background: transparent;
+    font-size: 2rem;
+}
+
+.owl-theme .owl-nav [class*='owl-']:hover{
+    background: transparent;
+    color: var(--midnight);
+}
+
+.owl-theme .owl-nav [class*='owl-']{
+    outline: none;
+}
+/*-- Blog Carousel --*/
+/* -- Site Content --*/
+.site-content{
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+.post-content{
+    width: 100%;
+}
+
+.site-content .post-content > .post-image, .post-title{
+    padding: 1rem 2rem;
+    position: relative;
+}
+ .post-content .post-title a{
+    font-family: cursive;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 1);
+}
+
+#right-aheet,#left-aheet{
+    animation: aheet 2s infinite linear;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+#main-bike{
+    animation: bike 1s ease-in-out infinite alternate;
+    transform-origin: bottom;
+}
+#Hat{
+    animation: Hat 1s ease-in-out infinite alternate;
+    transform-origin: center;
+    transform-box: fill-box;
+}
+@keyframes aheet{
+    from{
+        transform:rotateZ(0deg);
+    }
+    to{
+        transform:rotateZ(360deg);
+    }
+}
+@keyframes bike{
+    from{
+        transform:rotateX(0deg);
+    }
+    to{
+        transform:rotateX(20deg);
+    }
+}
+@keyframes Hat{
+    from{
+        transform:rotateY(0deg) rotateZ(0deg);
+    }
+    to{
+        transform:rotateY(30deg) rotateZ(20deg);
+    }
+}
+/* --End Site Content--*/
+/* -- Sidebar -- */
+.site-content > .sidebar .category-list{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+}
+.site-content > .sidebar .category-list .list-items{
+    background: rgba(175, 212, 253, 1);
+    padding: .4rem 1rem;
+    margin: .8rem 0;
+    border-radius: 3rem;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+.site-content > .sidebar .category-list .list-items a{
+    color:  black;
+    text-decoration: none  ;
+}
+.site-content  .sidebar .category-list :hover{
+    background: rgba(150, 113, 237, 1);
+}
+.site-content .sidebar .popular-post .post-content{
+    padding: 1rem 0;
+}
+
+.site-content .sidebar .popular-post h2{
+    padding-top: 8rem;
+}
+.site-content .sidebar .newsletter{
+    padding-top: 10rem;
+}
+/* --End Sidebar-- */
+/*  11. Social group area
+/*----------------------------------------*/
+
+.social-group-area {
+    background: #333333;
+}
+.section-title-3 h3 {
+    color: #fff;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.twitter-content .twitter-icon {
+    float: left;
+    width: 20%;
+}
+.twitter-content .twitter-icon a {
+    background: #f07c29 none repeat scroll 0 0;
+    border-radius: 100%;
+    color: black;
+    font-size: 24px;
+    height: 70px;
+    left: 0;
+    line-height: 70px;
+    text-align: center;
+    width: 70px;
+    display: inline-block;
+}
+.twitter-content .twitter-text {
+    float: left;
+    width: 80%;
+}
+.twitter-text p {
+    color: white;
+    font-family: "Rufina", serif;
+    font-size: 16px;
+    line-height: 21px;
+    margin: 0;
+    padding-top: 3px;
+}
+.twitter-text a {
+    color: #f07c29;
+    font-family: "Rufina", serif;
+    font-size: 16px;
+    font-style: italic;
+    padding-top: 3px;
+}
+.twitter-text a:hover {
+    color: #232323;
+}
+.twitter-content .twitter-text p.link a:hover,
+.twitter-content .twitter-text p > a:hover,
+.footer-top-menu ul li a:hover {
+    color: #f07c29;
+}
+.link-follow ul li {
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: 5px;
+}
+.link-follow ul li a {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 100%;
+    color: #333333;
+    font-size: 18px;
+    display: inline-block;
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    transition: .5s;
+    width: 52px;
+    text-decoration: none;
+    transition: .3s;
+}
+.link-follow ul li a:hover {
+    background: rgba(175, 212, 253, 1) none repeat scroll 0 0;
+    color: #fff;
+}
+
+

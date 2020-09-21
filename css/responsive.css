@@ -1,0 +1,30 @@
+
+/* 340px  */ 
+@media only screen and (max-width: 340px){
+    .header_area .main-menu .navbar,
+    .header_area .main-menu .navbar .navbar-brand
+    {
+        padding: 2%;
+        margin: 0%;
+    }
+    .site-main .site-banner .site-title h1{
+        font-size: 41px;
+    }
+    
+}
+
+/* 1910px*/ 
+@media only screen and (max-width: 1910px){
+    .header_area .main-menu .navbar{
+        padding: 1rem;
+    }
+
+    .container{
+        max-width: 90%;
+    }
+}
+@media only screen and (max-width: 750px){
+    main .site-content{
+        grid-template-columns: 100%;
+    }
+}
