@@ -5,112 +5,114 @@
 @using Microsoft.AspNetCore.Authentication;
 @using AppEducation.Models.AccountViewModels;
 
+
+<!-- inject SignInManager<ApplicationUser> SignInManager -->
 @model LoginViewModel
 
 @{
     // Layout = "_Layout";  -> Không cần thiết vì đã có ViewStart lo
     ViewData["Title"] = "Log in";
 }
-
-@section Header
-{
-    <!--Begin Header-->
-    <header class="header_area">
-        <div class="main-menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="#"><img src="./img/logo.png" alt="logo"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="mr-auto"></div>
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Trang Chủ <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Liên Hệ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Tư Vấn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="redirectRegister()" href="Dangki.html">Đăng kí </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Dangki.html">Đăng Nhập</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+<!--Begin Header-->
+<header class="header_area">
+    <div class="main-menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#"><img src="~/img/logo.png" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Trang Chủ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Liên Hệ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Tư Vấn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="redirectRegister()" href="Dangki.html">Đăng kí </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Dangki.html">Đăng Nhập</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<!--End Header-->
+<!-- user-login-area-start -->
+<section class="login-area">
+    <div class="cont">
+        <div class="form dangnhap">
+            <h2>Đăng Nhập</h2>
+            <label>
+                <span>Tên Tài Khoản</span>
+                <input type="text" name="text" />
+            </label>
+            <label>
+                <span>Mật Khẩu</span>
+                <input type="password" name="password">
+            </label>
+            <a href="./create.html" style="color:white; text-decoration: none;"><button class="submit" type="button">Đăng Nhập</button></a>
+            <p class="forgot-pass">Quên Mật Khẩu?</p>
         </div>
-    </header>
-    <!--End Header-->
-}
-@section Login
-{
-    <!-- user-login-area-start -->
-    <section class="login-area">
-        <div class="cont">
-            <div class="form dangnhap">
-                <h2>Đăng Nhập</h2>
+        <div class="sub-cont">
+            <div class="anh-dk">
+                <div class="img-text m-up">
+                    <h2>Đăng ký ?</h2>
+                    <p>Đăng ký và khám phá rất nhiều cơ hội mới!</p>
+                </div>
+                <div class="img-text m-in">
+                    <h2>Đăng Nhập ?</h2>
+                    <p>Nếu bạn đã có tài khoản, chỉ cần đăng nhập. những điều mới mẻ đang chờ bạn !</p>
+                </div>
+                <div class="img-btn">
+                    <span class="m-up">Đăng ký</span>
+                    <span class="m-in">Đăng Nhập</span>
+                </div>
+            </div>
+            <div class="form sign-up">
+                <h2>Đăng ký</h2>
                 <label>
-                    <span>Tên Tài Khoản</span>
-                    <input type="text" name="text" />
+                    <span>Họ Tên</span>
+                    <input type="text" zzzz>
+                </label>
+                <label>
+                    <span>Tên Đăng Nhập</span>
+                    <input type="email">
                 </label>
                 <label>
                     <span>Mật Khẩu</span>
-                    <input type="password" name="password">
+                    <input type="password">
                 </label>
-                <div class="col-md-offset-2 col-md-10">
-                    <div class="checkbox">
-                        <label asp-for="RememberMe">
-                            <input asp-for="RememberMe" />
-                            @Html.DisplayNameFor(m => m.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <a href="./create.html" style="color:white; text-decoration: none;"><button class="submit" type="button">Đăng Nhập</button></a>
-                <p class="forgot-pass">Quên Mật Khẩu?</p>
-            </div>
-            <div class="sub-cont">
-                <div class="anh-dk">
-                    <div class="img-text m-up">
-                        <h2>Đăng ký ?</h2>
-                        <p>Đăng ký và khám phá rất nhiều cơ hội mới!</p>
-                    </div>
-                    <div class="img-text m-in">
-                        <h2>Đăng Nhập ?</h2>
-                        <p>Nếu bạn đã có tài khoản, chỉ cần đăng nhập. những điều mới mẻ đang chờ bạn !</p>
-                    </div>
-                    <div class="img-btn">
-                        <span class="m-up">Đăng ký</span>
-                        <span class="m-in">Đăng Nhập</span>
-                    </div>
-                </div>
-                <div class="form sign-up">
-                    <h2>Đăng ký</h2>
-                    <label>
-                        <span>Họ Tên</span>
-                        <input type="text" >
-                    </label>
-                    <label>
-                        <span>Tên Đăng Nhập</span>
-                        <input type="email">
-                    </label>
-                    <label>
-                        <span>Mật Khẩu</span>
-                        <input type="password">
-                    </label>
-                    <label>
-                        <span>xác Nhận Mật khẩu</span>
-                        <input type="password">
-                    </label>
-                    <button type="button" class="submit">Xác Nhận</button>
-                </div>
+                <label>
+                    <span>xác Nhận Mật khẩu</span>
+                    <input type="password">
+                </label>
+                <button type="button" class="submit">Xác Nhận</button>
             </div>
         </div>
-    </section>
-    <!-- user-login-area-end -->
+    </div>
+</section>
+
+@section Scripts {
+    <!--  Jquery js file  -->
+    <script src="~/js/jquery.3.4.1.js"></script>
+    <!--  isotope js library  -->
+    <script src="~/vendor/isotope/isotope.min.js"></script>
+    <!--  Bootstrap js file  -->
+    <script src="~/js/bootstrap.min.js"></script>
+    <!--  Owl-carousel js file  -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <!-- AOS js Library -->
+    <script src="~/js/aos.js"></script>
+    <!--  custom js file  -->
+    <script src="~/js/main.js"></script>
+    <script src="~/js/Script.js"></script>
 }
