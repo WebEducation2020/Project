@@ -2,12 +2,17 @@
 @using System.Linq
 @using Microsoft.AspNetCore.Http
 <!-- using Microsoft.AspNetCore.Http.Authentication -->
+@using Microsoft.AspNetCore.Authentication;
+@using AppEducation.Models.AccountViewModels;
+
+@model LoginViewModel
 
 @{
+    // Layout = "_Layout";  -> Không cần thiết vì đã có ViewStart lo
     ViewData["Title"] = "Log in";
 }
 
-@section Header 
+@section Header
 {
     <!--Begin Header-->
     <header class="header_area">
@@ -43,7 +48,7 @@
     </header>
     <!--End Header-->
 }
-@section Login 
+@section Login
 {
     <!-- user-login-area-start -->
     <section class="login-area">
@@ -58,6 +63,14 @@
                     <span>Mật Khẩu</span>
                     <input type="password" name="password">
                 </label>
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
                 <a href="./create.html" style="color:white; text-decoration: none;"><button class="submit" type="button">Đăng Nhập</button></a>
                 <p class="forgot-pass">Quên Mật Khẩu?</p>
             </div>
@@ -80,7 +93,7 @@
                     <h2>Đăng ký</h2>
                     <label>
                         <span>Họ Tên</span>
-                        <input type="text" zzzz>
+                        <input type="text" >
                     </label>
                     <label>
                         <span>Tên Đăng Nhập</span>
@@ -101,18 +114,3 @@
     </section>
     <!-- user-login-area-end -->
 }
-    <!--  Jquery js file  -->
-    <script src="./js/jquery.3.4.1.js"></script>
-    <!--  isotope js library  -->
-    <script src="./vendor/isotope/isotope.min.js"></script>
-    <!--  Bootstrap js file  -->
-    <script src="./js/bootstrap.min.js"></script>
-    <!--  Owl-carousel js file  -->
-    <script src="./js/owl.carousel.min.js"></script>
-    <!-- AOS js Library -->
-    <script src="./js/aos.js"></script>
-    <!--  custom js file  -->
-    <script src="./js/main.js"></script>
-    <script src="./js/Script.js"></script>
-</body>
-</html>
