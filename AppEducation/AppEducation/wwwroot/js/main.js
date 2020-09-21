@@ -69,15 +69,6 @@ $(document).ready(function () {
     navbarFixed();
 
 });
-/*--------------------------
-     ScrollUp
-    ---------------------------- */
-$.scrollUp({
-    scrollText: '<i class="fa fa-arrow-up" aria-hidden="true"></i>',
-    easingType: 'linear',
-    scrollSpeed: 900,
-    animation: 'fade'
-});	
 
 /*------------------- */
 document.querySelector('.img-btn').addEventListener('click', function()

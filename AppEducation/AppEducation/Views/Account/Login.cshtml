@@ -10,42 +10,45 @@
 @model LoginViewModel
 
 @{
-    // Layout = "_Layout";  -> Không cần thiết vì đã có ViewStart lo
+    // Layout = "_Layout";  // Không cần thiết vì đã có ViewStart lo
     ViewData["Title"] = "Log in";
 }
-<!--Begin Header-->
-<header class="header_area">
-    <div class="main-menu">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#"><img src="~/img/logo.png" alt="logo"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="mr-auto"></div>
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Trang Chủ <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Liên Hệ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Tư Vấn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="redirectRegister()" href="Dangki.html">Đăng kí </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Dangki.html">Đăng Nhập</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</header>
-<!--End Header-->
+<link rel="stylesheet" href="~/css/dangnhap.css">
+@section Header {
+    <!--Begin Header-->
+    <header class="header_area">
+        <div class="main-menu">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#"><img src="~/img/logo.png" alt="logo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="mr-auto"></div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Trang Chủ <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Liên Hệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Tư Vấn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="redirectRegister()" href="Dangki.html">Đăng kí </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Dangki.html">Đăng Nhập</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--End Header-->
+}
 <!-- user-login-area-start -->
 <section class="login-area">
     <div class="cont">
@@ -101,18 +104,3 @@
     </div>
 </section>
 
-@section Scripts {
-    <!--  Jquery js file  -->
-    <script src="~/js/jquery.3.4.1.js"></script>
-    <!--  isotope js library  -->
-    <script src="~/vendor/isotope/isotope.min.js"></script>
-    <!--  Bootstrap js file  -->
-    <script src="~/js/bootstrap.min.js"></script>
-    <!--  Owl-carousel js file  -->
-    <script src="~/js/owl.carousel.min.js"></script>
-    <!-- AOS js Library -->
-    <script src="~/js/aos.js"></script>
-    <!--  custom js file  -->
-    <script src="~/js/main.js"></script>
-    <script src="~/js/Script.js"></script>
-}
