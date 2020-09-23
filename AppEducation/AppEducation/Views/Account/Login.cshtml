@@ -10,10 +10,11 @@
 @model LoginViewModel
 
 @{
-    // Layout = "_Layout";  // Không cần thiết vì đã có ViewStart lo
     ViewData["Title"] = "Log in";
 }
+
 <link rel="stylesheet" href="~/css/dangnhap.css">
+
 @section Header {
     <!--Begin Header-->
     <header class="header_area">
@@ -50,20 +51,69 @@
     <!--End Header-->
 }
 <!-- user-login-area-start -->
+@section  Login 
+{
 <section class="login-area">
     <div class="cont">
         <div class="form dangnhap">
-            <h2>Đăng Nhập</h2>
-            <label>
-                <span>Tên Tài Khoản</span>
-                <input type="text" name="text" />
-            </label>
-            <label>
-                <span>Mật Khẩu</span>
-                <input type="password" name="password">
-            </label>
-            <a href="./create.html" style="color:white; text-decoration: none;"><button class="submit" type="button">Đăng Nhập</button></a>
-            <p class="forgot-pass">Quên Mật Khẩu?</p>
+            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Email" type="text" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Password" type="Password"/>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Log in</button>
+                    </div>
+                </div>
+                <p>
+                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                </p>
+                <p>
+                    <a asp-action="ForgotPassword">Forgot your password?</a>
+                </p>
+            </form>
+            <!--
+    <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <h2>Đăng Nhập</h2>
+
+        <span>Tên Tài Khoản</span>
+        <label asp-for="Email" class="col-md-2 custom-control-label"></label>
+        <input asp-for="Email" type="text" name="text" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+
+        <span>Mật Khẩu</span>
+        <label asp-for="Password" class="col-md-2 custom-control-label"></label>
+        <input asp-for="Password" type="password" name="password">
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <button class="submit" type="submit">Đăng Nhập</button>
+
+        <p class="forgot-pass">Quên Mật Khẩu?</p>
+    </form>
+        </-->
         </div>
         <div class="sub-cont">
             <div class="anh-dk">
@@ -104,3 +154,4 @@
     </div>
 </section>
 
+}
