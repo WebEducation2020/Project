@@ -1,31 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
+    "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
   },
   "projects": {
-    "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
+    "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "projectUniqueName": "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
         "projectName": "AppEducation",
-        "projectPath": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\obj\\",
+        "projectPath": "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "packagesPath": "C:\\Users\\quock\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
+          "C:\\Users\\quock\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -78,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
