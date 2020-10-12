@@ -9,13 +9,13 @@ namespace AppEducation.Models.Users{
         [Required]
         public string Password { get; set; }
         [Required]
-        public string BirthDay { get; set; }
+        public string Birthday { get; set; }
         [Required]
         public string Job { get; set; }
         [Required]
-        public int Sex { get; set; }
+        public bool Sex { get; set; }
         [Required]
-        public int PhoneNumber { get; set; }
-        
+        public string PhoneNumber { get; set; }
+
     }
 }

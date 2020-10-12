@@ -30,14 +30,14 @@ namespace AppEducation
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(45);
             });
-            services.AddMvc();
             string conString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(conString));
             
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<AppIdentityDbContext>()
-            .AddDefaultTokenProviders();
+            .AddDefaultTokenProviders(); 
 
+            services.AddMvc();
             services.AddControllersWithViews();
         }
 

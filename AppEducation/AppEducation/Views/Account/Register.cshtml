@@ -1,3 +1,5 @@
+@model RegisterModel
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -131,13 +133,13 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">User Name</label>
-                                    <input class="input--style-4" type="text" name="UserName">
+                                    <input asp-for="UserName" class="input--style-4" type="text" >
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Password</label>
-                                    <input class="input--style-4" type="password" name="Password">
+                                    <input asp-for="Password" class="input--style-4" type="password" >
                                 </div>
                             </div>
                         </div>
@@ -146,7 +148,7 @@
                                 <div class="input-group">
                                     <label class="label">Birthday</label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="Birthday">
+                                        <input asp-for="Birthday" class="input--style-4 js-datepicker" type="text">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                                     </div>
                                 </div>
@@ -156,11 +158,11 @@
                                     <label class="label">Gender</label>
                                     <div class="p-t-10">
                                         <label class="radio-container m-r-45">Male
-                                            <input type="radio" value="true" checked="checked" name="Sex">
+                                            <input asp-for="Sex" type="radio" value="true" checked="checked" >
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">Female
-                                            <input type="radio" value="false" name="Sex">
+                                            <input asp-for="Sex" type="radio" value="false" >
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -171,20 +173,20 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="Email">
+                                    <input asp-for="Email" class="input--style-4" type="email" >
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Phone Number</label>
-                                    <input class="input--style-4" type="text" name="PhoneNumber">
+                                    <input asp-for="PhoneNumber" class="input--style-4" type="text" >
                                 </div>
                             </div>
                         </div>
                         <div class="input-group">
                             <label class="label">Job</label>
                             <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="Job">
+                                <select asp-for="Job" >
                                     <option disabled selected>Choose option</option>
                                     <option value="Student">Student</option>
                                     <option value="Teacher">Teacher</option>
@@ -193,7 +195,7 @@
                             </div>
                         </div>
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Sign Up</button>
                         </div>
                     </form>
                 </div>
