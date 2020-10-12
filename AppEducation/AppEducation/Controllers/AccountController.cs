@@ -17,8 +17,9 @@ namespace AppEducation.Controllers {
         private UserManager<AppUser> userManager;
         private readonly ILogger<AccountController> logger;
 
-        public AccountController( ILogger<AccountController> logger)
+        public AccountController(UserManager<AppUser> userManager, ILogger<AccountController> logger)
         {
+            this.userManager = userManager;
             this.logger = logger;
         }
 
@@ -31,17 +32,23 @@ namespace AppEducation.Controllers {
         public IActionResult Register() => View();
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model) {
-            if(ModelState.IsValid){
-                AppUser user = new AppUser {
+            if (ModelState.IsValid)
+            {
+                AppUser user = new AppUser
+                {
                     UserName = model.UserName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber
                 };
-                IdentityResult result = await userManager.CreateAsync(user,model.Password);
-                if(result.Succeeded) {
+                IdentityResult result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
                     return RedirectToAction("Index");
-                }else{
-                    foreach(IdentityError error in result.Errors) {
+                }
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
                         ModelState.AddModelError("", error.Description);
                     }
                 }
