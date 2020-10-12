@@ -8550,11 +8550,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\AppEducation.csproj",
+      "projectUniqueName": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
       "projectName": "AppEducation",
-      "projectPath": "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\AppEducation.csproj",
+      "projectPath": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\obj\\",
+      "outputPath": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
