@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AppEducation.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.AspNetCore.Identity;
+using AppEducation.Models;
+using AppEducation.Models.Users;
 namespace AppEducation
 {
     public class Startup
@@ -26,21 +26,19 @@ namespace AppEducation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<AppDbContext>()
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(45);
+            });
+            services.AddMvc();
+            string conString = Configuration["ConnectionStrings:DefaultConnection"];
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(conString));
+            
+            services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders();
-            //services.AddTransient<IEmailSender, AuthMessageSender>();
-            // Add framework services.
+
             services.AddControllersWithViews();
-           /* services.AddAuthorization(options => {
-                options.AddPolicy("CanManageRecipe",
-                    policyBuilder => policyBuilder
-                        .AddRequirements(new IsRecipeOwnerRequirement()));
-            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,11 +56,10 @@ namespace AppEducation
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseFileServer();
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

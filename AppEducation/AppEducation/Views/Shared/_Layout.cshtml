@@ -1,28 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebEducation</title>
-    <!--  custom css file  -->
-    <link rel="stylesheet" href="~/css/style.css">
-    <!--  Bootstrap css file  -->
-    <link rel="stylesheet" href="~/css/bootstrap.min.css">
-    <!--  font awesome icons  -->
-    <link rel="stylesheet" href="~/css/all.min.css">
-    <!--  Owl-carousel css file  -->
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
-    <!--  Responsive css file  -->
-    <link rel="stylesheet" href="~/css/responsive.css">
-    <!-- AOS Library -->
-    <link rel="stylesheet" href="~/css/aos.css">
-    <link rel="stylesheet" href="~/css/dangnhap.css">
-    <!--Fonts style-->
-    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>@ViewData["Title"] - WebEducation</title>
+    
+    @RenderSection("Head", required: false)
+
+
+
 </head>
 <body>
 
@@ -33,9 +22,10 @@
     @RenderBody()
 
     @RenderSection("Footer", required: false)
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @RenderSection("Script", required: false)
 </body>
 </html>

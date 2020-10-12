@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
+    "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\AppEducation.csproj": {}
   },
   "projects": {
-    "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
+    "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\AppEducation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\AppEducation.csproj",
         "projectName": "AppEducation",
-        "projectPath": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\AppEducation.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "E:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Desktop\\ProjectFinal\\AppEducation\\AppEducation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -55,6 +55,12 @@
               "target": "Package",
               "version": "[3.1.8, )"
             },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.4, )"
@@ -78,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
