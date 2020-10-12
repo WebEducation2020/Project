@@ -15,10 +15,16 @@ namespace AppEducation.Controllers {
     {
        
         private UserManager<AppUser> userManager;
+        private IUserValidator<AppUser> userValidator;
+        private IPasswordValidator<AppUser> passwordValidator;
+        private IPasswordHasher<AppUser> passwordHasher;
         private readonly ILogger<AccountController> logger;
 
-        public AccountController(UserManager<AppUser> userManager, ILogger<AccountController> logger)
+        public AccountController(  IPasswordHasher<AppUser> passwordHasher,  IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator ,UserManager<AppUser> userManager, ILogger<AccountController> logger)
         {
+            this.passwordValidator = passwordValidator;
+            this.passwordHasher = passwordHasher;
+            this.userValidator = userValidator;
             this.userManager = userManager;
             this.logger = logger;
         }
