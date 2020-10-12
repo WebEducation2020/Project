@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using AppEducation.Models.Users;
 namespace AppEducation.Controllers {
     public class AccountController : Controller 
     {
@@ -26,6 +27,10 @@ namespace AppEducation.Controllers {
         #endregion
          #region Register method
         public IActionResult Register() => View();
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel userrgt) {
+            
+        }
         #endregion
     }
 }
