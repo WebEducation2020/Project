@@ -8544,23 +8544,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\quock\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\PC\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Documents\\GitHub\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
       "projectName": "AppEducation",
-      "projectPath": "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
-      "packagesPath": "C:\\Users\\quock\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\quock\\Documents\\Code Scripts\\web\\Project\\AppEducation\\AppEducation\\obj\\",
+      "projectPath": "C:\\Users\\PC\\Documents\\GitHub\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PC\\Documents\\GitHub\\Project\\AppEducation\\AppEducation\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\quock\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8625,7 +8621,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
