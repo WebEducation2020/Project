@@ -5,7 +5,7 @@ namespace AppEducation.Models.Users {
     public class LoginModel {
         [Required]
         [MaxLength(30)]
-        public string UserName { get; set; }
+        public string Email { get; set; }
         [Required]
         [MaxLength(30)]
         public string Password { get; set; }

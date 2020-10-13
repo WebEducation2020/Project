@@ -11,22 +11,24 @@
 		<img src="~/pages/login/img/logo.png" alt="GitHub">
 	</div>
 	<div class="title">
-		<p>Sign in to Callcenter</p>
+		<p>Sign in to MTA Education</p>
 	</div>
-	<div class="form">
-		<div class="input_field">
-			<label>Username or email address</label>
-			<input type="text" class="input">
+	<form asp-area="" asp-controller="Account" asp-action="Login"  >
+		<div class="form">
+			<div class="input_field">
+				<label>Email address</label>
+				<input asp-for="Email" type="text" class="input">
+			</div>
+			<div class="input_field">
+				<label>Password</label>
+				<input asp-for="Password" type="password" class="input">
+				<a href="#" class="forgot">Forgot password?</a>
+			</div>
+			<div class="btn">
+				<input type="submit" value="Sign in" class="sign_btn">
+			</div>
 		</div>
-		<div class="input_field">
-			<label>Password</label>
-			<input type="password" class="input">
-			<a href="#" class="forgot">Forgot password?</a>
-		</div>
-		<div class="btn">
-			<input type="submit" value="Sign in" class="sign_btn">
-		</div>
-	</div>
+	</form>
 	<div class="create_act">
 		<p>New to Account? <a href="#">Create an account.</a></p>
 	</div>
