@@ -14427,6 +14427,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Shared\\_LayoutAdmin.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutAdmin.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Shared\\_LayoutHome.cshtml",
       "TargetPath": "Views\\Shared\\_LayoutHome.cshtml",
       "FileKind": "mvc"
