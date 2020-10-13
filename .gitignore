@@ -13,4 +13,9 @@ AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.pdb
 *.pdb
 *.dll
 *.cache
-AppEducation/AppEducation/obj
+AppEducation/AppEducation/obj/AppEducation.csproj.nuget.dgspec
+AppEducation/AppEducation/obj/AppEducation.csproj.nuget.g.props
+AppEducation/AppEducation/obj/AppEducation.csproj.nuget.g.targets
+AppEducation/AppEducation/obj/project.assets
+AppEducation/AppEducation/obj/project.nuget.cache
+
