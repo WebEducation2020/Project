@@ -14417,6 +14417,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Shared\\_LayoutHome.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutHome.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
       "FileKind": "mvc"
@@ -14439,6 +14444,11 @@
     {
       "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Shared\\_LayoutClient.cshtml",
+      "TargetPath": "Views\\Shared\\_LayoutClient.cshtml",
       "FileKind": "mvc"
     },
     {
