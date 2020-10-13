@@ -12,3 +12,4 @@ AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.dll
 AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.pdb
 *.pdb
 *.dll
+*.cache
