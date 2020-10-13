@@ -1,6 +1,7 @@
 @model LoginModel
 @{
     ViewData["Title"] = "User Login";
+	Layout = "_Layout";
 }
 
 @section Head {
@@ -11,7 +12,7 @@
 		<img src="~/pages/login/img/logo.png" alt="GitHub">
 	</div>
 	<div class="title">
-		<p>Sign in to MTA Education</p>
+		<p>Sign In</p>
 	</div>
 	<form asp-area="" asp-controller="Account" asp-action="Login"  >
 		<div class="form">

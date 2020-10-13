@@ -27,10 +27,13 @@ a{
 }
 
 .wrapper .logo img{
+	padding: 10px;
 	display: block;
 	width: auto;
 	height: auto;
-	margin: 0 auto 25px;
+	margin: 0 auto 15px;
+	background: cadetblue;
+	border-radius: 40px;
 }
 
 .wrapper .title p{
