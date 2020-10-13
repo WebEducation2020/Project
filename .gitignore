@@ -1,0 +1,14 @@
+
+AppEducation/.vs/AppEducation/v16/.suo
+AppEducation/.vs/AppEducation/DesignTimeBuild/.dtbcache
+*.ide
+*.ide-shm
+*.ide-wal
+AppEducation/AppEducation/.vscode/launch.json
+AppEducation/AppEducation/.vscode/tasks.json
+AppEducation/AppEducation/appsettings.json
+AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.deps.json
+AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.dll
+AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.pdb
+*.pdb
+*.dll
