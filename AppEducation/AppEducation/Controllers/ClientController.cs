@@ -11,16 +11,16 @@ using Microsoft.AspNetCore.Http;
 using AppEducation.Models.Users;
 using Microsoft.AspNetCore.Identity;
 namespace AppEducation.Controllers {
-    public class AccountController : Controller 
+    public class ClientController : Controller 
     {
        
         private UserManager<AppUser> userManager;
         private IUserValidator<AppUser> userValidator;
         private IPasswordValidator<AppUser> passwordValidator;
         private IPasswordHasher<AppUser> passwordHasher;
-        private readonly ILogger<AccountController> logger;
+        private readonly ILogger<ClientController> logger;
 
-        public AccountController(  IPasswordHasher<AppUser> passwordHasher,  IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator ,UserManager<AppUser> userManager, ILogger<AccountController> logger)
+        public ClientController(  IPasswordHasher<AppUser> passwordHasher,  IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator ,UserManager<AppUser> userManager, ILogger<ClientController> logger)
         {
             this.passwordValidator = passwordValidator;
             this.passwordHasher = passwordHasher;

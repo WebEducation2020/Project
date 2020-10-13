@@ -33,7 +33,6 @@ E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Ap
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.genruntimeconfig.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csproj.CopyComplete
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
-E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
@@ -309,7 +308,6 @@ C:\Users\quock\Documents\Code Scripts\web\Project\AppEducation\AppEducation\obj\
 C:\Users\quock\Documents\Code Scripts\web\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.pdb
 C:\Users\quock\Documents\Code Scripts\web\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.genruntimeconfig.cache
 =======
-E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 E:\WebEducation2020\MainProject\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\appsettings.Development.json
 E:\WebEducation2020\MainProject\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 E:\WebEducation2020\MainProject\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\appsettings.json
@@ -788,3 +786,5 @@ C:\Users\PC\Documents\GitHub\Project\AppEducation\AppEducation\obj\Debug\netcore
 C:\Users\PC\Documents\GitHub\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csproj.CopyComplete
 C:\Users\PC\Documents\GitHub\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.dll
 C:\Users\PC\Documents\GitHub\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.pdb
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Client\Login.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Client\Register.cshtml.g.cs
