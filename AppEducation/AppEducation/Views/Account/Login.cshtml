@@ -14,11 +14,12 @@
 	<div class="title">
 		<p>Sign In</p>
 	</div>
+	<div asp-validation-summary="All" class="text-danger"></div>
 	<form asp-area="" asp-controller="Account" asp-action="Login"  >
 		<div class="form">
 			<div class="input_field">
-				<label>Email address</label>
-				<input asp-for="Email" type="text" class="input">
+				<label>User Name</label>
+				<input asp-for="UserName" type="text" class="input">
 			</div>
 			<div class="input_field">
 				<label>Password</label>

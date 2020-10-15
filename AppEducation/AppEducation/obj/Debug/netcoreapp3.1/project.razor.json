@@ -14433,6 +14433,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\RoleAdmin\\Edit.cshtml",
+      "TargetPath": "Views\\RoleAdmin\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Admin\\Index.cshtml",
       "TargetPath": "Views\\Admin\\Index.cshtml",
       "FileKind": "mvc"

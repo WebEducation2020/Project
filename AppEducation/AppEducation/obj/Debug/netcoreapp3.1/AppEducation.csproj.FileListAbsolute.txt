@@ -161,3 +161,5 @@ E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Ra
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Client\Profile.cshtml.g.cs
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\RoleAdmin\Index.cshtml.g.cs
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutAdmin.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\RoleAdmin\Create.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\RoleAdmin\Edit.cshtml.g.cs

@@ -80,6 +80,7 @@ namespace AppEducation.Controllers {
         #endregion
 
         #region Login
+        [AllowAnonymous]
         public IActionResult Login(string returnUrl){
             ViewBag.returnUrl = returnUrl ;
             return View();
@@ -88,13 +89,16 @@ namespace AppEducation.Controllers {
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel , string returnUrl) {
+            if(string.IsNullOrEmpty(loginModel.UserName)) {
+                ModelState.AddModelError("", "Please enter your email or username");
+            }
+
             if(ModelState.IsValid){
-                AppUser user = await userManager.FindByEmailAsync(loginModel.Email);
+                AppUser user = await userManager.FindByNameAsync(loginModel.UserName);
                 if(user != null){
-                    await signInManager.SignOutAsync();
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false);
                     if(result.Succeeded) {
-                        return Redirect(returnUrl ?? "/");
+                        return Redirect(returnUrl ?? "/Admin/Index");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");

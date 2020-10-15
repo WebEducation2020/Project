@@ -33,7 +33,11 @@ namespace AppEducation
             string conString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(conString));
             
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>( options => {
+                options.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnm1234567890";
+                options.User.RequireUniqueEmail = true;
+            }
+            )
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders(); 
 
