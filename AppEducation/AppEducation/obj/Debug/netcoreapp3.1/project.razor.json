@@ -10256,6 +10256,37 @@
         }
       },
       {
+        "HashCode": -596952728,
+        "Kind": "ITagHelper",
+        "Name": "AppEducation.Infrastructure.RoleUsersTagHelper",
+        "AssemblyName": "AppEducation",
+        "CaseSensitive": false,
+        "TagMatchingRules": [
+          {
+            "TagName": "td",
+            "Attributes": [
+              {
+                "Name": "identity-role"
+              }
+            ]
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "ITagHelper",
+            "Name": "identity-role",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "Role"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "ITagHelper",
+          "Common.TypeName": "AppEducation.Infrastructure.RoleUsersTagHelper"
+        }
+      },
+      {
         "HashCode": 1226202186,
         "Kind": "ITagHelper",
         "Name": "Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper",
@@ -14464,6 +14495,11 @@
     {
       "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\Account\\Register.cshtml",
       "TargetPath": "Views\\Account\\Register.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\WebEducation2020\\Project\\AppEducation\\AppEducation\\Views\\RoleAdmin\\Create.cshtml",
+      "TargetPath": "Views\\RoleAdmin\\Create.cshtml",
       "FileKind": "mvc"
     },
     {

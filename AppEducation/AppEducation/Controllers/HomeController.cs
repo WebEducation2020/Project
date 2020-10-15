@@ -17,7 +17,7 @@ namespace AppEducation.Controllers
         {
             _logger = logger;
         }
-
+        
         public IActionResult Index()
         {
 

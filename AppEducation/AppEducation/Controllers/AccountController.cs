@@ -11,7 +11,9 @@ using Microsoft.AspNetCore.Http;
 using AppEducation.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authentication;
 namespace AppEducation.Controllers {
+    [Authorize]
     public class AccountController : Controller 
     {
        
@@ -31,12 +33,16 @@ namespace AppEducation.Controllers {
             this.logger = logger;
             this.signInManager = signInManager;
         }
-
+        [Authorize]
         public IActionResult Index() => View();
         
         #region Register method
+        [AllowAnonymous]
         public IActionResult Register() => View();
+
         [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model) {
             if(string.IsNullOrEmpty(model.Birthday)){
                 ModelState.AddModelError(nameof(model.Birthday), "Please enter your birthday");
@@ -80,6 +86,7 @@ namespace AppEducation.Controllers {
         }
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel , string returnUrl) {
             if(ModelState.IsValid){
                 AppUser user = await userManager.FindByEmailAsync(loginModel.Email);
