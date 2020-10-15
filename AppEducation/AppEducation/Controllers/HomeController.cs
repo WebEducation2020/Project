@@ -29,6 +29,17 @@ namespace AppEducation.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(_Class _class)
+        {
+            return View();
+        }
+
+        public IActionResult Present()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

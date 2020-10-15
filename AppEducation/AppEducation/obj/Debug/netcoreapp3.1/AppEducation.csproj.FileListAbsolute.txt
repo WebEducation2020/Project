@@ -329,3 +329,4 @@ C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\A
 C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.pdb
 C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.genruntimeconfig.cache
 C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Home\Create.cshtml.g.cs
+C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Home\Present.cshtml.g.cs

@@ -32,3 +32,7 @@ AppEducation/AppEducation/obj/AppEducation.csproj.nuget.dgspec.json
 *.cache
 AppEducation/AppEducation/obj/Debug/netcoreapp3.1/AppEducation.csproj.FileListAbsolute.txt
 AppEducation/AppEducation/obj/*
+AppEducation/.vs/AppEducation/v16/.suo
+*.dll
+*.pdb
+AppEducation/AppEducation/bin/*

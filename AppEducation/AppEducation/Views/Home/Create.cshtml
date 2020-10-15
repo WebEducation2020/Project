@@ -4,14 +4,16 @@
 @{
     ViewBag.Title = "Create Page";
 }
-@{
-    ViewBag.Title = "Create";
-}
 @model _Class
-<h1>Hello @User.Identity.Name !</h1>
-@section Head {
-    <link type="text/css" rel="stylesheet" href="/css/create.css" />
-}
+<head>
+    @{
+        ViewBag.Title = "Create Page";
+    }
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="~/pages/create/css/create.css" />
+    <link type="text/css" rel="stylesheet" href="~/pages/create/css/all.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/pages/create/css/site.css" />
+</head>
 <section>
     <div class="container">
         <div class="row">
@@ -39,7 +41,7 @@
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="right-container">
-                    <img src="~/img/pexels-fauxels-3183197 (1).jpg">
+                    <img src="~/pages/create/img/reference.jpg">
                 </div>
             </div>
         </div>
@@ -108,4 +110,5 @@
 
 @section Scripts {
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 }
