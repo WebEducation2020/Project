@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authentication;
 namespace AppEducation.Controllers {
-    [Authorize]
     public class AccountController : Controller 
     {
        
@@ -33,7 +32,6 @@ namespace AppEducation.Controllers {
             this.logger = logger;
             this.signInManager = signInManager;
         }
-        [Authorize]
         public IActionResult Index() => View();
         
         #region Register method
@@ -98,7 +96,7 @@ namespace AppEducation.Controllers {
                 if(user != null){
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false);
                     if(result.Succeeded) {
-                        return Redirect(returnUrl ?? "/Admin/Index");
+                        return Redirect(returnUrl ?? "/Home/Create");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");

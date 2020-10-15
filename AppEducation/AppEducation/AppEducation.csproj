@@ -18,6 +18,10 @@
   <ItemGroup>
     <Folder Include="Authorization\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\pages\create\css\" />
+    <Folder Include="wwwroot\pages\create\js\" />
+    <Folder Include="wwwroot\pages\create\img\" />
+    <Folder Include="wwwroot\pages\create\icon\" />
   </ItemGroup>
 
 </Project>

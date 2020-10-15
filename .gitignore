@@ -19,3 +19,16 @@ AppEducation/AppEducation/obj/AppEducation.csproj.nuget.g.targets
 AppEducation/AppEducation/obj/project.assets
 AppEducation/AppEducation/obj/project.nuget.cache
 
+AppEducation/.vs/AppEducation/v16/.suo
+AppEducation/AppEducation/appsettings.json
+AppEducation/.vs/AppEducation/config/applicationhost.config
+AppEducation/AppEducation/appsettings.json
+*.dll
+*.pdb
+AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.runtimeconfig.dev.json
+AppEducation/AppEducation/bin/Debug/netcoreapp3.1/appsettings.json
+AppEducation/AppEducation/obj/AppEducation.csproj.nuget.dgspec.json
+*.props
+*.cache
+AppEducation/AppEducation/obj/Debug/netcoreapp3.1/AppEducation.csproj.FileListAbsolute.txt
+AppEducation/AppEducation/obj/*
