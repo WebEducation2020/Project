@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using AppEducation.Models.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace AppEducation.Controllers {
     public class AccountController : Controller 
     {
@@ -37,6 +38,16 @@ namespace AppEducation.Controllers {
         public IActionResult Register() => View();
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model) {
+            if(string.IsNullOrEmpty(model.Birthday)){
+                ModelState.AddModelError(nameof(model.Birthday), "Please enter your birthday");
+            }
+            if(ModelState.GetValidationState("Date") == ModelValidationState.Valid && DateTime.Now > Convert.ToDateTime(model.Birthday)) {
+                ModelState.AddModelError(nameof(model.Birthday), "Please enter a date in the past");
+            }
+            if(string.IsNullOrEmpty(model.Email)){
+                ModelState.AddModelError(nameof(model.Email),"Please enter your email");
+
+            }
             if (ModelState.IsValid)
             {
                 AppUser user = new AppUser
