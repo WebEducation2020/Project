@@ -15,9 +15,25 @@ namespace AppEducation.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AppEducation.Models.Classes", b =>
+                {
+                    b.Property<string>("ClassID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClassID");
+
+                    b.ToTable("Classes");
+                });
 
             modelBuilder.Entity("AppEducation.Models.Users.AppUser", b =>
                 {

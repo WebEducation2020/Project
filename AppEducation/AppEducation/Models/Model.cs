@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AppEducation.Models
 {
-    public class _Class
+    public class Classes
     {
         public string ClassID { get; set; }
         public string ClassName { get; set; }
@@ -13,7 +13,7 @@ namespace AppEducation.Models
     }
     public class Room
     {
-        public _Class RoomIF { get; set; }
+        public Classes RoomIF { get; set; }
         public List<User> UserCall { get; set; }
     }
     public class User

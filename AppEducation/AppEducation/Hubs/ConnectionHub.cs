@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace AppEducation.Hubs
 {
+
     public class ConnectionHub : Hub<IConnectionHub>
     {
+
+
     }
 
     public interface IConnectionHub

@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
+    "C:\\Users\\quock\\Documents\\Year 4 - semeter 1\\web\\WebApplication\\Project\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
   },
   "projects": {
-    "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
+    "C:\\Users\\quock\\Documents\\Year 4 - semeter 1\\web\\WebApplication\\Project\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "projectUniqueName": "C:\\Users\\quock\\Documents\\Year 4 - semeter 1\\web\\WebApplication\\Project\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
         "projectName": "AppEducation",
-        "projectPath": "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "D:\\SQl\\Project\\AppEducation\\AppEducation\\obj\\",
+        "projectPath": "C:\\Users\\quock\\Documents\\Year 4 - semeter 1\\web\\WebApplication\\Project\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "packagesPath": "C:\\Users\\quock\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\quock\\Documents\\Year 4 - semeter 1\\web\\WebApplication\\Project\\Project\\AppEducation\\AppEducation\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\quock\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,21 +43,17 @@
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.8, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -79,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

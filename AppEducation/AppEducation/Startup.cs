@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
 using AppEducation.Models;
 using AppEducation.Models.Users;
+using AppEducation.Hubs;
+
 namespace AppEducation
 {
     public class Startup
@@ -45,6 +47,7 @@ namespace AppEducation
             services.AddControllersWithViews();
             services.AddAuthentication();
             services.AddAuthorization();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +75,10 @@ namespace AppEducation
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ConnectionHub>("/ConnectionHub", options =>
+                {
+                    options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                });
             });
         }
     }
