@@ -12,7 +12,7 @@ using AppEducation.Models.Users;
 namespace AppEducation.Controllers
 {
     
-    [Authorize]
+   
     public class HomeController : Controller
     {
         private readonly AppIdentityDbContext _context;
@@ -23,54 +23,12 @@ namespace AppEducation.Controllers
             _logger = logger;
             _context = context;
         }
-        [AllowAnonymous]
+        
         public IActionResult Index()
         {
 
             return View();
         }
-        public IActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Classes _class)
-        {
-            if(ModelState.IsValid)
-            {
-                _context.Classes.Add(_class);
-                _context.SaveChanges();
-                return RedirectToAction("Present", "Home",_class);
-            }
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Join(Classes _class)
-        {
-            if(ModelState.IsValid)
-            {
-                Classes cls = _context.Classes.Find(_class.ClassID);
-                if (cls == null)
-                    return View();
-                return RedirectToAction("Index", "Present", cls);
-            }
-            return View();
-        }
-        public IActionResult Present()
-        {
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+       
     }
 }

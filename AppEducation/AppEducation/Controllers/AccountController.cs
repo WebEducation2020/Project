@@ -105,5 +105,10 @@ namespace AppEducation.Controllers {
           
         }
         #endregion 
+        [AllowAnonymous]
+        public IActionResult Profile(){
+            return View();
+        }
+        
     }
 }
