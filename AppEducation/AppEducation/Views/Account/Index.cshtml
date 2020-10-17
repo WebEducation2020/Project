@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="~/pages/profile/css/all.min.css">
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout";
+}
+@section Head {
+ <link rel="stylesheet" href="~/pages/profile/css/all.min.css">
     <link rel="stylesheet" href="~/pages/profile/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/pages/profile/css/font.google.css">
     <link rel="stylesheet" href="~/pages/profile/css/OneSignalSDKStyles.css">
@@ -15,10 +14,7 @@
     <link rel="stylesheet" href="~/pages/profile/css/HeaderUser.css">
     <link rel="stylesheet" href="~/pages/profile/css/FooterUser.css">
     <link rel="stylesheet" href="~/pages/profile/css/MainUser.css">
-
-</head>
-
-<body>
+}
     <header class="header-fixed header-boxshadow-active">
         <div class="#wrapper40-scroll" id="#wrapper">
             <div class="container">
@@ -98,9 +94,9 @@
                                                     aria-expanded="false">
                                                 <div class="mark-read-menu dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton">
-                                                    <img src="/images/polygon-white.png">
+                                                    <img src="~/pages/profile/images/polygon-white.png">
                                                     <div class="content-mark-read">
-                                                        <img src="/images/check-gray.png">
+                                                        <img src="~/pages/profile/images/check-gray.png">
                                                         <span>Đánh dấu tất cả là đã đọc</span>
                                                     </div>
                                                 </div>
@@ -112,7 +108,7 @@
                                         <div class="table-notify-footer">
                                             <a href="#/user/notification">
                                                 <span>Xem tất cả thông báo</span>
-                                                <img src="/images/arrow-right.png" class="img-arrow-right"></a>
+                                                <img src="~/pages/profile/images/arrow-right.png" class="img-arrow-right"></a>
                                         </div>
                                     </div>
                                 </li>
@@ -164,8 +160,6 @@
                         <ul style="list-style: none;" >
                             <li class="active"><a href="/user/info"><img  src="~/pages/profile/images/user_info_icon.png"
                                         alt="~/pages/profile/images/user_info_icon.png"><span> Thông tin cá nhân</span></a></li>
-                            <!-- <li class=""><a href="./user/package"><img style="width: 15px" src="~/pages/profile/images/package_icon.png"
-                                        alt="~/pages/profile/images/package_icon.png"><span> Thông tin tài khoản</span></a></li> -->
                             <li class=""><a href="/user/history"><img style="width: 15px" src="~/pages/profile/images/history_icon.png"
                                         alt="~/pages/profile/images/history_icon.png"><span> Lịch sử học tập</span></a></li>
                             <li class=""><a href="/user/renew-package"><img style="width: 15px" src="~/pages/profile/images/renew_package_icon.png"
@@ -258,30 +252,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="box user-social-box col-md-12" id="user-social-box">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-3"><span class="text-normal"><strong>Liên kết mạng xã
-                                                    hội</strong></span></div>
-                                    </div>
-                                    <div>
-                                        <div class="col-md-12">
-                                            <div class="col-md-3"><img src="/images/facebook.png" alt="/images/icon/facebook.png">
-                                                    <span class="text-normal">Liên kết Facebook</span>
-                                            </div>
-                                            <div class="col-md-9 text-right"><a class="update-button">Liên kết ngay</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 border-top fix-size">
-                                            <div class="col-md-3"><img src="/images/google.png"
-                                                    alt="~/pages/profile/images/google.png"><span class="text-normal">Liên kết
-                                                    Google</span></div>
-                                            <div class="col-md-9 text-right"><span class="no-drop">Đã liên kết (
-                                                    cuongtop4598@gmail.com )</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -308,9 +279,9 @@
                 </div>
             </div>
     </footer>
-</body>
-<script>
 
+@section Script {
+<script>
 $(document).ready(function() {  
     var readURL = function(input) {
         if (input.files && input.files[0]) {
@@ -343,3 +314,5 @@ $(document).ready(function() {
 <script src="~/pages/profile/js/OneSignalSDK.js" async=""></script>
 <script src="~/pages/profile/js/main_vendor.chunkhash.101202010.bundle.js"></script>
 <script src="~/pages/profile/js/jquery.3.4.1.js"></script>
+
+}
