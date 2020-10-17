@@ -23,7 +23,7 @@ namespace AppEducation.Controllers
             _logger = logger;
             _context = context;
         }
-        
+        [AllowAnonymous]
         public IActionResult Index()
         {
 
