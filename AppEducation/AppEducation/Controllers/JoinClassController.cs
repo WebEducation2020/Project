@@ -43,7 +43,7 @@ namespace AppEducation.Controllers
             {
                 _context.Classes.Add(_class);
                 _context.SaveChanges();
-                return RedirectToAction("Present", "Home", _class);
+                return RedirectToAction("Present", "JoinClass", _class);
             }
             return View();
         }
@@ -56,14 +56,14 @@ namespace AppEducation.Controllers
                 Classes cls = _context.Classes.Find(_class.ClassID);
                 if (cls == null)
                     return View();
-                return RedirectToAction("Index", "Present", cls);
+                return RedirectToAction("Present", "JoinClass", cls);
             }
             return View();
         }
         [AllowAnonymous]
-        public IActionResult Present()
+        public IActionResult Present(Classes cls)
         {
-            return View();
+            return View(cls);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

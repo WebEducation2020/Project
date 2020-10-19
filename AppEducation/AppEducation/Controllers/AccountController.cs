@@ -96,7 +96,7 @@ namespace AppEducation.Controllers {
                 if(user != null){
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false);
                     if(result.Succeeded) {
-                        return Redirect(returnUrl ?? "/Home/Create");
+                        return Redirect(returnUrl ?? "/JoinClass/Create");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
