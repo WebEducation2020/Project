@@ -1,31 +1,17 @@
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-namespace AppEducation.Models.Users
-{
-    public class AppIdentityDbContext : IdentityDbContext<AppUser>
-    {
 
-        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options) { }
+namespace AppEducation.Models.Users{
+    public class AppIdentityDbContext : IdentityDbContext<AppUser> {
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
-
-        public DbSet<Classes> Classes { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options) {}
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Classes>()
+            builder.Entity<Classes>()
                 .HasKey(t => t.ClassID);
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<UserProfile>().ToTable("UserProfiles");
-            modelBuilder.Entity<UserProfile>().HasKey(t => t.UserProfileId);
-
-            modelBuilder.Entity<AppUser>()
-                .HasOne(u => u.Profile).WithMany(w => w.Users)
-                .HasForeignKey(u => u.UserProfileId).IsRequired(false);
+            base.OnModelCreating(builder);
         }
-
+        public DbSet<Classes> Classes { get; set; }
     }
 }

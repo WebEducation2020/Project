@@ -10,32 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppEducation.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20201019042834_initial")]
-    partial class initial
+    [Migration("20201012003959_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AppEducation.Models.Classes", b =>
-                {
-                    b.Property<string>("ClassID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClassName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Topic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClassID");
-
-                    b.ToTable("Classes");
-                });
 
             modelBuilder.Entity("AppEducation.Models.Users.AppUser", b =>
                 {
@@ -89,9 +73,6 @@ namespace AppEducation.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<long>("UserProfileId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -102,43 +83,7 @@ namespace AppEducation.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("UserProfileId");
-
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("AppEducation.Models.Users.UserProfile", b =>
-                {
-                    b.Property<long>("UserProfileId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Birthday")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Job")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Sex")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserProfileId");
-
-                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -270,13 +215,6 @@ namespace AppEducation.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("AppEducation.Models.Users.AppUser", b =>
-                {
-                    b.HasOne("AppEducation.Models.Users.UserProfile", "Profile")
-                        .WithMany("Users")
-                        .HasForeignKey("UserProfileId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
