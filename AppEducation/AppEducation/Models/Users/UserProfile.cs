@@ -16,7 +16,6 @@ namespace AppEducation.Models.Users {
         public string Job { get; set; }
         public bool Sex { get; set; }
         public string PhoneNumber { get; set; }
-
-        public IEnumerable<AppUser> Users {get; set;}
+        public AppUser User { get; set;}
     }
 }
