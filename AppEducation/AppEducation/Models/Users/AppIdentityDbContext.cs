@@ -31,8 +31,9 @@ namespace AppEducation.Models.Users{
             modelBuilder.Entity<UserProfile>().HasKey( t => t.UserProfileId);
 
             modelBuilder.Entity<AppUser>()
-                .HasOne( u => u.Profile).WithMany( w => w.Users)
-                .HasForeignKey( u => u.UserProfileId).IsRequired(false);
+                .HasOne( u => u.Profile)
+                .WithOne( p => p.User)
+                .HasForeignKey<UserProfile>( p => p.UserId);
         }
     
     }
