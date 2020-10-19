@@ -32,17 +32,18 @@ namespace AppEducation.Hubs
                 Room rm = GetRoomByClassID(classid);
                 if (rm == null)
                 {
+                    usr.IsCaller = true;
                     _rooms.Add(new Room
                     {
                         RoomIF = clr,
                         UserCall = new List<User> { usr }
                     });
                     await SendUserListUpdate(GetRoomByClassID(classid));
+                    await Clients.Client(usr.ConnectionID).initDevices();
                 }
                 else
                 {
                     rm.UserCall.Add(usr);
-
                     await SendUserListUpdate(rm);
                     await Clients.Client(rm.UserCall[0].ConnectionID).NotifyNewMember(usr);
                 }
@@ -83,12 +84,9 @@ namespace AppEducation.Hubs
                     return;
                 }
             }
-            //set user make room is 
-            callingUser.IsCaller = true;
             // They are here, so tell them someone wants to talk
             foreach (User u in targetUsers)
             {
-                u.InCall = true;
                 await Clients.Client(u.ConnectionID).IncomingCall(callingUser);
             }
         }
@@ -120,6 +118,8 @@ namespace AppEducation.Hubs
                 return;
             }
 
+            callingUser.InCall = true;
+            targetUser.InCall = true;
             // Make sure there is still an active offer.  If there isn't, then the other use hung up before the Callee answered.
             // Tell the original caller that the call was accepted
             await Clients.Client(targetConnectionId.ConnectionID).CallAccepted(callingUser);
@@ -204,6 +204,7 @@ namespace AppEducation.Hubs
         Task CallDeclined(User u, string v);
         Task CallEnded(User targetConnectionId, string v);
         Task IncomingCall(User callingUser);
+        Task initDevices();
         Task NotifyNewMember(User usr);
         Task ReceiveSignal(User callingUser, string signal);
         Task UpdateUserList(List<User> userCall);

@@ -48,6 +48,7 @@ namespace AppEducation
             services.AddAuthentication();
             services.AddAuthorization();
             services.AddSignalR();
+            services.AddSingleton<List<Room>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
