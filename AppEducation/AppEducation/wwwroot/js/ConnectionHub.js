@@ -2,7 +2,7 @@
 const isDebugging = true;
 
 var hubUrl = document.location.pathname + 'ConnectionHub';
-var peerConnectionConfig = { "iceServers": [{ "url": "stun:stun.l.google.com:19302" }] };
+var peerConnectionConfig = { "iceServers": [{ "urls": "stun:stun.l.google.com:19302" }] };
 // Create connection to Hub
 var wsconn = new signalR.HubConnectionBuilder().withUrl("/ConnectionHub").build();
 const screenConstraints = {
@@ -10,13 +10,12 @@ const screenConstraints = {
         width: 1080,
         height: 720
     },
-    audio: true
 }
 const cameraConstraints = {
     video: {
         width: 480,
         height: 360
-    }
+    },audio:true
 }
 let localcamera, localscreen;
 var connections = {};
@@ -58,19 +57,14 @@ const initializeDevices = () => {
         .catch(err => console.log(err));
 }
 const attachMediaStream = (e) => {
-    //console.log(e);
     console.log("OnPage: called attachMediaStream ");
     var partnerScreen = document.querySelector("#screen");
     var partnerCamera = document.querySelector("#camera");
-    if (partnerScreen.srcObject == null) {
-        console.log(e.streams[0].getTracks());
-        partnerScreen.srcObject = e.streams[0];
-        localStreamScreen = e.streams[0];
+    if (e.stream.getTracks().length == 2) {
+        partnerCamera.srcObject = e.stream;
     }
-    else {
-        console.log(e.streams[0].getTracks());
-        partnerCamera.srcObject = e.streams[0];
-        localStreamCamera = e.streams[0];
+    else if(e.stream.getTracks().length == 1){
+        partnerScreen.srcObject = e.stream;
     }
 };
 
@@ -193,7 +187,7 @@ const initializeConnection = (partnerClientId) => {
     var connection = new RTCPeerConnection(peerConnectionConfig);
     connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId); // ICE Candidate Callback
     //connection.onnegotiationneeded = evt => callbackNegotiationNeeded(connection, evt); // Negotiation Needed Callback
-    connection.ontrack = evt => callbackAddStream(connection, evt); // Add stream handler callback
+    connection.onaddstream = evt => callbackAddStream(connection, evt); // Add stream handler callback
     connection.onremovestream = evt => callbackRemoveStream(connection, evt); // Remove stream handler callback
     connections[partnerClientId] = connection; // Store away the connection based on username
     return connection;
@@ -204,8 +198,8 @@ const initiateOffer = (partnerClientId) => {
     var connection = getConnection(partnerClientId); // // get a connection for the given partner
     //console.log('initiate Offer stream: ', stream);
     console.log("offer connection: ", connection);
-    connection.addTrack(localscreen.getTracks()[0], localcamera);
-    connection.addTrack(localcamera.getTracks()[0], localscreen);
+    connection.addStream(localcamera);
+    connection.addStream(localscreen);
     //connection.(stream);// add our audio/video stream
     console.log("WebRTC: Added local stream");
 
@@ -293,3 +287,26 @@ const consoleLogger = (val) => {
         console.log(val);
     }
 };
+
+
+//// tat video ben nguoi goi
+
+//// tat video ben nguoi duoc goi
+
+//// tat mic , loa ben nguoi goi
+
+//// tat mic, loa ben nguoi duoc goi
+//// => tat mic
+//document.querySelector("#mic").addEventListener("click", () => {
+//    console.log("turn on/off mic");
+//    var AudioStream = document.querySelector("#screen").srcObject;
+//    var AudioTrack = AudioStream.getAudioTracks()[0];
+//    screenAudioTrack.enabled = !screenAudioTrack.enabled;
+//});
+
+//document.querySelector("#cam").addEventListener("click", () => {
+//    console.log("turn on/off cam");
+//    var cameraStream = document.querySelector("#camera").srcObject;
+//    var cameraTrack = cameraStream.getVideoTracks()[0];
+//    cameraTrack.enabled = !cameraStream.enabled;
+//});
