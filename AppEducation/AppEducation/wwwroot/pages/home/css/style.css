@@ -31,7 +31,7 @@ a:focus {
 img {
     max-width: 100%;
     height: auto;
-    padding-top: 40px;
+    padding-top:40px;
 }
 .fix {
     overflow: hidden
@@ -1526,3 +1526,4 @@ a#scrollUp:hover {
 }
 
 /*----------------------------------------*/
+}}
