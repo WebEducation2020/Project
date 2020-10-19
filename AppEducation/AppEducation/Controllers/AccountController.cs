@@ -74,12 +74,9 @@ namespace AppEducation.Controllers {
                 if (result.Succeeded)
                 {
                     // save info user
+                    AppUser usernew = await userManager.FindByNameAsync(user.UserName);
+                    profile.UserId = usernew.Id;
                     context.UserProfiles.Add(profile);
-                    context.SaveChanges();
-                    AppUser userNew = context.Users.Find(model.UserName);
-                    UserProfile profileNew = context.UserProfiles.Find(profile.UserProfileId);
-                    userNew.UserProfileId = profile.UserProfileId;
-                    context.Users.Update(userNew);
                     context.SaveChanges();
                     return RedirectToAction("Index");
                 }
