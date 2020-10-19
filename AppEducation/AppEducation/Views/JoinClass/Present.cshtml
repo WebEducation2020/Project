@@ -3,6 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutPresent.cshtml";
 }
+@model Classes
 <div id="topica-vcr">
     <div class="AtlaskitThemeProvider__LegacyReset-sc-431dkp-0 tOoji">
         <div class="wrapper">
@@ -89,6 +90,7 @@
                         <div class="vcrx-item-box vcrx-webcam">
                             <div class="box-webcam box-list">
                                 <div class="video-cam">
+                                    <video id="camera" autoplay="autoplay"></video> 
                                 </div>
                             </div>
                         </div>
@@ -97,7 +99,7 @@
                 <div class="group-right">
                     <div class="vcrx-item-box vcrx-header">
                         <div class="header">
-                            <div class="box-logo-topica"><img src="./images/logo.png"></div>
+                            <div class="box-logo-topica"><img src="~/pages/Presents/images/logo.png"></div>
                             <div class="box-media-control">
                                 <div class="group-media-control">
                                     <div class="media-control">
@@ -171,6 +173,7 @@
                                             </p>
                                         </div>
                                         <div class="vcr-slide-box">
+                                            <video id="screen" autoplay="autoplay"></video>
                                         </div>
                                     </div>
                                 </div>
@@ -365,6 +368,7 @@
 <script>
     const username = "@User.Identity.Name";
     console.log(username);
+    const classid = "@Model.ClassID";
 </script>
 <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/ConnectionHub.js"></script>
