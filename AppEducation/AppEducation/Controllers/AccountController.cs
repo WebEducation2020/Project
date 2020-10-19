@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authentication;
 namespace AppEducation.Controllers {
     public class AccountController : Controller 
     {
-       
+        private AppIdentityDbContext context;
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
         private IUserValidator<AppUser> userValidator;
@@ -23,8 +23,9 @@ namespace AppEducation.Controllers {
         private IPasswordHasher<AppUser> passwordHasher;
         private readonly ILogger<AccountController> logger;
 
-        public AccountController( SignInManager<AppUser> signInManager, IPasswordHasher<AppUser> passwordHasher,  IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator ,UserManager<AppUser> userManager, ILogger<AccountController> logger)
+        public AccountController(AppIdentityDbContext context, SignInManager<AppUser> signInManager, IPasswordHasher<AppUser> passwordHasher,  IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator ,UserManager<AppUser> userManager, ILogger<AccountController> logger)
         {
+            this.context = context;
             this.passwordValidator = passwordValidator;
             this.passwordHasher = passwordHasher;
             this.userValidator = userValidator;
@@ -60,9 +61,26 @@ namespace AppEducation.Controllers {
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber
                 };
+                UserProfile profile = new UserProfile
+                {
+                    Birthday = model.Birthday,
+                    Job = model.Job,
+                    Password = model.Password,
+                    PhoneNumber = model.PhoneNumber,
+                    Sex = model.Sex,
+                    Email = model.Email
+                };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // save info user
+                    context.UserProfiles.Add(profile);
+                    context.SaveChanges();
+                    AppUser userNew = context.Users.Find(model.UserName);
+                    UserProfile profileNew = context.UserProfiles.Find(profile.UserProfileId);
+                    userNew.UserProfileId = profile.UserProfileId;
+                    context.Users.Update(userNew);
+                    context.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 else
