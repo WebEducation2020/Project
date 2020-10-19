@@ -22,7 +22,7 @@ AppEducation/AppEducation/obj/project.nuget.cache
 AppEducation/.vs/AppEducation/v16/.suo
 AppEducation/AppEducation/appsettings.json
 AppEducation/.vs/AppEducation/config/applicationhost.config
-AppEducation/AppEducation/appsettings.json
+AppEducation/AppEducation/appsettings
 *.dll
 *.pdb
 AppEducation/AppEducation/bin/Debug/netcoreapp3.1/AppEducation.runtimeconfig.dev.json
