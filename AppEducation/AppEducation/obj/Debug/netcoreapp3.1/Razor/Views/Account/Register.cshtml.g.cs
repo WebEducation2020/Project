@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #pragma checksum "C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\Views\Account\Register.cshtml" "{ff1816ec-aa5e-4d10-87f7-6f4963833460}" "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad91"
+=======
+#pragma checksum "E:\WebEducation2020\Project\AppEducation\AppEducation\Views\Account\Register.cshtml" "{ff1816ec-aa5e-4d10-87f7-6f4963833460}" "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad91"
+>>>>>>> parent of 1b61a66... change main.css register
 =======
 #pragma checksum "E:\WebEducation2020\Project\AppEducation\AppEducation\Views\Account\Register.cshtml" "{ff1816ec-aa5e-4d10-87f7-6f4963833460}" "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad91"
 >>>>>>> parent of 1b61a66... change main.css register
@@ -124,7 +128,11 @@ using System.Linq;
             DefineSection("Head", async() => {
                 WriteLiteral("\r\n    <!-- Icons font CSS-->\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9114270", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9113913", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9113913", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -144,7 +152,11 @@ using System.Linq;
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9115537", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9115180", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9115180", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -164,7 +176,11 @@ using System.Linq;
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    <!-- Font special for pages-->\r\n    <link href=\"https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i\" rel=\"stylesheet\">\r\n\r\n    <!-- Vendor CSS-->\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9117043", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9116686", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9116686", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -184,7 +200,11 @@ using System.Linq;
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9118310", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9117953", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9117953", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -204,7 +224,11 @@ using System.Linq;
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n\r\n    <!-- Main CSS-->\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9119605", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9119248", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9119248", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -224,7 +248,11 @@ using System.Linq;
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    \r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9120880", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9120523", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9120523", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -253,7 +281,11 @@ using System.Linq;
                     <h2 class=""title"">Registration Form</h2>
                     ");
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9122496", async() => {
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9122139", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9122139", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -279,7 +311,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper.ValidationSumma
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9124180", async() => {
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9123772", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9123772", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -290,7 +326,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper.ValidationSumma
                                     <label class=""label"">User Name</label>
                                     ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9124719", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9124311", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9124311", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -324,7 +364,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                                     <label class=""label"">Password</label>
                                     ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9126869", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9126410", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9126410", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -361,7 +405,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                                     <div class=""input-group-icon"">
                                         ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9129180", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9128670", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9128670", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -415,7 +463,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                                     <label class=""label"">Email</label>
                                     ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9132611", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9132050", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9132050", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -449,7 +501,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                                     <label class=""label"">Phone Number</label>
                                     ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9134762", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9134150", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9134150", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -484,9 +540,15 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                             <div class=""rs-select2 js-select-simple select--no-search"">
                                 ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9136962", async() => {
                     WriteLiteral("\r\n                                    ");
                     __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9137267", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9136299", async() => {
+                    WriteLiteral("\r\n                                    ");
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9136604", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9136299", async() => {
                     WriteLiteral("\r\n                                    ");
@@ -512,7 +574,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                                    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                     __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9139051", async() => {
+=======
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9138388", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                     __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9138388", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -532,7 +598,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                                    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                     __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9140378", async() => {
+=======
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9139715", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                     __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9139715", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -603,7 +673,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_SelectTagHelper.For = ModelExpressionProvi
             DefineSection("Script", async() => {
                 WriteLiteral("\r\n    <script type=\"text/javascript\">\r\n    \r\n        $(document).ready(function(){\r\n            $(\"input.input-validation-error\").closest(\".input-group\").addClass(\"has-danger\")\r\n        })\r\n    </script>\r\n    <!-- Jquery JS-->\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9145583", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9144869", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9144869", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -621,7 +695,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_SelectTagHelper.For = ModelExpressionProvi
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9146684", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9145970", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9145970", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -639,7 +717,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_SelectTagHelper.For = ModelExpressionProvi
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9147785", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9147071", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9147071", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
@@ -657,7 +739,11 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_SelectTagHelper.For = ModelExpressionProvi
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    <!-- Main JS-->\r\n    ");
 <<<<<<< HEAD
+<<<<<<< HEAD
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9148909", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9148195", async() => {
+>>>>>>> parent of 1b61a66... change main.css register
 =======
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2dcb0c6c053b6600c96d1a186b0770a5c2ad9148195", async() => {
 >>>>>>> parent of 1b61a66... change main.css register
