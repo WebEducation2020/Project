@@ -5,6 +5,7 @@ var hubUrl = document.location.pathname + 'ConnectionHub';
 var peerConnectionConfig = { "iceServers": [{ "urls": "stun:stun.l.google.com:19302" }] };
 // Create connection to Hub
 var wsconn = new signalR.HubConnectionBuilder().withUrl("/ConnectionHub").build();
+// initial valuable !
 const screenConstraints = {
     video: {
         width: 1080,
@@ -15,81 +16,133 @@ const cameraConstraints = {
     video: {
         width: 480,
         height: 360
-    },audio:true
+    }
 }
-let localcamera, localscreen;
+const audioConstraints = {
+    audio: true
+}
+var screenStream = new MediaStream();
+screenStream.onaddtrack = async e => { await callbackOnaddtrackScreen(e);}
+var cameraStream = new MediaStream();
+cameraStream.onaddtrack = async e => { await callbackOnaddtrackCamera(e); };
+var remoteAudio = new MediaStream();
+let localcamera, localscreen, localaudio;
+let isCaller = false;
 var connections = {};
 const initialize = async () => {
     console.log("Start connection for hub!")
     wsconn.start()
-        .then(() => {
-            wsconn.invoke("Join", username, classid)
+        .then(async () => {
+            await wsconn.invoke("Join", username, classid)
                 .catch((err) => {
-                    console.log(err);
-                    console.log("Join Fail");
+                    console.log("Join Fail | " + err);
                 });
         })
         .catch(err => console.log(err));
 };
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     console.log("Ready for Hub");
-    initialize();
+    await initialize();
 });
-const callbackDisplayMediaSuccess = (stream) => {
-    console.log("WebRTC: got media stream");
+const callbackDisplayMediaSuccess = async (stream) => {
+    console.log("WebRTC: got screen media stream");
     var screen = document.querySelector("#screen");
-    screen.srcObject = stream;
-    localscreen = stream;
+    screenStream = stream;
+    screen.srcObject = screenStream;
+    localscreen = new MediaStream(stream.getTracks());
 }
-const callbackUserMediaSuccess = (stream) => {
-    console.log("WebRTC: got media stream");
+const callbackOnaddtrackCamera = async (e) => {
+    console.log("call back add camera")
     var camera = document.querySelector("#camera");
-    camera.srcObject = stream;
-    localcamera = stream;
+    camera.srcObject = cameraStream;
 }
-const initializeDevices = () => {
+const callbackOnaddtrackScreen = async (e) => {
+    console.log("call back add screen");
+    var screen = document.querySelector("#screen");
+    screen.srcObject = cameraStream;
+}
+const callbackUserMediaSuccess = async (stream) => {
+    console.log("WebRTC: got camera media stream");
+    var camera = document.querySelector("#camera");
+    cameraStream = stream;
+    camera.srcObject = cameraStream;
+    localcamera = new MediaStream(stream.getTracks());
+}
+const callbackAudioMediaSuccess = async (stream) => {
+    console.log("WebRTC: got audio media stream");
+    var camera = document.querySelector("#camera");
+    localaudio = new MediaStream(stream.getTracks());
+    var tracks = stream.getTracks();
+    for (var i = 0; i < tracks.length ; i++)
+    {
+        console.log("cameraStream add Track : " + JSON.stringify(tracks[i]));
+        cameraStream.addTrack(tracks[i]);
+    }
+}
+//const callbackonaddtrack = (e) => {
+//    console.log("add Track : " + JSON.stringify(e.track));
+//    var camera = document.querySelector("#camera");
+//    camera.srcObject = localcamera;
+//}
+const initializeDevices = async (UserCall) => {
+    console.log(JSON.stringify(UserCall));
     console.log('WebRTC: InitializeUserMedia: ');
-    navigator.mediaDevices.getDisplayMedia(screenConstraints)
-        .then((stream) => callbackDisplayMediaSuccess(stream))
-        .catch(err => console.log(err));
-    navigator.mediaDevices.getUserMedia(cameraConstraints)
-        .then((stream) => callbackUserMediaSuccess(stream))
-        .catch(err => console.log(err));
+    if (isCaller) {
+        await navigator.mediaDevices.getDisplayMedia(screenConstraints)
+            .then((stream) => callbackDisplayMediaSuccess(stream))
+            .catch(err => console.log(err));
+        await navigator.mediaDevices.getUserMedia(cameraConstraints)
+            .then((stream) => callbackUserMediaSuccess(stream))
+            .catch(err => console.log(err));
+        await navigator.mediaDevices.getUserMedia(audioConstraints)
+            .then(stream => callbackAudioMediaSuccess(stream))
+            .catch(err => console.log(err));
+    }
+    else {
+        localcamera = new MediaStream();
+        localscreen = new MediaStream();
+        await navigator.mediaDevices.getUserMedia(audioConstraints)
+            .then(stream => callbackAudioMediaSuccess(stream))
+            .catch(err => console.log(err));
+    }
 }
-const attachMediaStream = (e) => {
-    console.log("OnPage: called attachMediaStream ");
-    var partnerScreen = document.querySelector("#screen");
-    var partnerCamera = document.querySelector("#camera");
-    if (e.stream.getTracks().length == 2) {
-        partnerCamera.srcObject = e.stream;
-    }
-    else if(e.stream.getTracks().length == 1){
-        partnerScreen.srcObject = e.stream;
-    }
-};
+//const attachMediaStream = (e) => {
+//    console.log("OnPage: called attachMediaStream ");
+//    var partnerScreen = document.querySelector("#screen");
+//    var partnerCamera = document.querySelector("#camera");
+//    if (e.stream.getTracks().length == 2) {
+//        partnerCamera.srcObject = e.stream;
+//        localcamera = partnerCamera.srcObject;
+//    }
+//    else if(e.stream.getTracks().length == 1){
+//        partnerScreen.srcObject = e.stream;
+//        localscreen = partnerScreen.srcObject;
+//    }
+//};
 
-const receivedCandidateSignal = (connection, partnerClientId, candidate) => {
+const receivedCandidateSignal = async (connection, partnerClientId, candidate) => {
     console.log('WebRTC: adding full candidate');
     connection.addIceCandidate(new RTCIceCandidate(candidate), () => console.log("WebRTC: added candidate successfully"), () => console.log("WebRTC: cannot add candidate"));
 }
 
 //Process a newly received SDP signal
-const receivedSdpSignal = (connection, partnerClientId, sdp) => {
+const receivedSdpSignal = async (connection, partnerClientId, sdp) => {
     console.log('connection: ', connection);
     console.log('sdp', sdp);
     console.log('WebRTC: called receivedSdpSignal');
     console.log('WebRTC: processing sdp signal');
-    connection.setRemoteDescription(new RTCSessionDescription(sdp), () => {
+    connection.setRemoteDescription(new RTCSessionDescription(sdp), async () => {
         console.log('WebRTC: set Remote Description');
         if (connection.remoteDescription.type == "offer") {
             console.log('WebRTC: remote Description type offer');
+            connection.addTrack(localaudio.getTracks()[0]);
             connection.createAnswer().then((desc) => {
                 console.log('WebRTC: create Answer...');
-                connection.setLocalDescription(desc, () => {
+                connection.setLocalDescription(desc, async () => {
                     console.log('WebRTC: set Local Description...');
                     console.log('connection.localDescription: ', connection.localDescription);
                     //setTimeout(() => {
-                    sendHubSignal(JSON.stringify({ "sdp": connection.localDescription }), partnerClientId);
+                    await sendHubSignal(JSON.stringify({ "sdp": connection.localDescription }), partnerClientId);
                     //}, 1000);
                 }, errorHandler);
             }, errorHandler);
@@ -100,10 +153,8 @@ const receivedSdpSignal = (connection, partnerClientId, sdp) => {
 }
 
 // Hand off a new signal from the signaler to the connection
-const newSignal = (partnerClientId, data) => {
+const newSignal = async (partnerClientId, data) => {
     console.log('WebRTC: called newSignal');
-    //console.log('connections: ', connections);
-
     var signal = JSON.parse(data);
     var connection = getConnection(partnerClientId);
     console.log("connection: ", connection);
@@ -111,21 +162,18 @@ const newSignal = (partnerClientId, data) => {
     // Route signal based on type
     if (signal.sdp) {
         console.log('WebRTC: sdp signal');
-        receivedSdpSignal(connection, partnerClientId, signal.sdp);
+        await receivedSdpSignal(connection, partnerClientId, signal.sdp);
     } else if (signal.candidate) {
         console.log('WebRTC: candidate signal');
-        receivedCandidateSignal(connection, partnerClientId, signal.candidate);
+        await receivedCandidateSignal(connection, partnerClientId, signal.candidate);
     } else {
         console.log('WebRTC: adding null candidate');
-        connection.addIceCandidate(null, () => console.log("WebRTC: added null candidate successfully"), () => console.log("WebRTC: cannot add null candidate"));
+        await connection.addIceCandidate(null, async () => console.log("WebRTC: added null candidate successfully"), () => console.log("WebRTC: cannot add null candidate"));
     }
 }
 
-//const onStreamRemoved = (connection, streamId) => {
-//    console.log("WebRTC: onStreamRemoved -> Removing stream: ");
-//}
 // Close the connection between myself and the given partner
-const closeConnection = (partnerClientId) => {
+const closeConnection = async (partnerClientId) => {
     console.log("WebRTC: called closeConnection ");
     var connection = connections[partnerClientId];
 
@@ -135,10 +183,10 @@ const closeConnection = (partnerClientId) => {
     }
 }
 // Close all of our connections
-const closeAllConnections = () => {
+const closeAllConnections = async () => {
     console.log("WebRTC: call closeAllConnections ");
     for (var connectionID in connections) {
-        closeConnection(connectionID);
+        await closeConnection(connectionID);
     }
 }
 
@@ -154,16 +202,45 @@ const getConnection = (partnerClientId) => {
     }
 }
 // gui tin hieu di 
-const sendHubSignal = (candidate, partnerClientId) => {
+const sendHubSignal = async (candidate, partnerClientId) => {
     console.log('candidate', candidate);
     console.log('SignalR: called sendhubsignal ');
-    wsconn.invoke('sendSignal', candidate, partnerClientId).catch(errorHandler);
+    await wsconn.invoke('sendSignal', candidate, partnerClientId).catch(errorHandler);
 };
 // goi ham them luong du lieu vao ket noi
 const callbackAddStream = (connection, evt) => {
     console.log('WebRTC: called callbackAddStream');
-
     attachMediaStream(evt);
+}
+const callbackAddTrack = async (connection, e) => {
+    if (e.streams && e.streams[0]) {
+        console.log('add Track 1');
+        console.log(e.streams);
+    } else {
+        console.log("add Track 2");
+        if (e.track.kind == "audio") {
+            console.log("add track : " + e.track);
+            remoteAudio.addTrack(e.track);
+            cameraStream.addTrack(e.track);
+            document.querySelector("#camera").srcObject = cameraStream;
+        }
+        else {
+            console.log("add track video")
+            if (localcamera.getVideoTracks().length == 0) {
+                var camera = document.querySelector("#camera");
+                cameraStream.addTrack(e.track);
+                localcamera.addTrack(e.track);
+                document.querySelector("#camera").srcObject = cameraStream;
+            }
+            else {
+                localscreen.addTrack(e.track);
+                var screen = document.querySelector("#screen");
+                screenStream.addTrack(e.track);
+                localscreen.addTrack(e.track);
+                document.querySelector("#screen").srcObject = screenStream;
+            }
+        }
+    }
 }
 // goi ham tao ung vien cho ket noi
 const callbackIceCandidate = (evt, connection, partnerClientId) => {
@@ -187,82 +264,97 @@ const initializeConnection = (partnerClientId) => {
     var connection = new RTCPeerConnection(peerConnectionConfig);
     connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId); // ICE Candidate Callback
     //connection.onnegotiationneeded = evt => callbackNegotiationNeeded(connection, evt); // Negotiation Needed Callback
-    connection.onaddstream = evt => callbackAddStream(connection, evt); // Add stream handler callback
-    connection.onremovestream = evt => callbackRemoveStream(connection, evt); // Remove stream handler callback
+    //connection.onaddstream = evt => callbackAddStream(connection, evt); // Add stream handler callback
+    connection.ontrack = async e => { await callbackAddTrack(connection, e) };
+    //connection.onremovestream = evt => callbackRemoveStream(connection, evt); // Remove stream handler callback
     connections[partnerClientId] = connection; // Store away the connection based on username
     return connection;
 }
 
-const initiateOffer = (partnerClientId) => {
+const initiateOffer = async (partnerClientId) => {
     console.log('WebRTC: called initiateoffer: ');
     var connection = getConnection(partnerClientId); // // get a connection for the given partner
     //console.log('initiate Offer stream: ', stream);
     console.log("offer connection: ", connection);
-    connection.addStream(localcamera);
-    connection.addStream(localscreen);
-    //connection.(stream);// add our audio/video stream
-    console.log("WebRTC: Added local stream");
 
+    console.log("WebRTC: Added local stream");
+    if (isCaller) {
+        for (var i = 0; i < localcamera.getTracks().length; i++) {
+            console.log(localcamera.getTracks()[i]);
+            connection.addTrack(localcamera.getTracks()[i]);
+        }
+        for (var i = 0; i < localscreen.getTracks().length; i++) {
+            console.log(localscreen.getTracks()[i]);
+            connection.addTrack(localscreen.getTracks()[i]);
+        }
+        for (var i = 0; i < localaudio.getTracks().length; i++) {
+            console.log(localaudio.getTracks()[i]);
+            connection.addTrack(localaudio.getTracks()[i]);
+        }
+    }
+    else {
+        for (var i = 0; i < localaudio.getTracks().length; i++) {
+            console.log(localaudio.getTracks()[i]);
+            connection.addTrack(localaudio.getTracks()[i]);
+        }
+    }
     connection.createOffer().then(offer => {
         console.log('WebRTC: created Offer: ');
         console.log('WebRTC: Description after offer: ', offer);
-        connection.setLocalDescription(offer).then(() => {
+        connection.setLocalDescription(offer).then( async () => {
             console.log('WebRTC: set Local Description: ');
             console.log('connection before sending offer ', connection);
-            setTimeout(() => {
-                sendHubSignal(JSON.stringify({ "sdp": connection.localDescription }), partnerClientId);
+            setTimeout(async () => {
+                await sendHubSignal(JSON.stringify({ "sdp": connection.localDescription }), partnerClientId);
             }, 1000);
         }).catch(err => console.error('WebRTC: Error while setting local description', err));
     }).catch(err => console.error('WebRTC: Error while creating offer', err));
 }
 
-wsconn.on("initDevices", () => {
-    console.log("Init devices");
-    initializeDevices();
+wsconn.on("initDevices", async (UserCall) => {
+    isCaller = UserCall.isCaller;
+    await initializeDevices(UserCall);
 });
 // initial something
 
 wsconn.on('updateUserList', (userList) => {
     console.log("update list users " + JSON.stringify(userList));
 });
-wsconn.on("NotifyNewMember", (newMember) => {
-    console.log(" new member");
-    wsconn.invoke("CallUser")
+wsconn.on("NotifyNewMember",async (newMember) => {
+    console.log("New member !");
+    await wsconn.invoke("CallUser",newMember)
         .catch(err => console.log(err));
 });
 // cuoc goi toi
-wsconn.on('incomingCall', (callingUser) => {
+wsconn.on('incomingCall', async (callingUser) => {
     console.log('SignalR: incoming call from: ' + JSON.stringify(callingUser));
-    wsconn.invoke('AnswerCall', true, callingUser).catch(err => console.log(err));
+    await wsconn.invoke('AnswerCall', true, callingUser).catch(err => console.log(err));
 });
 // Hub Callback: Call Accepted
-wsconn.on('callAccepted', (acceptingUser) => {
+wsconn.on('callAccepted',async (acceptingUser) => {
     console.log('SignalR: call accepted from: ' + JSON.stringify(acceptingUser) + '.  Initiating WebRTC call and offering my stream up...');
-
-    // Callee accepted our call, let's send them an offer with our video stream
-    initiateOffer(acceptingUser.connectionID); // Will use driver email in production
-    // Set UI into call mode
+    await initiateOffer(acceptingUser.connectionID);
 });
 // hub : receive signal
-wsconn.on('receiveSignal', (signalingUser, signal) => {
+wsconn.on('receiveSignal', async (signalingUser, signal) => {
     console.log('WebRTC: receive signal ');
-    newSignal(signalingUser.connectionID, signal);
+    await newSignal(signalingUser.connectionID, signal);
 });
 //Hub inform : call decline
-wsconn.on('callDeclined', (decliningUser, reason) => {
+wsconn.on('callDeclined', async (decliningUser, reason) => {
     console.log('SignalR: call declined from: ' + decliningUser.connectionID);
     console.log(reason);
 });
 
 // Hub Callback: Call Ended
-wsconn.on('callEnded', (signalingUser, signal) => {
+wsconn.on('callEnded', async (signalingUser, signal) => {
     console.log('SignalR: call with ' + signalingUser.connectionID + ' has ended: ' + signal);
 
     // Let the user know why the server says the call is over
     console.log(signal);
 
     // Close the WebRTC connection
-    closeConnection(signalingUser.connectionID);
+    await closeConnection(signalingUser.connectionID);
 });
 wsconn.onclose(e => {
     if (e) {
@@ -289,24 +381,28 @@ const consoleLogger = (val) => {
 };
 
 
-//// tat video ben nguoi goi
+document.querySelector("#mic").addEventListener("click", () => {
+    console.log("turn on/off mic");
+    var cameraStream = document.querySelector("#camera").srcObject;
+    var AudioTrack = cameraStream.getAudioTracks()[0];
+    AudioTrack.enabled = !AudioTrack.enabled;
+});
 
-//// tat video ben nguoi duoc goi
+document.querySelector("#cam").addEventListener("click", () => {
+    console.log("turn on/off cam");
+    var cameraStream = document.querySelector("#camera").srcObject;
+    var cameraTrack = cameraStream.getVideoTracks()[0];
+    cameraTrack.enabled = !cameraTrack.enabled;
+});
+async function getConnectedDevices(type) {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    return devices.filter(device => device.kind === type)
+}
 
-//// tat mic , loa ben nguoi goi
-
-//// tat mic, loa ben nguoi duoc goi
-//// => tat mic
-//document.querySelector("#mic").addEventListener("click", () => {
-//    console.log("turn on/off mic");
-//    var AudioStream = document.querySelector("#screen").srcObject;
-//    var AudioTrack = AudioStream.getAudioTracks()[0];
-//    screenAudioTrack.enabled = !screenAudioTrack.enabled;
-//});
-
-//document.querySelector("#cam").addEventListener("click", () => {
-//    console.log("turn on/off cam");
-//    var cameraStream = document.querySelector("#camera").srcObject;
-//    var cameraTrack = cameraStream.getVideoTracks()[0];
-//    cameraTrack.enabled = !cameraStream.enabled;
-//});
+// bat mic tren client duoc goi
+document.querySelector("#scrn").addEventListener("click",async () => {
+    //console.log("turn on/off screen");
+    //var screenStream = document.querySelector("#screen").srcObject;
+    //var screenTrack = screenStream.getVideoTracks()[0];
+    //screenTrack.enabled = !screenTrack.enabled;
+});
