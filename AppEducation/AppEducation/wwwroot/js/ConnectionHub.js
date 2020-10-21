@@ -79,11 +79,6 @@ const callbackAudioMediaSuccess = async (stream) => {
         cameraStream.addTrack(tracks[i]);
     }
 }
-//const callbackonaddtrack = (e) => {
-//    console.log("add Track : " + JSON.stringify(e.track));
-//    var camera = document.querySelector("#camera");
-//    camera.srcObject = localcamera;
-//}
 const initializeDevices = async (UserCall) => {
     console.log(JSON.stringify(UserCall));
     console.log('WebRTC: InitializeUserMedia: ');
@@ -106,19 +101,6 @@ const initializeDevices = async (UserCall) => {
             .catch(err => console.log(err));
     }
 }
-//const attachMediaStream = (e) => {
-//    console.log("OnPage: called attachMediaStream ");
-//    var partnerScreen = document.querySelector("#screen");
-//    var partnerCamera = document.querySelector("#camera");
-//    if (e.stream.getTracks().length == 2) {
-//        partnerCamera.srcObject = e.stream;
-//        localcamera = partnerCamera.srcObject;
-//    }
-//    else if(e.stream.getTracks().length == 1){
-//        partnerScreen.srcObject = e.stream;
-//        localscreen = partnerScreen.srcObject;
-//    }
-//};
 
 const receivedCandidateSignal = async (connection, partnerClientId, candidate) => {
     console.log('WebRTC: adding full candidate');
@@ -259,12 +241,28 @@ const callbackIceCandidate = (evt, connection, partnerClientId) => {
 // khoi tao ket noi
 const initializeConnection = (partnerClientId) => {
     console.log('WebRTC: Initializing connection...');
-    //console.log("Received Param for connection: ", partnerClientId);
-
     var connection = new RTCPeerConnection(peerConnectionConfig);
-    connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId); // ICE Candidate Callback
-    //connection.onnegotiationneeded = evt => callbackNegotiationNeeded(connection, evt); // Negotiation Needed Callback
-    //connection.onaddstream = evt => callbackAddStream(connection, evt); // Add stream handler callback
+    const LocaldataChannel = connection.createDataChannel("chat");
+    LocaldataChannel.addEventListener('open', event => {
+        console.log("open datachanel");
+        document.querySelector("#sendButton").addEventListener('click', e => {
+            console.log("hello");
+            const message = messageBox.textContent;
+            LocaldataChannel.send("HI !");
+        })
+    });
+    LocaldataChannel.addEventListener('close', event => {
+        console.log("close datachanel");
+    });
+    connection.addEventListener('datachannel', event => {
+        console.log("initial datachanel");
+        const remotedataChannel = event.channel;
+        remotedataChannel.addEventListener('message', event => {
+            const message = event.data;
+            console.log("message : " + message);
+        });
+    });
+    connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId);
     connection.ontrack = async e => { await callbackAddTrack(connection, e) };
     //connection.onremovestream = evt => callbackRemoveStream(connection, evt); // Remove stream handler callback
     connections[partnerClientId] = connection; // Store away the connection based on username
@@ -276,7 +274,6 @@ const initiateOffer = async (partnerClientId) => {
     var connection = getConnection(partnerClientId); // // get a connection for the given partner
     //console.log('initiate Offer stream: ', stream);
     console.log("offer connection: ", connection);
-
     console.log("WebRTC: Added local stream");
     if (isCaller) {
         for (var i = 0; i < localcamera.getTracks().length; i++) {
