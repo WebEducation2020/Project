@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AppEducation.Hubs
 {
-    
+    // connectionhub
     public class ConnectionHub : Hub<IConnectionHub>
     {
         private readonly List<Room> _rooms;
@@ -38,14 +38,22 @@ namespace AppEducation.Hubs
                         RoomIF = clr,
                         UserCall = new List<User> { usr }
                     });
+                    await Clients.Client(usr.ConnectionID).initDevices(usr);
                     await SendUserListUpdate(GetRoomByClassID(classid));
-                    await Clients.Client(usr.ConnectionID).initDevices();
                 }
                 else
                 {
                     rm.UserCall.Add(usr);
+                    await Clients.Client(usr.ConnectionID).initDevices(usr);
                     await SendUserListUpdate(rm);
-                    await Clients.Client(rm.UserCall[0].ConnectionID).NotifyNewMember(usr);
+                    rm.UserCall.ForEach(async u =>
+                    {
+                        if( u != usr)
+                        {
+                            await Clients.Client(u.ConnectionID).NotifyNewMember(usr);
+                        }
+                    });
+                    
                 }
             }
         }
@@ -65,30 +73,19 @@ namespace AppEducation.Hubs
         }
 
 
-        public async Task CallUser()
+        public async Task CallUser(User targetUser)
         {
             Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
             User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
-            var targetUsers = new List<User>();
-            callingRoom.UserCall.ForEach(u => {
-                if (u != callingUser && u.InCall == false)
-                    targetUsers.Add(u);
-            });
             // Make sure the person we are trying to call is still here
-            foreach (User u in targetUsers)
+            if (targetUser == null)
             {
-                if (u == null)
-                {
-                    // If not, let the caller know
-                    await Clients.Caller.CallDeclined(u, "The user you called has left.");
-                    return;
-                }
+                // If not, let the caller know
+                await Clients.Caller.CallDeclined(targetUser,"The user you called has left.");
+                return;
             }
             // They are here, so tell them someone wants to talk
-            foreach (User u in targetUsers)
-            {
-                await Clients.Client(u.ConnectionID).IncomingCall(callingUser);
-            }
+            await Clients.Client(targetUser.ConnectionID).IncomingCall(callingUser);
         }
 
         public async Task AnswerCall(bool acceptCall, User targetConnectionId)
@@ -175,6 +172,14 @@ namespace AppEducation.Hubs
             await Clients.Client(targetConnectionId).ReceiveSignal(callingUser, signal);
         }
 
+        public async Task getCallerID()
+        {
+            Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
+            User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
+            User CallerUser = callingRoom.UserCall.SingleOrDefault(u => u.IsCaller);
+            await Clients.Client(callingUser.ConnectionID).getCallerID(CallerUser);
+        }
+
         #region Private Helpers
 
         private async Task SendUserListUpdate(Room rm)
@@ -203,8 +208,9 @@ namespace AppEducation.Hubs
         Task CallAccepted(User callingUser);
         Task CallDeclined(User u, string v);
         Task CallEnded(User targetConnectionId, string v);
+        Task getCallerID(User callerUser);
         Task IncomingCall(User callingUser);
-        Task initDevices();
+        Task initDevices(User UserCall);
         Task NotifyNewMember(User usr);
         Task ReceiveSignal(User callingUser, string signal);
         Task UpdateUserList(List<User> userCall);
