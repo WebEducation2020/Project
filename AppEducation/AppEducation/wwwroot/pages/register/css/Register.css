@@ -13,7 +13,7 @@
 /* ==========================================================================
    #GRID
    ========================================================================== */
-.row {
+.roww {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -24,7 +24,7 @@
   flex-wrap: wrap;
 }
 
-.row-space {
+.roww-space {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -moz-box-pack: justify;
@@ -32,7 +32,7 @@
   justify-content: space-between;
 }
 
-.col-2 {
+.col-2-2{
   width: -webkit-calc((100% - 30px) / 2);
   width: -moz-calc((100% - 30px) / 2);
   width: calc((100% - 30px) / 2);
@@ -169,31 +169,15 @@ h6 {
   background: #fa4251;
 }
 
-.bg-gra-01 {
-  background: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a18cd1));
-  background: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: -moz-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: -o-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
-}
-
-.bg-gra-02 {
-  background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
-  background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-  background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-  background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-  background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
-}
-
 /* ==========================================================================
    #SPACING
    ========================================================================== */
 .p-t-100 {
-  padding-top: 20px;
+  padding-top: 100px;
 }
 
 .p-t-130 {
-  padding-top: 50px;
+  padding-top: 130px;
 }
 
 .p-t-180 {
@@ -206,8 +190,6 @@ h6 {
 
 .p-t-15 {
   padding-top: 15px;
-
-  margin-left:10px;
 }
 
 .p-t-10 {
@@ -406,21 +388,21 @@ input {
   color: #666;
 }
 
-.label {
+.input-group .label {
   font-size: 16px;
-  color: #555;
+  color: #fff;
   text-transform: capitalize;
   display: block;
   margin-bottom: 5px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-
 .radio-container {
   display: inline-block;
   position: relative;
   padding-left: 30px;
   cursor: pointer;
   font-size: 16px;
-  color: #666;
+  color: #fff;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -607,7 +589,7 @@ input {
    ========================================================================== */
 .title {
   font-size: 24px;
-  color: #525252;
+  color: #fff;
   font-weight: 400;
   margin-bottom: 40px;
 }
@@ -619,11 +601,11 @@ input {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: #fff;
+  background: #555;
 }
 
 .card-4 {
-  background: #fff;
+  background: #555;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;

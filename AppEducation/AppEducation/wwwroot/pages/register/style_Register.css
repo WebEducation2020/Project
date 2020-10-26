@@ -1,29 +1,6 @@
 /* google-font */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Rufina:400,700');
-@font-face {
-	font-family: 'Linearicons-Free';
-	src:url('fonts/Linearicons-Free.eot?w118d');
-	src:url('fonts/Linearicons-Free.eot?#iefixw118d') format('embedded-opentype'),
-		url('fonts/Linearicons-Free.woff2?w118d') format('woff2'),
-		url('fonts/Linearicons-Free.woff?w118d') format('woff'),
-		url('fonts/Linearicons-Free.ttf?w118d') format('truetype'),
-		url('fonts/Linearicons-Free.svg?w118d#Linearicons-Free') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-.lnr {
-	font-family: 'Linearicons-Free';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
 html,
 body {
     height: 100%;
@@ -53,8 +30,7 @@ a:focus {
 }
 img {
     max-width: 100%;
-    height: auto;
-    padding-top:40px;
+    height: auto
 }
 .fix {
     overflow: hidden
@@ -339,6 +315,12 @@ body {
     margin-right: 22px;
     padding: 9px 0 11px;
     position: relative;
+}
+.header-top-area .img-login{
+    vertical-align: middle;
+    border-style: none;
+    margin-top: 6px;
+    cursor: pointer;
 }
 .account-area ul > li {
     display: inline-block;
@@ -1549,4 +1531,3 @@ a#scrollUp:hover {
 }
 
 /*----------------------------------------*/
-}}
