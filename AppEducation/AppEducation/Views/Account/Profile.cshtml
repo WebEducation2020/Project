@@ -2,6 +2,9 @@
     ViewData["Title"] = "Profile";
     Layout = "_LayoutAccount";
 }
+
+@model UserProfile
+
 @section Head {
     <link rel="stylesheet" href="~/pages/profile/css/MainUser.css">
 }
@@ -111,13 +114,10 @@
                         <nav class="navbar navbar-inverse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a href="#">Chuẩn bị bài trước khi vào lớp</a>
+                                    <a href="#">Chuẩn bị bài</a>
                                 </li>
                                 <li>
-                                    <a asp-action="Index">Học trực tuyến</a>
-                                </li>
-                                <li>
-                                    <a href="#">Làm bài tập về nhà</a>
+                                    <a asp-controller="JoinClass" asp-action="Create">Học trực tuyến</a>
                                 </li>
                                 <li>
                                     <a href="#">Kiểm tra</a>
@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="col-md-12 " >
                                         <div class="col-md-3 file "><span class="text-size-avatar">Ảnh</span>
-                                            <img id="myImg" src="~/pages/profile/images/google.png" width="200" class="avatar img-circle img-thumbnail" alt="avatar">
+                                            @* <img id="myImg" src="~/pages/profile/images/google.png" width="200" class="avatar img-circle img-thumbnail" alt="avatar"> *@
                                         </div>
                                         <div class="col-md-9">
                                             <div class="user-info-avatar">
@@ -185,20 +185,20 @@
                                         <div class="col-md-12 border-top">
                                             <div class="col-md-3"><span>Họ và tên</span></div>
                                             <div class="col-md-9">
-                                                <span class="oldInput">Nguyen Jame</span>
+                                                <span class="oldInput">@Model.FullName</span>
                                                 <input class="form-control newInput" name="UserName" style="display: none;" > 
                                             </div>
                                         </div>
                                         <div class="col-md-12 border-top">
                                             <div class="col-md-3"><span>Email</span></div>
                                             <div class="col-md-9">
-                                                <span class="oldInput">cuongtop4598@gmail.com</span>
+                                                <span class="oldInput">@Model.Email</span>
                                                 <input  class="form-control newInput" name="Email"  style="display: none;"> 
                                             </div>
                                         </div>
                                         <div class="col-md-12 border-top">
                                             <div class="col-md-3"><span>Số điện thoại</span></div>
-                                            <div class="col-md-9"><span class="oldInput">0786815820</span></div>
+                                            <div class="col-md-9"><span class="oldInput">@Model.PhoneNumber</span></div>
                                             <input class="form-control newInput" name="Phone" style="display: none;"> 
                                         </div>
                                         <div class="col-md-12 border-top">
@@ -206,24 +206,30 @@
                                                 <span>Ngày sinh</span>
                                             </div>
                                             <div class="col-md-9">
-                                                <span class="oldInput">4/5/1998</span>
+                                                <span class="oldInput">@Model.Birthday</span>
                                                 <input  class="newInput form-control" name="BirthDay"  style="display: none;"> 
                                             </div>
                                         </div>
                                         <div class="col-md-12 border-top">
                                             <div class="col-md-3"><span>Giới tính</span></div>
                                             <div class="col-md-9">
-                                                <span class="oldInput">Nam</span>
+                                                @if(Model.Sex == true)
+                                                {
+                                                  <span class="oldInput">Nam</span>
+                                                }else
+                                                {
+                                                    <span class="oldInput">Nữ</span>
+                                                }
                                                 <select class="newInput"  style="display: none;">
                                                     <ol>Nam</ol>
-                                                    <ol>Nu</ol>
+                                                    <ol>Nữ</ol>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-12 border-top">
                                             <div class="col-md-3"><span>Trình độ</span></div>
                                             <div class="col-md-9">
-                                                <span class="text-capitalize oldInput">inter</span>
+                                                <span class="text-capitalize oldInput">@Model.Job</span>
                                                 <select class="newInput"  style="display: none;">
                                                     <ol>Teacher</ol>
                                                     <ol>Student</ol>

@@ -33,7 +33,7 @@ namespace AppEducation.Controllers {
             this.logger = logger;
             this.signInManager = signInManager;
         }
-        public IActionResult Index() => View();
+        public IActionResult Index() => RedirectToAction("Profile");
         
         #region Register method
         [AllowAnonymous]
@@ -111,7 +111,7 @@ namespace AppEducation.Controllers {
                 if(user != null){
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false);
                     if(result.Succeeded) {
-                        return Redirect(returnUrl ?? "/JoinClass/Create");
+                        return Redirect(returnUrl ?? "/Account/Profile");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
@@ -120,9 +120,11 @@ namespace AppEducation.Controllers {
           
         }
         #endregion 
-        [AllowAnonymous]
-        public IActionResult Profile(){
-            return View();
+        public async Task<IActionResult> Profile(){
+        
+            AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            UserProfile profile =  context.UserProfiles.First( p => p.UserId == currentUser.Id ) ;
+            return View(profile);
         }
         
     }

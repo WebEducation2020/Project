@@ -57,7 +57,6 @@ ul {
 }
 .left-bar-user {
     border-right: 2px solid #E5E5E5;
-    padding-top: 25px;
     max-width: 250px;
     padding-bottom: 165px;
 }
@@ -103,18 +102,15 @@ a {
     padding-top: 5px;
     margin-left: 5px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-.user-layout-children {
-    padding-top: 24px;
-    margin-left: 20px;
-    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
 }
 
 
 .user-layout-children .title {
+    padding-top: 5px;
+    padding-left: 3px;
     margin: 20px 0 0;
     font-style: normal;
     font-weight: bold;

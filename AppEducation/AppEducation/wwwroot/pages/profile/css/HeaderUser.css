@@ -28,7 +28,7 @@ header {
 
 /* navigate header*/
 .top-header ul  { 
-    margin-top: 35px;
+    margin-top: 0px;
     margin-left: 5px;
     z-index: 20;
     float: right;

@@ -1681,6 +1681,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
+  width : auto !important;
 }
 
 .table thead th {
@@ -1704,6 +1705,7 @@ pre code {
 .table-bordered th,
 .table-bordered td {
   border: 1px solid #dee2e6;
+
 }
 
 .table-bordered thead th,
