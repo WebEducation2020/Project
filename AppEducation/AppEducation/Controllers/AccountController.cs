@@ -126,6 +126,22 @@ namespace AppEducation.Controllers {
             UserProfile profile =  context.UserProfiles.First( p => p.UserId == currentUser.Id ) ;
             return View(profile);
         }
+        public IActionResult ChangeProfile(UserProfile profile){
+            if(ModelState.IsValid){
+                UserProfile  old = context.UserProfiles.First( p => p.Email == profile.Email);
+                if(old != null)
+                {
+                    old.FullName = profile.FullName;
+                    old.Birthday = profile.Birthday;
+                    old.PhoneNumber = profile.PhoneNumber;
+                    old.Job = profile.Job;
+                    old.Sex = profile.Sex;
+                    context.SaveChanges();
+                }
+             
+            }
+            return RedirectToAction("Profile");
+        }
         
     }
 }

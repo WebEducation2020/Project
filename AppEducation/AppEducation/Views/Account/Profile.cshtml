@@ -166,7 +166,11 @@
                                     <div class="col-md-12">
                                         <div class="col-md-3"><span class="text-normal"><strong>Thông tin cơ
                                                     bản</strong></span></div>
-                                        <div class="col-md-9 text-right update-button"><button id="changes" onclick="changeFunction()" type="button">Chỉnh sửa</button></div>
+                                        <div class="col-md-9 text-right update-button">
+                                            
+                                            <button id="changes" onclick="changeFunction()" type="button">Chỉnh sửa</button>
+                                            <button id="save" asp-action="ChangeProfile" asp-area="" asp-controller="AccountController" type="button" >Lưu</button>
+                                        </div>
                                     </div>
                                     <div class="col-md-12 " >
                                         <div class="col-md-3 file "><span class="text-size-avatar">Ảnh</span>
