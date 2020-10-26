@@ -29,6 +29,8 @@ var remoteAudio = new MediaStream();
 let localcamera, localscreen, localaudio;
 let isCaller = false;
 var connections = {};
+var localDataChannels = {};
+var remoteDataChannels = {};
 const initialize = async () => {
     console.log("Start connection for hub!")
     wsconn.start()
@@ -242,26 +244,33 @@ const callbackIceCandidate = (evt, connection, partnerClientId) => {
 const initializeConnection = (partnerClientId) => {
     console.log('WebRTC: Initializing connection...');
     var connection = new RTCPeerConnection(peerConnectionConfig);
-    const LocaldataChannel = connection.createDataChannel("chat");
+    var LocaldataChannel = connection.createDataChannel("chat-publish");
+    LocaldataChannel.binaryType = "arraybuffer";
     LocaldataChannel.addEventListener('open', event => {
         console.log("open datachanel");
-        document.querySelector("#sendButton").addEventListener('click', e => {
-            console.log("hello");
-            const message = messageBox.textContent;
-            LocaldataChannel.send("HI !");
-        })
     });
     LocaldataChannel.addEventListener('close', event => {
         console.log("close datachanel");
     });
-    connection.addEventListener('datachannel', event => {
-        console.log("initial datachanel");
-        const remotedataChannel = event.channel;
-        remotedataChannel.addEventListener('message', event => {
-            const message = event.data;
-            console.log("message : " + message);
-        });
+    connection.addEventListener('datachannel', (event) => {
+        var remotedataChannel = event.channel;
+        remotedataChannel.binaryType = "arraybuffer";
+        remotedataChannel.onmessage = (e) => {
+            var data = JSON.parse(e.data);
+            console.log(data.message.length);
+            if (data.type == "particular") {
+                receiveMessage(data.message, document.querySelector("#chat-particular").querySelector("#chatconversation"))
+            }
+            else if (data.type == "public") {
+                receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"));
+            }
+            else if (data.type == "group") {
+                receiveMessage(data.message, document.querySelector("#chat-group").querySelector("#chatconversation"));
+            }
+        }
+        remoteDataChannels[partnerClientId] = remotedataChannel;
     });
+    localDataChannels[partnerClientId] = LocaldataChannel;
     connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId);
     connection.ontrack = async e => { await callbackAddTrack(connection, e) };
     //connection.onremovestream = evt => callbackRemoveStream(connection, evt); // Remove stream handler callback
@@ -316,6 +325,45 @@ wsconn.on("initDevices", async (UserCall) => {
 
 wsconn.on('updateUserList', (userList) => {
     console.log("update list users " + JSON.stringify(userList));
+    var listUserTag = document.querySelector("#chat-userlist");
+    var strTmp = ""
+    userList.forEach(user => {
+        if (user.isCaller) {
+            strTmp += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID + "\"); >\
+            <li class=\"contact-list-item\">\
+                <div class=\"group-icon-device\">\
+                    <div class=\"box-icon-device\">\
+                        <div class=\"icon-user icon-teacher\">\
+                            <svg class=\"icon icon-px_ic_teacher\"><use xlink:href=\"#icon-px_ic_teacher\"></use></svg>\
+                        </div>\
+                    </div>\
+                 </div>\
+            <div class=\"contact-list-item-name\">\
+                <span title=\"TEACHER\" class=\"user-role\">\
+                    <span class=\"role-device\">TEACHER</span><br></span>\
+                    <span class=\"user-name\" title=\""+ user.username + "\">" + user.userName + "</span >\
+            </div>\
+            <div class=\"box-number-noti\"></div></li></a>";
+        }
+        else {
+            strTmp += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID  + "\"); >\
+            <li class=\"contact-list-item\">\
+                <div class=\"group-icon-device\">\
+                    <div class=\"box-icon-device\">\
+                        <div class=\"icon-user icon-teacher\">\
+                            <svg class=\"icon icon-px_ic_teacher\"><use xlink:href=\"#icon-px_ic_teacher\"></use></svg>\
+                        </div>\
+                    </div>\
+                 </div>\
+            <div class=\"contact-list-item-name\">\
+                <span title=\"STUDENT\" class=\"user-role\">\
+                    <span class=\"role-device\">STUDENT</span><br></span>\
+                    <span class=\"user-name\" title=\""+ user.username + "\">" + user.userName + "</span >\
+            </div>\
+            <div class=\"box-number-noti\"></div></li></a>";
+        }
+    });
+    listUserTag.innerHTML = strTmp;
 });
 wsconn.on("NotifyNewMember",async (newMember) => {
     console.log("New member !");
@@ -403,3 +451,56 @@ document.querySelector("#scrn").addEventListener("click",async () => {
     //var screenTrack = screenStream.getVideoTracks()[0];
     //screenTrack.enabled = !screenTrack.enabled;
 });
+
+
+
+// *********************** Implement with chat ********************************** //
+const addnewMessageForMe = (message, elementTag) => {
+    elementTag.innerHTML += "<div class=\"box-content-chat\">\
+        <div class=\"chatmessage\">\
+            <div class=\"username localuser\"></div>\
+            <div class=\"timestamp\">14:54:44</div>\
+            <div class=\"usermessage\"><p class=\"userMessageContent\" >" + message +"</p></div>\
+        </div></div>";
+}
+const receiveMessage = (message, elementTag) => {
+    elementTag.innerHTML += "\
+        <div class=\"box-content-chat\">\
+            <div class=\"chatmessage chatmessageReceived\">\
+                <div class=\"username remoteuser\"></div>\
+                <div class=\"timestamp\">19:10:01</div>\
+                <div class=\"usermessage\"><p class=\"userMessageContentReceived\">" + message +"</p></div>\
+            </div>\
+        </div>";
+}
+document.querySelector("div#chat-public").querySelector("textarea.text-area").addEventListener('keypress', (e) => {
+    if (e.key == "Enter") {
+        var messageTextArea = document.querySelector("div#chat-public").querySelector("textarea.text-area");
+        const message = messageTextArea.value;
+        for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
+            localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
+        };
+        messageTextArea.value = "";
+        addnewMessageForMe(message, document.querySelector("div#chatconversation"));
+    }
+});
+const getLocalDataChannel = (connectionID) => {
+    return localDataChannels[connectionID] != null ? localDataChannels[connectionID] : null;
+}
+const getRemoteDataChannel = (connectionID) => {
+    return remoteDataChannels[connectionID] != null ? remoteDataChannels[connectionID] : null;
+}
+const addEvent = (connectionID) => {
+    var localDtChannel = getLocalDataChannel(connectionID);
+    var remoteDtChannel = getRemoteDataChannel(connectionID);
+    var messageBox = document.querySelector("#chat-particular").querySelector("textarea.text-area");
+    messageBox.addEventListener("keypress", function sendMessage(e){
+        if (e.key == "Enter") {
+            var messageBox = document.querySelector("#chat-particular").querySelector("textarea.text-area").value;
+            localDtChannel.send(JSON.stringify({ "message": messageBox.value, "type": "particular" }));
+
+            addnewMessageForMe(messageBox.value, document.querySelector("#chat-particular").querySelector("#chatconversation"));
+            messageBox.value = "";
+        }
+    });
+}
