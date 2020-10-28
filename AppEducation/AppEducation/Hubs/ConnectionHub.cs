@@ -20,7 +20,7 @@ namespace AppEducation.Hubs
         }
         public async Task Join(string username, string classid)
         {
-            User usr = new User { UserName = username, ConnectionID = Context.ConnectionId };
+            User usr = new User { UserName = username, ConnectionID = Context.ConnectionId ,IsCaller =false,InCall= false};
             Classes clr = _context.Classes.Find(classid);
             if (clr == null)
             {
@@ -38,14 +38,14 @@ namespace AppEducation.Hubs
                         RoomIF = clr,
                         UserCall = new List<User> { usr }
                     });
-                    await Clients.Client(usr.ConnectionID).initDevices(usr);
                     await SendUserListUpdate(GetRoomByClassID(classid));
+                    await Clients.Client(usr.ConnectionID).initDevices(usr);
                 }
                 else
                 {
                     rm.UserCall.Add(usr);
-                    await Clients.Client(usr.ConnectionID).initDevices(usr);
                     await SendUserListUpdate(rm);
+                    await Clients.Client(usr.ConnectionID).initDevices(usr);
                     rm.UserCall.ForEach(async u =>
                     {
                         if( u != usr)
@@ -145,13 +145,10 @@ namespace AppEducation.Hubs
             // Send a hang up message to each user in the call, if there is one
             if (callingRoom != null)
             {
-                foreach (User user in callingRoom.UserCall.Where(u => u.ConnectionID != callingUser.ConnectionID))
+                foreach(User user in callingRoom.UserCall.Where(u => u.ConnectionID != callingUser.ConnectionID))
                 {
-                    user.InCall = false;
-                    user.IsCaller = false;
                     await Clients.Client(user.ConnectionID).CallEnded(callingUser, string.Format("{0} has hung up.", callingUser.UserName));
                 }
-
             }
             await SendUserListUpdate(callingRoom);
         }
@@ -170,14 +167,6 @@ namespace AppEducation.Hubs
 
             // These folks are in a call together, let's let em talk WebRTC
             await Clients.Client(targetConnectionId).ReceiveSignal(callingUser, signal);
-        }
-
-        public async Task getCallerID()
-        {
-            Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
-            User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
-            User CallerUser = callingRoom.UserCall.SingleOrDefault(u => u.IsCaller);
-            await Clients.Client(callingUser.ConnectionID).getCallerID(CallerUser);
         }
 
         #region Private Helpers
@@ -208,7 +197,6 @@ namespace AppEducation.Hubs
         Task CallAccepted(User callingUser);
         Task CallDeclined(User u, string v);
         Task CallEnded(User targetConnectionId, string v);
-        Task getCallerID(User callerUser);
         Task IncomingCall(User callingUser);
         Task initDevices(User UserCall);
         Task NotifyNewMember(User usr);
