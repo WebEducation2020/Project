@@ -28,16 +28,21 @@ const audioConstraints = {
 }
 /** A stream of media content. A stream consists of several tracks such as video or audio tracks. Each track is specified as an instance of MediaStreamTrack. */
 var screenStream = new MediaStream();
+<<<<<<< HEAD
 //  adds a new media track to the set of tracks which will be transmitted to the other peer.
 screenStream.onaddtrack = async e => { await callbackOnaddtrackScreen(e);}
+=======
+>>>>>>> bc0091b5f83cb2f6f3f521a47b0926f607e2c267
 var cameraStream = new MediaStream();
-cameraStream.onaddtrack = async e => { await callbackOnaddtrackCamera(e); };
 var remoteAudio = new MediaStream();
 let localcamera, localscreen, localaudio;
 let isCaller = false;
 var connections = {};
 var localDataChannels = {};
 var remoteDataChannels = {};
+
+// khởi chạy hub với hàm start(), khi client kết nối sẽ gọi tới hàm Join Trong connectionHub.cs vs tham sô là username 
+// và classid 
 const initialize = async () => {
     console.log("Start connection for hub!")
     wsconn.start() // when this succeeds, fulfilling the returned promise
@@ -49,10 +54,12 @@ const initialize = async () => {
         })
         .catch(err => console.log(err));
 };
+// khi page load xong, gọi tới hàm initialize để khởi chạy Hub
 document.addEventListener("DOMContentLoaded", async () => {
     console.log("Ready for Hub");
     await initialize();
 });
+// hàm này gọi khi luồng media từ Màn hình đc lấy ra và đính vào thẻ video để hiển thị nội dung chia sẻ
 const callbackDisplayMediaSuccess = async (stream) => {
     console.log("WebRTC: got screen media stream");
     var screen = document.querySelector("#screen");
@@ -60,6 +67,7 @@ const callbackDisplayMediaSuccess = async (stream) => {
     screen.srcObject = screenStream;
     localscreen = new MediaStream(stream.getTracks());
 }
+<<<<<<< HEAD
 
 //=============== Add Track =========================================
 const callbackOnaddtrackCamera = async (e) => {
@@ -78,6 +86,9 @@ const callbackOnaddtrackScreen = async (e) => {
 }
 
 //=============== Condition of get user divices=========================================
+=======
+// tương tự với luồng từ camera 
+>>>>>>> bc0091b5f83cb2f6f3f521a47b0926f607e2c267
 const callbackUserMediaSuccess = async (stream) => {
     console.log("WebRTC: got camera media stream");
     var camera = document.querySelector("#camera");
@@ -85,6 +96,7 @@ const callbackUserMediaSuccess = async (stream) => {
     camera.srcObject = cameraStream;
     localcamera = new MediaStream(stream.getTracks());
 }
+//tuong tu vơi audio
 const callbackAudioMediaSuccess = async (stream) => {
     console.log("WebRTC: got audio media stream");
     var camera = document.querySelector("#camera");
@@ -96,35 +108,39 @@ const callbackAudioMediaSuccess = async (stream) => {
         cameraStream.addTrack(tracks[i]);
     }
 }
+// hàm này thực hiện khởi tạo các luồn video,screen, audio.
 const initializeDevices = async (UserCall) => {
     console.log(JSON.stringify(UserCall));
     console.log('WebRTC: InitializeUserMedia: ');
-    if (isCaller) {
-        await navigator.mediaDevices.getDisplayMedia(screenConstraints)
+    if (isCaller) { // nếu là giáo viên sẽ chia sẻ cả camera và màn hình
+        await navigator.mediaDevices.getDisplayMedia(screenConstraints) //screen
             .then((stream) => callbackDisplayMediaSuccess(stream))
             .catch(err => console.log(err));
-        await navigator.mediaDevices.getUserMedia(cameraConstraints)
+        await navigator.mediaDevices.getUserMedia(cameraConstraints)    //camera
             .then((stream) => callbackUserMediaSuccess(stream))
             .catch(err => console.log(err));
         await navigator.mediaDevices.getUserMedia(audioConstraints)
             .then(stream => callbackAudioMediaSuccess(stream))
             .catch(err => console.log(err));
     }
-    else {
+    else { // học sinh
         localcamera = new MediaStream();
         localscreen = new MediaStream();
-        await navigator.mediaDevices.getUserMedia(audioConstraints)
+        await navigator.mediaDevices.getUserMedia(audioConstraints)     //audio
             .then(stream => callbackAudioMediaSuccess(stream))
             .catch(err => console.log(err));
     }
 }
 
+// cấu hình ICE candidate (cái này mô tả các giao thức và định tuyến cần thiết lập cho webrtc để kế nối
+// ngang hành) cho kết nối
 const receivedCandidateSignal = async (connection, partnerClientId, candidate) => {
     console.log('WebRTC: adding full candidate');
     connection.addIceCandidate(new RTCIceCandidate(candidate), () => console.log("WebRTC: added candidate successfully"), () => console.log("WebRTC: cannot add candidate"));
 }
 
-//Process a newly received SDP signal
+//Process a newly received SDP signal - thực hiện khi nhận một tín hiệu session description protocol mới
+// có các hàm setRemoteDescription , createAnswer 
 const receivedSdpSignal = async (connection, partnerClientId, sdp) => {
     console.log('connection: ', connection);
     console.log('sdp', sdp);
@@ -151,7 +167,7 @@ const receivedSdpSignal = async (connection, partnerClientId, sdp) => {
     }, errorHandler);
 }
 
-// Hand off a new signal from the signaler to the connection
+// chuyển tín hiệu mới để cài đặt kết nối 
 const newSignal = async (partnerClientId, data) => {
     console.log('WebRTC: called newSignal');
     var signal = JSON.parse(data);
@@ -159,23 +175,22 @@ const newSignal = async (partnerClientId, data) => {
     console.log("connection: ", connection);
 
     // Route signal based on type
-    if (signal.sdp) {
+    if (signal.sdp) { // nếu là sdp 
         console.log('WebRTC: sdp signal');
         await receivedSdpSignal(connection, partnerClientId, signal.sdp);
-    } else if (signal.candidate) {
+    } else if (signal.candidate) { // neu la candidate
         console.log('WebRTC: candidate signal');
         await receivedCandidateSignal(connection, partnerClientId, signal.candidate);
-    } else {
+    } else { // con k 
         console.log('WebRTC: adding null candidate');
         await connection.addIceCandidate(null, async () => console.log("WebRTC: added null candidate successfully"), () => console.log("WebRTC: cannot add null candidate"));
     }
 }
 
-// Close the connection between myself and the given partner
+// ngat ket noi ngang hang với client có partnerClientId
 const closeConnection = async (partnerClientId) => {
     console.log("WebRTC: called closeConnection ");
     var connection = connections[partnerClientId];
-
     if (connection) {
         connection.close();
         delete connections[partnerClientId]; // Remove the property
@@ -188,7 +203,7 @@ const closeAllConnections = async () => {
         await closeConnection(connectionID);
     }
 }
-
+// lấy ra connecction kết nối với partnerClientId
 const getConnection = (partnerClientId) => {
     console.log("WebRTC: called getConnection");
     if (connections[partnerClientId]) {
@@ -197,20 +212,18 @@ const getConnection = (partnerClientId) => {
     }
     else {
         console.log("WebRTC: initialize new connection");
-        return initializeConnection(partnerClientId)
+        return initializeConnection(partnerClientId) // tạo mới connection 
     }
 }
-// gui tin hieu di 
+// gui tin hieu di thống qua hub đến partnerClientId 
 const sendHubSignal = async (candidate, partnerClientId) => {
     console.log('candidate', candidate);
     console.log('SignalR: called sendhubsignal ');
     await wsconn.invoke('sendSignal', candidate, partnerClientId).catch(errorHandler);
 };
-// goi ham them luong du lieu vao ket noi
-const callbackAddStream = (connection, evt) => {
-    console.log('WebRTC: called callbackAddStream');
-    attachMediaStream(evt);
-}
+
+// khi có một track được attach vào kế nối, bên kia kết nối sẽ gọi hàm này
+// hàm này thực hiện thêm cách track vào các thẻ để hiển thị video , screeen, hay audio 
 const callbackAddTrack = async (connection, e) => {
     if (e.streams && e.streams[0]) {
         console.log('add Track 1');
@@ -241,7 +254,7 @@ const callbackAddTrack = async (connection, e) => {
         }
     }
 }
-// goi ham tao ung vien cho ket noi
+// khi có ICE candidate được thêm vào kết nối sẽ gọi hàm này 
 const callbackIceCandidate = (evt, connection, partnerClientId) => {
     console.log("WebRTC: Ice Candidate callback");
     //console.log("evt.candidate: ", evt.candidate);
@@ -259,6 +272,7 @@ const callbackIceCandidate = (evt, connection, partnerClientId) => {
 const initializeConnection = (partnerClientId) => {
     console.log('WebRTC: Initializing connection...');
     var connection = new RTCPeerConnection(peerConnectionConfig);
+    // tạo Kênh dữ liệu để chat 
     var LocaldataChannel = connection.createDataChannel("chat-publish");
     LocaldataChannel.binaryType = "arraybuffer";
     LocaldataChannel.addEventListener('open', event => {
@@ -270,35 +284,38 @@ const initializeConnection = (partnerClientId) => {
     connection.addEventListener('datachannel', (event) => {
         var remotedataChannel = event.channel;
         remotedataChannel.binaryType = "arraybuffer";
+        // sự kiện khi bên kia nhận được tin nhắn 
         remotedataChannel.onmessage = (e) => {
             var data = JSON.parse(e.data);
             console.log(data.message.length);
-            if (data.type == "particular") {
+            if (data.type == "particular") { // nếu là nhắn tin riêng
                 receiveMessage(data.message, document.querySelector("#chat-particular").querySelector("#chatconversation"))
             }
-            else if (data.type == "public") {
+            else if (data.type == "public") { // nếu là nhắn tin cho tất cả mọi người trong lớp học 
                 receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"));
             }
-            else if (data.type == "group") {
+            else if (data.type == "group") { // nhắn tin trong nhóm 
                 receiveMessage(data.message, document.querySelector("#chat-group").querySelector("#chatconversation"));
             }
         }
         remoteDataChannels[partnerClientId] = remotedataChannel;
     });
     localDataChannels[partnerClientId] = LocaldataChannel;
-    connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId);
-    connection.ontrack = async e => { await callbackAddTrack(connection, e) };
+    //
+    connection.onicecandidate = evt => callbackIceCandidate(evt, connection, partnerClientId); // hàm callback cài đặt cho sư kiên onicecandidate
+    connection.ontrack = async e => { await callbackAddTrack(connection, e) }; // hàm callback cho sư kiện khi có track đươcj attach vào kết nối
     //connection.onremovestream = evt => callbackRemoveStream(connection, evt); // Remove stream handler callback
     connections[partnerClientId] = connection; // Store away the connection based on username
     return connection;
 }
-
+// khởi tạo offer cho kết nối 
 const initiateOffer = async (partnerClientId) => {
     console.log('WebRTC: called initiateoffer: ');
     var connection = getConnection(partnerClientId); // // get a connection for the given partner
     //console.log('initiate Offer stream: ', stream);
     console.log("offer connection: ", connection);
     console.log("WebRTC: Added local stream");
+    // nếu là người gọi thì thêm các track video, screen, audio vào kết nối để truyền đi 
     if (isCaller) {
         for (var i = 0; i < localcamera.getTracks().length; i++) {
             console.log(localcamera.getTracks()[i]);
@@ -313,12 +330,14 @@ const initiateOffer = async (partnerClientId) => {
             connection.addTrack(localaudio.getTracks()[i]);
         }
     }
+    // nếu là học sinh thì thêm track audio ( mic nói ) vào kết nối để truyền đi
     else {
         for (var i = 0; i < localaudio.getTracks().length; i++) {
             console.log(localaudio.getTracks()[i]);
             connection.addTrack(localaudio.getTracks()[i]);
         }
     }
+    // tạo offer cho kết nối 
     connection.createOffer().then(offer => {
         console.log('WebRTC: created Offer: ');
         console.log('WebRTC: Description after offer: ', offer);
@@ -331,20 +350,54 @@ const initiateOffer = async (partnerClientId) => {
         }).catch(err => console.error('WebRTC: Error while setting local description', err));
     }).catch(err => console.error('WebRTC: Error while creating offer', err));
 }
-
+// khi hub yêu càu khời tạo devices cho client 
 wsconn.on("initDevices", async (UserCall) => {
-    isCaller = UserCall.isCaller;
+    isCaller = UserCall.isCaller; // nếu là giáo viên iscaller = true , nếu là học sinh iscaller = false
     await initializeDevices(UserCall);
 });
-// initial something
-
+//đếm giáo viên - k cần thiêt :) 
+const countTeacher = (userList) => {
+    var result = 0;
+    userList.forEach(u => {
+        if (u.isCaller) result++;
+    })
+    return result;
+}
+// đếm học sinh 
+const countStudent = (userList) => {
+    var result = 0;
+    userList.forEach(u => {
+        if (!u.isCaller) result++;
+    })
+    return result;
+}
+// update lại danh sách thành viên trong lớp 
 wsconn.on('updateUserList', (userList) => {
     console.log("update list users " + JSON.stringify(userList));
     var listUserTag = document.querySelector("#chat-userlist");
-    var strTmp = ""
+    var strTmp1 = "";
+    var strTmp2 = "";
+    var strTmp3 = "";
     userList.forEach(user => {
         if (user.isCaller) {
-            strTmp += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID + "\"); >\
+            strTmp1 += "<li class=\"contact-list-item\">\
+                            <div class=\"group-icon-device\">\
+                                <div class=\"box-icon-device\">\
+                                    <div class=\"icon-network connect-good\"></div>\
+                                    <div class=\"icon-user icon-teacher\">\
+                                            <svg class=\"icon icon-px_ic_teacher\">\
+                                            </svg>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class=\"contact-list-item-name\">\
+                                <span data-title=\"teacher\" class=\"user-role\">\
+                                <span class=\"role-device\">teacher</span><br></span>\
+                                <span class=\"user-name\" title=\""+ user.userName +"\">" + user.userName + "</span>\
+                            </div>\
+                        </li>";
+
+            strTmp2 += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID + "\"); >\
             <li class=\"contact-list-item\">\
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
@@ -361,7 +414,24 @@ wsconn.on('updateUserList', (userList) => {
             <div class=\"box-number-noti\"></div></li></a>";
         }
         else {
-            strTmp += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID  + "\"); >\
+            strTmp3 += "<li class=\"contact-list-item\">\
+                            <div class=\"group-icon-device\">\
+                                <div class=\"box-icon-device\">\
+                                    <div class=\"icon-network connect-good\"></div>\
+                                    <div class=\"icon-user icon-teacher\">\
+                                            <svg class=\"icon icon-px_ic__Device__Website\">\
+                                                <use xlink:href=\"#icon-px_ic__Device__Website\"></use>\
+                                            </svg>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class=\"contact-list-item-name\">\
+                                <span data-title=\"student\" class=\"user-role\">\
+                                <span class=\"role-device\">student</span><br>\
+                                </span><span class=\"user-name\" title=\""+ user.userName + "\"> "+ user.userName+ "</span>\
+                            </div>\
+                        </li>";
+            strTmp2 += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID  + "\"); >\
             <li class=\"contact-list-item\">\
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
@@ -378,29 +448,33 @@ wsconn.on('updateUserList', (userList) => {
             <div class=\"box-number-noti\"></div></li></a>";
         }
     });
-    listUserTag.innerHTML = strTmp;
+    document.querySelector("#student-part").querySelector("span.user-count").innerHTML = countStudent(userList);
+    document.querySelector("#teacher-part").querySelector("#contacts").innerHTML = strTmp1;
+    document.querySelector("#student-part").querySelector("#contacts").innerHTML = strTmp3;
+    listUserTag.innerHTML = strTmp2;
 });
+// khi có một người mới vào phòng 
 wsconn.on("NotifyNewMember",async (newMember) => {
     console.log("New member !");
-    await wsconn.invoke("CallUser",newMember)
+    await wsconn.invoke("CallUser",newMember) // thực thi các cuộc goi kết nối tới người mới 
         .catch(err => console.log(err));
 });
-// cuoc goi toi
+// cuoc goi toi từ phía callingUser
 wsconn.on('incomingCall', async (callingUser) => {
     console.log('SignalR: incoming call from: ' + JSON.stringify(callingUser));
     await wsconn.invoke('AnswerCall', true, callingUser).catch(err => console.log(err));
 });
-// Hub Callback: Call Accepted
+// cuộc gọi được chấp nhận 
 wsconn.on('callAccepted',async (acceptingUser) => {
     console.log('SignalR: call accepted from: ' + JSON.stringify(acceptingUser) + '.  Initiating WebRTC call and offering my stream up...');
     await initiateOffer(acceptingUser.connectionID);
 });
-// hub : receive signal
+// nhận được tín hiệu gửi từ signalingUser
 wsconn.on('receiveSignal', async (signalingUser, signal) => {
     console.log('WebRTC: receive signal ');
     await newSignal(signalingUser.connectionID, signal);
 });
-//Hub inform : call decline
+// cuộc gọi bị từ chốii 
 wsconn.on('callDeclined', async (decliningUser, reason) => {
     console.log('SignalR: call declined from: ' + decliningUser.connectionID);
     console.log(reason);
@@ -440,7 +514,7 @@ const consoleLogger = (val) => {
     }
 };
 
-
+// 3 sự kiện tắt bật mic, cam, screen
 document.querySelector("#mic").addEventListener("click", () => {
     console.log("turn on/off mic");
     var cameraStream = document.querySelector("#camera").srcObject;
@@ -459,17 +533,9 @@ async function getConnectedDevices(type) {
     return devices.filter(device => device.kind === type)
 }
 
-// bat mic tren client duoc goi
-document.querySelector("#scrn").addEventListener("click",async () => {
-    //console.log("turn on/off screen");
-    //var screenStream = document.querySelector("#screen").srcObject;
-    //var screenTrack = screenStream.getVideoTracks()[0];
-    //screenTrack.enabled = !screenTrack.enabled;
-});
-
-
 
 // *********************** Implement with chat ********************************** //
+// thêm nôi dung tin nhắn 
 const addnewMessageForMe = (message, elementTag) => {
     elementTag.innerHTML += "<div class=\"box-content-chat\">\
         <div class=\"chatmessage\">\
@@ -488,6 +554,8 @@ const receiveMessage = (message, elementTag) => {
             </div>\
         </div>";
 }
+
+
 document.querySelector("div#chat-public").querySelector("textarea.text-area").addEventListener('keypress', (e) => {
     if (e.key == "Enter") {
         var messageTextArea = document.querySelector("div#chat-public").querySelector("textarea.text-area");
