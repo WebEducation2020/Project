@@ -2,26 +2,33 @@
 const isDebugging = true;
 
 var hubUrl = document.location.pathname + 'ConnectionHub';
+// Thiết lập tham số RTCConfiguration cho hàm RTCPeerConnection 
+// đối tượng này xác định cách thiết lập kết nối ngang hàng và nên chứa thông tin về các máy chủ ICE sử dụng
+// iceServers: Information about ICE servers - Use your own!
 var peerConnectionConfig = { "iceServers": [{ "urls": "stun:stun.l.google.com:19302" }] };
 // Create connection to Hub
 var wsconn = new signalR.HubConnectionBuilder().withUrl("/ConnectionHub").build();
-// initial valuable !
+//Tạo đối tượng video track -  cho phép show màn hình chính
 const screenConstraints = {
-    video: {
+    video: {  
         width: 1080,
         height: 720
     },
 }
+// tạo đối tượng video track - camera of caller
 const cameraConstraints = {
     video: {
         width: 480,
         height: 360
     }
 }
+// we want an audio track 
 const audioConstraints = {
     audio: true
 }
+/** A stream of media content. A stream consists of several tracks such as video or audio tracks. Each track is specified as an instance of MediaStreamTrack. */
 var screenStream = new MediaStream();
+//  adds a new media track to the set of tracks which will be transmitted to the other peer.
 screenStream.onaddtrack = async e => { await callbackOnaddtrackScreen(e);}
 var cameraStream = new MediaStream();
 cameraStream.onaddtrack = async e => { await callbackOnaddtrackCamera(e); };
@@ -33,7 +40,7 @@ var localDataChannels = {};
 var remoteDataChannels = {};
 const initialize = async () => {
     console.log("Start connection for hub!")
-    wsconn.start()
+    wsconn.start() // when this succeeds, fulfilling the returned promise
         .then(async () => {
             await wsconn.invoke("Join", username, classid)
                 .catch((err) => {
@@ -53,9 +60,15 @@ const callbackDisplayMediaSuccess = async (stream) => {
     screen.srcObject = screenStream;
     localscreen = new MediaStream(stream.getTracks());
 }
+
+//=============== Add Track =========================================
 const callbackOnaddtrackCamera = async (e) => {
     console.log("call back add camera")
     var camera = document.querySelector("#camera");
+    // we attach the incoming stream to the local preview <video> element by 
+    // setting the element's srcObject property. Since the element is configured
+    // to automatically play incoming video, the stream begins playing in our
+    // local preview box.
     camera.srcObject = cameraStream;
 }
 const callbackOnaddtrackScreen = async (e) => {
@@ -63,6 +76,8 @@ const callbackOnaddtrackScreen = async (e) => {
     var screen = document.querySelector("#screen");
     screen.srcObject = cameraStream;
 }
+
+//=============== Condition of get user divices=========================================
 const callbackUserMediaSuccess = async (stream) => {
     console.log("WebRTC: got camera media stream");
     var camera = document.querySelector("#camera");
