@@ -28,11 +28,10 @@ const audioConstraints = {
 }
 /** A stream of media content. A stream consists of several tracks such as video or audio tracks. Each track is specified as an instance of MediaStreamTrack. */
 var screenStream = new MediaStream();
-<<<<<<< HEAD
+
 //  adds a new media track to the set of tracks which will be transmitted to the other peer.
 screenStream.onaddtrack = async e => { await callbackOnaddtrackScreen(e);}
-=======
->>>>>>> bc0091b5f83cb2f6f3f521a47b0926f607e2c267
+
 var cameraStream = new MediaStream();
 var remoteAudio = new MediaStream();
 let localcamera, localscreen, localaudio;
@@ -67,7 +66,6 @@ const callbackDisplayMediaSuccess = async (stream) => {
     screen.srcObject = screenStream;
     localscreen = new MediaStream(stream.getTracks());
 }
-<<<<<<< HEAD
 
 //=============== Add Track =========================================
 const callbackOnaddtrackCamera = async (e) => {
@@ -85,10 +83,8 @@ const callbackOnaddtrackScreen = async (e) => {
     screen.srcObject = cameraStream;
 }
 
-//=============== Condition of get user divices=========================================
-=======
 // tương tự với luồng từ camera 
->>>>>>> bc0091b5f83cb2f6f3f521a47b0926f607e2c267
+
 const callbackUserMediaSuccess = async (stream) => {
     console.log("WebRTC: got camera media stream");
     var camera = document.querySelector("#camera");
