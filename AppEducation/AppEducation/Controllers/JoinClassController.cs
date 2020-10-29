@@ -12,7 +12,7 @@ using AppEducation.Models.Users;
 namespace AppEducation.Controllers
 {
 
-
+    [Authorize]
     public class JoinClassController : Controller
     {
         private readonly AppIdentityDbContext _context;

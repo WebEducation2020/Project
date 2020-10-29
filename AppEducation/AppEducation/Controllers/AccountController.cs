@@ -33,6 +33,7 @@ namespace AppEducation.Controllers {
             this.logger = logger;
             this.signInManager = signInManager;
         }
+        [Authorize(Roles = "Student,Teacher")]
         public IActionResult Index() => RedirectToAction("Profile");
         
         #region Register method
@@ -111,7 +112,10 @@ namespace AppEducation.Controllers {
                 if(user != null){
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false);
                     if(result.Succeeded) {
-                        return Redirect(returnUrl ?? "/Account/Profile");
+                        if(user.UserName == "admin")
+                            return RedirectToAction("Index","Admin");
+                        else
+                            return Redirect(returnUrl ?? "/Account/Profile");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
@@ -120,12 +124,14 @@ namespace AppEducation.Controllers {
           
         }
         #endregion 
+        [Authorize(Roles = "Student,Teacher")]
         public async Task<IActionResult> Profile(){
         
             AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             UserProfile profile =  context.UserProfiles.First( p => p.UserId == currentUser.Id ) ;
             return View(profile);
         }
+        [Authorize(Roles = "Student,Teacher")]
         public IActionResult ChangeProfile(UserProfile profile){
             if(ModelState.IsValid){
                 UserProfile  old = context.UserProfiles.First( p => p.Email == profile.Email);

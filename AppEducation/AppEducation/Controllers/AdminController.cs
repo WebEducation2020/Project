@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using AppEducation.Models.Users;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 namespace AppEducation.Controllers {
+    [Authorize(Roles ="Admin")]
     public class AdminController: Controller {
         private UserManager<AppUser> userManager;
         public AdminController(UserManager<AppUser> usrMgr){
