@@ -114,7 +114,7 @@ namespace AppEducation
                 //Here you could create the super admin who will maintain the web app
                 var poweruser = new AppUser
                 {
-                    UserName = "Admin",
+                    UserName = "admin",
                     Email = "admin@email.com",
                 };
                 string adminPassword = "Admin123.";
