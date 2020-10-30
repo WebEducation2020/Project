@@ -1,137 +1,11 @@
+@model UserProfile
+
 @{
     ViewData["Title"] = "Profile";
     Layout = "_LayoutAccount";
 }
 
-@model UserProfile
-
-@section Head {
-    <link rel="stylesheet" href="~/pages/profile/css/MainUser.css">
-}
-    <header class="header-fixed header-boxshadow-active">
-        <div class="#wrapper40-scroll" id="#wrapper">
-            <div class="container">
-                <div class="row top-header">
-                    <div class="col-md-4 col-xs-3">
-                        <a href="#homepage">
-                            <img class="header-logo" src="~/pages/profile/images/LogoEducation.png" alt="logo">
-                        </a>
-                    </div>
-                    <div class="col-md-8 col-xs-9">
-                        <nav class="navbar navbar-inverse">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="user-information dropdown-toggle dropdown">
-                                    <a class="dropdown-toggle text-classy" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-user-circle"></i>
-                                        Cuong Top
-                                    </a>
-                                    <ul class="dropdown-menu" style="min-width: fit-content;">
-                                        <li style="width: 100%; margin: 0;">
-                                            <a href="#user/info">
-                                                <i class="fa fa-user"></i>
-                                                Your Profile
-                                            </a>
-                                        </li>
-                                        <li style="width: 100%; margin: 0;">
-                                            <a href="#user/package">
-                                                <i class="fa fa-user-md" aria-hidden="true"></i>
-                                                Your Account
-                                            </a>
-                                        </li>
-                                        <li style="width: 100%; margin: 0;">
-                                            <a href="#user/history">
-                                                <i class="fa fa-history"></i>
-                                                History
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-toggle dropdown" data-toggle="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <img src="~/pages/profile/images/flag_vi.png" alt="language_flag" class="flag_uk mr-2">
-                                        Tiếng Việt
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu" style="min-width: fit-content;">
-                                        <li>
-                                            <a href="#">
-                                                <img src="~/pages/profile/images/flag_uk.png" alt="flag uk" class="flag_uk">
-                                                Tiếng Anh
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><img src="~/pages/profile/images/flag_vi.png" alt="flag vn" class="flag_uk">
-                                                Tiếng Việt
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="notify-header dropdown-toggle dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <img src="~/pages/profile/images/bell.png" class="bell-notify">
-                                        <span class="text-notify">
-                                            Thông báo
-                                        </span>
-                                    </a>
-                                    <div class="table-notify dropdown-menu ">
-                                        <div class="table-notify-header">
-                                            <div class="col-md-4">
-                                                <span>Thông báo</span>
-                                            </div>
-                                            <div class="col-md-8 menu-notify dropdown">
-                                                <img src="~/pages/profile/images/three-dots.png" class="menu-dots dropdown-toggle"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <div class="mark-read-menu dropdown-menu"
-                                                    aria-labelledby="dropdownMenuButton">
-                                                    <img src="~/pages/profile/images/polygon-white.png">
-                                                    <div class="content-mark-read">
-                                                        <img src="~/pages/profile/images/check-gray.png">
-                                                        <span>Đánh dấu tất cả là đã đọc</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="table-notify-body">
-
-                                        </div>
-                                        <div class="table-notify-footer">
-                                            <a href="#/user/notification">
-                                                <span>Xem tất cả thông báo</span>
-                                                <img src="~/pages/profile/images/arrow-right.png" class="img-arrow-right"></a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="row header-menu">
-                    <div class="col-md-12 col-xs-12">
-                        <nav class="navbar navbar-inverse">
-                            <ul class="nav navbar-nav">
-                                <li>
-                                    <a href="#">Chuẩn bị bài</a>
-                                </li>
-                                <li>
-                                    <a asp-controller="JoinClass" asp-action="Create">Học trực tuyến</a>
-                                </li>
-                                <li>
-                                    <a href="#">Kiểm tra</a>
-                                </li>
-                                <li>
-                                    <a href="#">Hỗ trợ</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-
-    </header>
+<section>
     <div class="main">
         <div class="user-layout">
             <div class="header-page">
@@ -259,7 +133,7 @@
             </div>
         </div>
     </div>
-
+</section>
 @section Script {
     <script>
     $(document).ready(function() {  

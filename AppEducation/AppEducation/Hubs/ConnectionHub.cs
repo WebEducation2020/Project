@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 namespace AppEducation.Hubs
 {
     // connectionhub
@@ -13,14 +14,17 @@ namespace AppEducation.Hubs
     {
         private readonly List<Room> _rooms;
         private readonly AppIdentityDbContext _context;
-        public ConnectionHub(List<Room> rooms, AppIdentityDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor; 
+         
+        public ConnectionHub(List<Room> rooms, AppIdentityDbContext context, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _rooms = rooms;
             _context = context;
         }
         public async Task Join(string username, string classid)
         {
-            User usr = new User { UserName = username, ConnectionID = Context.ConnectionId ,IsCaller =false,InCall= false};
+            UserCall usr = new UserCall { FullName = username, ConnectionID = Context.ConnectionId ,IsCaller =false,InCall= false};
             Classes clr = _context.Classes.Find(classid);
             if (clr == null)
             {
@@ -36,17 +40,17 @@ namespace AppEducation.Hubs
                     _rooms.Add(new Room
                     {
                         RoomIF = clr,
-                        UserCall = new List<User> { usr }
+                        UserCalls = new List<UserCall> { usr }
                     });
                     await SendUserListUpdate(GetRoomByClassID(classid));
                     await Clients.Client(usr.ConnectionID).initDevices(usr);
                 }
                 else
                 {
-                    rm.UserCall.Add(usr);
+                    rm.UserCalls.Add(usr);
                     await SendUserListUpdate(rm);
                     await Clients.Client(usr.ConnectionID).initDevices(usr);
-                    rm.UserCall.ForEach(async u =>
+                    rm.UserCalls.ForEach(async u =>
                     {
                         if( u != usr)
                         {
@@ -64,7 +68,7 @@ namespace AppEducation.Hubs
             await HangUp(); // Gets the user from "Context" which is available in the whole hub
 
             // Remove the user
-            callingRoom.UserCall.RemoveAll(u => u.ConnectionID == Context.ConnectionId);
+            callingRoom.UserCalls.RemoveAll(u => u.ConnectionID == Context.ConnectionId);
 
             // Send down the new user list to all clients
             await SendUserListUpdate(callingRoom);
@@ -73,10 +77,10 @@ namespace AppEducation.Hubs
         }
 
 
-        public async Task CallUser(User targetUser)
+        public async Task CallUser(UserCall targetUser)
         {
             Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
-            User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
+            UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
             // Make sure the person we are trying to call is still here
             if (targetUser == null)
             {
@@ -88,11 +92,11 @@ namespace AppEducation.Hubs
             await Clients.Client(targetUser.ConnectionID).IncomingCall(callingUser);
         }
 
-        public async Task AnswerCall(bool acceptCall, User targetConnectionId)
+        public async Task AnswerCall(bool acceptCall, UserCall targetConnectionId)
         {
             Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
-            User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
-            var targetUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == targetConnectionId.ConnectionID);
+            UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
+            var targetUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == targetConnectionId.ConnectionID);
 
             // This can only happen if the server-side came down and clients were cleared, while the user
             // still held their browser session.
@@ -111,7 +115,7 @@ namespace AppEducation.Hubs
             // Send a decline message if the callee said no
             if (acceptCall == false)
             {
-                await Clients.Client(targetConnectionId.ConnectionID).CallDeclined(callingUser, string.Format("{0} did not accept your call.", callingUser.UserName));
+                await Clients.Client(targetConnectionId.ConnectionID).CallDeclined(callingUser, string.Format("{0} did not accept your call.", callingUser.FullName));
                 return;
             }
 
@@ -128,9 +132,9 @@ namespace AppEducation.Hubs
         public async Task HangUp()
         {
             Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
-            User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
+            UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
             // if room is mine . Remove all user in call
-            if (callingRoom.UserCall.Count == 1)
+            if (callingRoom.UserCalls.Count == 1)
             {
                 // do something
                 Room rm = GetRoomByConnectionID(callingUser.ConnectionID);
@@ -145,9 +149,9 @@ namespace AppEducation.Hubs
             // Send a hang up message to each user in the call, if there is one
             if (callingRoom != null)
             {
-                foreach(User user in callingRoom.UserCall.Where(u => u.ConnectionID != callingUser.ConnectionID))
+                foreach(UserCall user in callingRoom.UserCalls.Where(u => u.ConnectionID != callingUser.ConnectionID))
                 {
-                    await Clients.Client(user.ConnectionID).CallEnded(callingUser, string.Format("{0} has hung up.", callingUser.UserName));
+                    await Clients.Client(user.ConnectionID).CallEnded(callingUser, string.Format("{0} has hung up.", callingUser.FullName));
                 }
             }
             await SendUserListUpdate(callingRoom);
@@ -157,8 +161,8 @@ namespace AppEducation.Hubs
         public async Task SendSignal(string signal, string targetConnectionId)
         {
             Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
-            User callingUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
-            User targetUser = callingRoom.UserCall.SingleOrDefault(u => u.ConnectionID == targetConnectionId);
+            UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
+            UserCall targetUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == targetConnectionId);
             // Make sure both users are valid
             if (callingUser == null || targetUser == null)
             {
@@ -173,14 +177,14 @@ namespace AppEducation.Hubs
 
         private async Task SendUserListUpdate(Room rm)
         {
-            foreach (User u in rm.UserCall)
+            foreach (UserCall u in rm.UserCalls)
             {
-                await Clients.Client(u.ConnectionID).UpdateUserList(rm.UserCall);
+                await Clients.Client(u.ConnectionID).UpdateUserList(rm.UserCalls);
             }
         }
         private Room GetRoomByConnectionID(string cid)
         {
-            Room matchingRoom = _rooms.SingleOrDefault(r => r.UserCall.SingleOrDefault(u => u.ConnectionID == cid) != null);
+            Room matchingRoom = _rooms.SingleOrDefault(r => r.UserCalls.SingleOrDefault(u => u.ConnectionID == cid) != null);
             return matchingRoom;
         }
         private Room GetRoomByClassID(string classid)
@@ -194,13 +198,13 @@ namespace AppEducation.Hubs
 
     public interface IConnectionHub
     {
-        Task CallAccepted(User callingUser);
-        Task CallDeclined(User u, string v);
-        Task CallEnded(User targetConnectionId, string v);
-        Task IncomingCall(User callingUser);
-        Task initDevices(User UserCall);
-        Task NotifyNewMember(User usr);
-        Task ReceiveSignal(User callingUser, string signal);
-        Task UpdateUserList(List<User> userCall);
+        Task CallAccepted(UserCall callingUser);
+        Task CallDeclined(UserCall u, string v);
+        Task CallEnded(UserCall targetConnectionId, string v);
+        Task IncomingCall(UserCall callingUser);
+        Task initDevices(UserCall UserCalls);
+        Task NotifyNewMember(UserCall usr);
+        Task ReceiveSignal(UserCall callingUser, string signal);
+        Task UpdateUserList(List<UserCall> UserCalls);
     }
 }

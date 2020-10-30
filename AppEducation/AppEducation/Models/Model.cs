@@ -14,11 +14,11 @@ namespace AppEducation.Models
     public class Room
     {
         public Classes RoomIF { get; set; }
-        public List<User> UserCall { get; set; }
+        public List<UserCall> UserCalls { get; set; }
     }
-    public class User
+    public class UserCall
     {
-        public string UserName { get; set; }
+        public string FullName { get; set; }
         public string ConnectionID { get; set; }
         public bool InCall { get; set; }
         public bool IsCaller { get; set; }

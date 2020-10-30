@@ -29,14 +29,13 @@ namespace AppEducation.Controllers
 
             return View();
         }
-        [AllowAnonymous]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Teacher")]
         public IActionResult Create(Classes _class)
         {
             if (ModelState.IsValid)
@@ -49,6 +48,7 @@ namespace AppEducation.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Student")]
         public IActionResult Join(Classes _class)
         {
             if (ModelState.IsValid)
@@ -60,7 +60,7 @@ namespace AppEducation.Controllers
             }
             return View();
         }
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Present(Classes cls)
         {
             return View(cls);

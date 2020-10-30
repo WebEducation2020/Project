@@ -1,18 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @{
     ViewBag.Title = "Create Page";
+    Layout = "_LayoutAccount";
 }
 @model Classes
 <head>
     @{
         ViewBag.Title = "Create Page";
     }
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="~/pages/create/css/create.css" />
-    <link type="text/css" rel="stylesheet" href="~/pages/create/css/all.min.css" />
-    <link type="text/css" rel="stylesheet" href="~/pages/create/css/site.css" />
 </head>
 <section>
     <div class="container">
@@ -20,7 +16,7 @@
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="left-container">
                     <div class="text-container">
-                        <h2>Cuộc gọi video chất lượng.</h2>
+                        <h2>Cuộc gọi video chất lượng</h2>
                         <h2>Giờ đây miễn phí cho tất cả mọi người</h2>
                         <p>Chúng tôi tạo ra dịch vụ này để cung cấp việc học tập miễn phí cho tất cả mọi người</p>
                     </div>
@@ -107,8 +103,3 @@
         </form>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-}
