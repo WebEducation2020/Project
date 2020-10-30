@@ -79,9 +79,9 @@ namespace AppEducation.Controllers {
                     profile.UserId = usernew.Id;
                     context.UserProfiles.Add(profile);
                     if(profile.Job == "Teacher"){
-                        var roleResult = userManager.AddToRoleAsync(usernew,"Teacher");
+                        var roleResult  = await userManager.AddToRoleAsync(usernew,"Teacher");
                     }else{
-                        var roleResult = userManager.AddToRoleAsync(usernew, "Student");
+                        var roleResult = await userManager.AddToRoleAsync(usernew, "Student");
                     }
                     context.SaveChanges();
                     return RedirectToAction("Index");
