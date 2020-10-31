@@ -1798,8 +1798,11 @@ height: 100%; }
 .wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat {
 height: 100%;
 padding-right: 6px; }
-.wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat {
-height: 100%; }
+    .wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat {
+        overflow: auto;
+        margin: 0 auto;
+        height: 95%;
+    }
 .wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat .vcr-public-chat {
 margin-top: 13px; }
 .wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat .vcr-public-chat .chat-userlist {
@@ -2153,30 +2156,47 @@ opacity: 1; }
 color: #8B90A0; }
 .wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat .vcr-public-chat ::-ms-input-placeholder {
 color: #8B90A0; }
-.wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat .vcr-public-chat #usermsg {
-resize: none;
-width: calc(100% - 10px);
-border: 1px solid #E5E5EA;
-height: 44px;
-line-height: 1.2;
-padding: 12px 11px;
-overflow: hidden;
-color: #222222;
-transition: 0.2s;
-font-size: 14px; }
+.wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .text-bar #usermsg {
+    resize: none;
+    width: calc(100% - 10px);
+    border: 1px solid #E5E5EA;
+    height: 44px;
+    line-height: 1.2;
+    padding: 12px 11px;
+    overflow: hidden;
+    color: #222222;
+    transition: 0.2s;
+    font-size: 14px;
+}
 @media (max-width: 1919px) {
-.wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat .vcr-public-chat #usermsg {
-height: 36px;
-font-size: 12px;
-line-height: 1.7;
-padding: 8px;
-padding-top: 7px;
-width: calc(100% - 2px); } }
-.wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .vcr-body-chat .vcr-public-chat #usermsg:hover {
-border: 1px solid #DBAC69;
-transition: 0.2s; }
+    .wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .text-bar #usermsg {
+        height: 36px;
+        font-size: 12px;
+        line-height: 1.7;
+        padding: 8px;
+        padding-top: 7px;
+        width: calc(100% - 2px);
+    } }
+.wrapper .vcrx-body .group-right .group-slide-chat .vcrx-box-right .vcrx-chat .box-chat .text-bar #usermsg:hover {
+    border: 1px solid #DBAC69;
+    transition: 0.2s;
+}
 .video-cam .logo-nvn {
 z-index: -1;
 width: 40%;
 height: 100%;
+}
+.text-bar {
+    height: 50px;
+    border-top: 1px solid #ccc;
+}
+.back {
+    position: relative;
+}
+
+.back-chat {
+    position: absolute;
+    top: 50%;
+    margin: -40px 0 0 280px;
+    display: block;
 }
