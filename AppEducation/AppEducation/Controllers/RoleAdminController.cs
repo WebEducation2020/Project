@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using AppEducation.Models.Users;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AppEducation.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class RoleAdminController : Controller
     {
         private RoleManager<IdentityRole> roleManager;

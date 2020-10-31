@@ -33,8 +33,8 @@ namespace AppEducation.Hubs
             }
             else
             {
-                Room rm = GetRoomByClassID(classid);
-                if (rm == null)
+                Room room = GetRoomByClassID(classid);
+                if (room == null)
                 {
                     usr.IsCaller = true;
                     _rooms.Add(new Room
@@ -47,10 +47,10 @@ namespace AppEducation.Hubs
                 }
                 else
                 {
-                    rm.UserCalls.Add(usr);
-                    await SendUserListUpdate(rm);
+                    room.UserCalls.Add(usr);
+                    await SendUserListUpdate(room);
                     await Clients.Client(usr.ConnectionID).initDevices(usr);
-                    rm.UserCalls.ForEach(async u =>
+                    room.UserCalls.ForEach(async u =>
                     {
                         if( u != usr)
                         {
@@ -137,8 +137,9 @@ namespace AppEducation.Hubs
             if (callingRoom.UserCalls.Count == 1)
             {
                 // do something
-                Room rm = GetRoomByConnectionID(callingUser.ConnectionID);
-                _context.Classes.Remove(_context.Classes.Find(rm.RoomIF.ClassID));
+                Room room = GetRoomByConnectionID(callingUser.ConnectionID);
+                _context.Classes.Remove(_context.Classes.Find(room.RoomIF.ClassID));
+                await _context.SaveChangesAsync();
             }
             // do something if not
             if (callingUser == null)
@@ -175,11 +176,11 @@ namespace AppEducation.Hubs
 
         #region Private Helpers
 
-        private async Task SendUserListUpdate(Room rm)
+        private async Task SendUserListUpdate(Room room)
         {
-            foreach (UserCall u in rm.UserCalls)
+            foreach (UserCall u in room.UserCalls)
             {
-                await Clients.Client(u.ConnectionID).UpdateUserList(rm.UserCalls);
+                await Clients.Client(u.ConnectionID).UpdateUserList(room.UserCalls);
             }
         }
         private Room GetRoomByConnectionID(string cid)
@@ -192,6 +193,7 @@ namespace AppEducation.Hubs
             Room matchingRoom = _rooms.SingleOrDefault<Room>(r => r.RoomIF.ClassID == classid);
             return matchingRoom;
         }
+ 
 
         #endregion
     }
@@ -205,6 +207,6 @@ namespace AppEducation.Hubs
         Task initDevices(UserCall UserCalls);
         Task NotifyNewMember(UserCall usr);
         Task ReceiveSignal(UserCall callingUser, string signal);
-        Task UpdateUserList(List<UserCall> UserCalls);
+        Task UpdateUserList(List<UserCall> userCalls);
     }
 }

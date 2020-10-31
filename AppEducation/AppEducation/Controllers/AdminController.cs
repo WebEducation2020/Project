@@ -3,15 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using AppEducation.Models.Users;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using AppEducation.Models;
+using System.Collections.Generic;
 namespace AppEducation.Controllers {
     [Authorize(Roles ="Admin")]
     public class AdminController: Controller {
         private UserManager<AppUser> userManager;
-        public AdminController(UserManager<AppUser> usrMgr){
+        private TotalInformation totalInfo;
+        private List<Room> rooms;
+        public AdminController(UserManager<AppUser> usrMgr, List<Room> rms){
             userManager = usrMgr;
+            rooms = rms;
         }
-        public ViewResult Index() => View(userManager.Users);
-
+        public ViewResult Index() {
+            //totalInfo.Users = userManager.Users;
+           // totalInfo.Rooms = rooms;
+            return View(userManager.Users);
+        } 
+        public  ViewResult UserManager() => View(userManager.Users);
         // Delete User 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)

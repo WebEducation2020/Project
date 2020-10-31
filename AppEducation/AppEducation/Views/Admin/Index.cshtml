@@ -1,147 +1,38 @@
 @model IEnumerable<AppUser>
+
 @{
-  Layout = "_LayoutAdmin";
   ViewData["Title"] = "Index";
+  Layout = "_LayoutAdmin";
+  var numberStudentOnline = 0;
+  var numberTeacherOnline = 0;
+  var numberClassOnline = 0;
 }
-
-<!-- Main content -->
-<section class="content" id="section-content">
-  <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>@Model.Count()</h3>
-
-            <p>User Registrations</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          <a href="#" id="UserRegis" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-success">
-          <div class="inner">
-            <h3>53<sup style="font-size: 20px"></sup></h3>
-
-            <p>Student Online</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>53<sup style="font-size: 20px"></sup></h3>
-
-            <p>Teacher Online</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>65</h3>
-
-            <p>Class Online</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
+@section Content{
+   <div class="right__content">
+    <div class="right__title">Bảng điều khiển</div>
+    <p class="right__desc">Bảng điều khiển</p>
+    <div class="right__cards">
+      <a class="right__card" asp-action="UserManager" asp-controller="Admin">
+        <div class="right__cardTitle">Người dùng</div>
+        <div class="right__cardNumber">@Model.Count()</div>
+        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
+      </a>
+      <a class="right__card" href="view_customers.html">
+        <div class="right__cardTitle">Học sinh online</div>
+        <div class="right__cardNumber">@numberStudentOnline</div>
+        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
+      </a>
+      <a class="right__card" href="view_p_category.html">
+        <div class="right__cardTitle">Giáo viên online</div>
+        <div class="right__cardNumber">@numberTeacherOnline</div>
+        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
+      </a>
+      <a class="right__card" href="view_orders.html">
+        <div class="right__cardTitle">Lớp online</div>
+        <div class="right__cardNumber">@numberClassOnline</div>
+        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
+      </a>
     </div>
   </div>
-</section>
-<div class="content-wrapper" id="table-user" style="margin-right: 1px; display:none ; margin-left:1px ; width:100%">
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-13">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Danh Sách Người Dùng</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="table-responsive table--no-card m-b-30">
-                            <table id="example2" class="table table-borderless table-striped table-earning">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>ID</th>
-                                        <th>User Name</th>
-                                        <th>Email</th>
-                                        <th>Password</th>
-                                        <th>Modify</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model.Count() == 0)
-                                    {
-                                        <tr>
-                                        <td> No user registered </td>
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                    var i = 0;
-                                    foreach (AppUser user in Model)
-                                    {
-                                        <tr>
-                                            <td>@i</td>
-                                            <td>@user.Id</td>
-                                            <td>@user.UserName</td>
-                                            <td>@user.Email</td>
-                                            <td>@user.PasswordHash</td>
-                                            <td>
-                                            <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                            Delete
-                                            </button>
-                                            </form>
-                                            </td>
-                                        </tr>
-                                    }
-                                    }
-
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                <!-- /.card -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-</div>
-<!-- /.content-wrapper -->
+}
+ 

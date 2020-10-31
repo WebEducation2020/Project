@@ -1,0 +1,63 @@
+@model IEnumerable<AppUser>
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Index";
+    
+}
+@section Content{
+<div class="right__content">
+    <div class="right__title">Danh Sách Người Dùng</div>
+    <div class="right__table">
+        <p class="right__tableTitle">Thông tin tài khoản</p>
+        <div class="right__tableWrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>ID</th>
+                        <th>User Name</th>
+                        <th style="text-align: left;">Email</th>
+
+                        <th>Modify</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td> No user registered </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        var i = 0;
+                        foreach (AppUser user in Model)
+                        {
+                            <tr>
+                                <td data-label="Order Number">@i</td>
+                                <td data-label="ID">@user.Id</td>
+                                <td data-label="UserName">@user.UserName</td>
+                                <td data-label="Email" style="text-align: left;">@user.Email</td>
+                                <td data-label="Modify">
+                                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                                        <a class="btn btn-sm btn-primary" asp-action="Details"
+                                        asp-route-id="@user.Id">Details</a>
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a href="" class="right__tableMore">
+            <p>Xem tất cả các người dùng online</p> <img src="assets/arrow-right-black.svg" alt="">
+        </a>
+    </div>
+</div>
+}

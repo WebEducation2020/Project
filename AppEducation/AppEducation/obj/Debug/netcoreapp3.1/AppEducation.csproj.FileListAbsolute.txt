@@ -292,10 +292,8 @@ E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\ru
 E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csprojAssemblyReference.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.AssemblyInfoInputs.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.AssemblyInfo.cs
-E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csproj.CoreCompileInputs.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.MvcApplicationPartsAssemblyInfo.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.RazorAssemblyInfo.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.RazorAssemblyInfo.cs
@@ -336,3 +334,7 @@ C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\A
 C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\JoinClass\Create.cshtml.g.cs
 C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\JoinClass\Present.cshtml.g.cs
 C:\Users\quock\Documents\Year 4 - semeter 1\web\WebApplication\Project\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutAccount.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutRegister.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csprojAssemblyReference.cache
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csproj.CoreCompileInputs.cache
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Admin\UserManager.cshtml.g.cs
