@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_LayoutPresent.cshtml";
 }
 @model Classes
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <div id="topica-vcr">
     <div class="AtlaskitThemeProvider__LegacyReset-sc-431dkp-0 tOoji">
         <div class="wrapper">
@@ -18,7 +20,6 @@
                                         <p class="user-title">Giáo viên</p>
                                         <div class="contact-list-panel">
                                             <ul id="contacts" class="list-group list-group-striped">
-                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -65,14 +66,19 @@
                                 <div class="group-media-control">
                                     <div class="media-control">
                                         <div title="Cam" id="cam" class="mic-control media-box">
-                                            <i class="fa fa-microphone" aria-hidden="true"> </i>
+                                            <div class="sim-row-edit-icon" aria-hidden="true">
+                                                <i class="fa fa-eye"></i>
+                                            </div>
                                         </div>
                                         <div title="Mic" id="mic" class="mic-control media-box">
-                                            <i class="fa fa-microphone" aria-hidden="true"> </i>
+                                            <div class="sim-row-edit-icon1">
+                                                <i class="fa fa-microphone"></i>
+                                            </div>
                                         </div>
-
                                         <div title="Loa" id="scrn" class="volumn-control media-box">
-                                            <i class="fa fa-music" aria-hidden="true"> </i>
+                                            <div class="sim-row-edit-icon2">
+                                                <i class="fa fa-bell"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +190,7 @@
                                                             </div><span>Tùy chọn</span>
                                                         </a>
                                                     </li>
-                                                    <li class="nav-item">
+                                                    <li class="nav-item" style="display: none;">
                                                         <a class="nav-link" data-toggle="tab" href="#chat-particular">
                                                             <div class="box-icon-chat icon-public">
                                                                 <svg class="icon icon-px_ic__User">
@@ -203,7 +209,7 @@
                                                                      class="sideToolbarContainer__inner">
                                                                     <div id="chatconversation">
                                                                     </div>
-                                                                    <textarea class="text-area" spellcheck="false" id="usermsg" data-i18n="[placeholder]chat.messagebox" placeholder="Nhập tin nhắn"></textarea>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -236,56 +242,26 @@
                                                         </div>
                                                     </div>
                                                     <div id="chat-particular" class="tab-pane">
-                                                        <div>
-                                                            <div id="sideToolbarContainerChat">
-                                                                <div id="chat_container" data-userid-private="0"
-                                                                     class="sideToolbarContainer__inner">
-                                                                    <div id="chatconversation">
-                                                                        <div class="box-content-chat">
-                                                                            <div class="chatmessage chatmessageReceived">
-                                                                                <div class="username remoteuser">
-                                                                                    Vuk
-                                                                                    LAZAREVIĆ
-                                                                                </div>
-                                                                                <div class="timestamp">19:10:01</div>
-                                                                                <div class="usermessage">
-                                                                                    <p class="userMessageContentReceived">
-                                                                                        Designate (v) /ˈdezɪɡneɪt/ to
-                                                                                        show something using a
-                                                                                        particular mark or sign
-                                                                                    </p>
-                                                                                </div>
+                                                        <a class="nav-link" data-toggle="tab" href="#chat-group">
+                                                            <div class="back">
+                                                                <div class="box-media-control back-chat">
+                                                                    <div class="group-media-control">
+                                                                        <div class="media-control">
+                                                                            <div class="mic-control media-box">
+                                                                                <i class="fa fa-arrow-left"></i>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="box-content-chat">
-                                                                            <div class="chatmessage chatmessageReceived">
-                                                                                <div class="username remoteuser">
-                                                                                    Vuk
-                                                                                    LAZAREVIĆ
-                                                                                </div>
-                                                                                <div class="timestamp">19:22:17</div>
-                                                                                <div class="usermessage">
-                                                                                    <p class="userMessageContentReceived">
-                                                                                        If you cancel now you will mess
-                                                                                        up all my arrangements
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="box-content-chat"><div class="chatmessage"><div class="username localuser"></div><div class="timestamp">14:54:44</div><div class="usermessage"><p class="userMessageContent">Good afternoon</p></div></div></div>
                                                                     </div>
-                                                                    <textarea class="text-area" spellcheck="false" id="usermsg" data-i18n="[placeholder]chat.messagebox" placeholder="Nhập tin nhắn"></textarea>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane">
-                                                        <ul id="chat-userlist" class="list-group chat-userlist">
-                                                        </ul>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="text-bar">
+                                        <textarea class="text-area" spellcheck="false" id="usermsg" data-i18n="[placeholder]chat.messagebox" placeholder="Nhập tin nhắn"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -301,6 +277,17 @@
     const username = "@User.Identity.Name";
     console.log(username);
     const classid = "@Model.ClassID";
+</script>
+<script>
+    $(".sim-row-edit-icon").click(function () {
+        $(this).find('i').toggleClass('fas fa-eye-slash');
+    });
+    $(".sim-row-edit-icon1").click(function () {
+        $(this).find('i').toggleClass('fas fa-microphone-slash');
+    });
+    $(".sim-row-edit-icon2").click(function () {
+        $(this).find('i').toggleClass('fas fa-bell-slash');
+    });
 </script>
 <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/ConnectionHub.js"></script>
