@@ -16,9 +16,10 @@ namespace AppEducation.Controllers {
             rooms = rms;
         }
         public ViewResult Index() {
-            //totalInfo.Users = userManager.Users;
-           // totalInfo.Rooms = rooms;
-            return View(userManager.Users);
+            totalInfo = new TotalInformation();
+            totalInfo.Users = userManager.Users;
+            totalInfo.Rooms = rooms;
+            return View(totalInfo);
         } 
         public  ViewResult UserManager() => View(userManager.Users);
         // Delete User 

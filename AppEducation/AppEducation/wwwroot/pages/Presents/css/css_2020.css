@@ -1225,7 +1225,7 @@ height: 37px; } }
 flex: 2;
 padding-left: 9px; }
 .wrapper .vcrx-body .group-right .vcrx-header .header .box-logo-topica img {
-padding-top: 11px;
+padding-top: 0px;
 width: 92px; }
 
 @media (max-width: 1919px) {

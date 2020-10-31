@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutPresent.cshtml";
 }
@@ -61,7 +60,7 @@
                 <div class="group-right">
                     <div class="vcrx-item-box vcrx-header">
                         <div class="header">
-                            <div class="box-logo-topica"><img src="./images/logo.png"></div>
+                            <div class="box-logo-topica"><img src="~/pages/Presents/images/logo.png"></div>
                             <div class="box-media-control">
                                 <div class="group-media-control">
                                     <div class="media-control">
@@ -89,8 +88,8 @@
                             <div class="box-header-control">
                                 <div class="group-header-control">
                                     <div class="log-out">
-                                        <button title="Đăng xuất" class="btn-logout"
-                                                data-toggle="modal" data-target="#myModallogOut">
+                                        <button title="Đăng xuất" class="btn-logout" data-toggle="modal"
+                                        data-target="#myModallogOut">
                                             <svg class="icon icon-px_ic__Logout">
                                                 <use xlink:href="#icon-px_ic__Logout"></use>
                                             </svg> Thoát
@@ -99,9 +98,8 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <button id="close" type="button"
-                                                                class="close" data-dismiss="modal"
-                                                                aria-label="Close">
+                                                        <button id="close" type="button" class="close"
+                                                        data-dismiss="modal" aria-label="Close">
                                                             <svg class="icon icon-px_ic___Delete">
                                                                 <use xlink:href="#icon-px_ic___Delete"></use>
                                                             </svg>
@@ -114,8 +112,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn-border"
-                                                                data-dismiss="modal">
+                                                        <button class="btn-border" data-dismiss="modal">
                                                             Thoát khỏi lớp
                                                         </button><button class="btn-full" data-dismiss="modal">
                                                             Đóng
@@ -137,13 +134,15 @@
                                         <div class="vcr-title-user full-width">
                                             <p class="vcrx-title">
                                                 Chủ đề: <span>
-                                                    Sharing some smart Organizing Ideas
-                                                    For Your Kitchen
+                                                    @Model.ClassName
                                                 </span>
                                             </p>
                                         </div>
                                         <div class="vcr-slide-box">
                                             <video id="screen" autoplay="autoplay"></video>
+                                        </div>
+                                        <div>
+                                            <button class="btn-lg btn-warning">Reset</button>
                                         </div>
                                     </div>
                                 </div>
@@ -155,9 +154,8 @@
                                     <h5 class="vcrx-title">Thời gian</h5>
                                     <div class="box-timer-content">
                                         <div class="box-timer-count">
-                                            <span class="timer-count-text">
-                                                00: 25:
-                                                04
+                                            <span id="datetime" class="timer-count-text">
+
                                             </span>
                                         </div>
                                     </div>
@@ -173,7 +171,8 @@
                                             <div class="tab">
                                                 <ul class="nav nav-tabs">
                                                     <li class="nav-item active">
-                                                        <a class="nav-link active" data-toggle="tab" href="#chat-public">
+                                                        <a class="nav-link active" data-toggle="tab"
+                                                        href="#chat-public">
                                                             <div class="box-icon-chat icon-public">
                                                                 <svg class="icon icon-px_ic__Chat">
                                                                     <use xlink:href="#icon-px_ic__Chat"></use>
@@ -206,7 +205,7 @@
                                                         <div>
                                                             <div id="sideToolbarContainerChat">
                                                                 <div id="chat_container" data-userid-private="0"
-                                                                     class="sideToolbarContainer__inner">
+                                                                class="sideToolbarContainer__inner">
                                                                     <div id="chatconversation">
                                                                     </div>
 
@@ -217,13 +216,16 @@
                                                     <div id="chat-group" class="tab-pane fade">
                                                         <div>
                                                             <ul id="chat-userlist" class="list-group chat-userlist">
-                                                                <a class="nav-link" data-toggle="tab" href="#chat-particular">
+                                                                <a class="nav-link" data-toggle="tab"
+                                                                href="#chat-particular">
                                                                     <li class="contact-list-item">
                                                                         <div class="group-icon-device">
                                                                             <div class="box-icon-device">
                                                                                 <div class="icon-user icon-teacher">
-                                                                                    <svg class="icon icon-px_ic_teacher">
-                                                                                        <use xlink:href="#icon-px_ic_teacher">
+                                                                                    <svg
+                                                                                    class="icon icon-px_ic_teacher">
+                                                                                        <use
+                                                                                        xlink:href="#icon-px_ic_teacher">
                                                                                         </use>
                                                                                     </svg>
                                                                                 </div>
@@ -231,9 +233,12 @@
                                                                         </div>
                                                                         <div class="contact-list-item-name">
                                                                             <span title="TEACHER" class="user-role">
-                                                                                <span class="role-device">TEACHER</span><br>
+                                                                                <span
+                                                                                class="role-device">TEACHER</span><br>
                                                                             </span>
-                                                                            <span class="user-name" title=" Milicevic Olivera-131224"> Milicevic Olivera-131224</span>
+                                                                            <span class="user-name"
+                                                                            title=" Milicevic Olivera-131224">
+                                                                                Milicevic Olivera-131224</span>
                                                                         </div>
                                                                         <div class="box-number-noti"></div>
                                                                     </li>
@@ -261,7 +266,9 @@
                                         </div>
                                     </div>
                                     <div class="text-bar">
-                                        <textarea class="text-area" spellcheck="false" id="usermsg" data-i18n="[placeholder]chat.messagebox" placeholder="Nhập tin nhắn"></textarea>
+                                        <textarea class="text-area" spellcheck="false" id="usermsg"
+                                        data-i18n="[placeholder]chat.messagebox"
+                                        placeholder="Nhập tin nhắn"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -279,15 +286,45 @@
     const classid = "@Model.ClassID";
 </script>
 <script>
+    // Set the date we're counting down to
+    var now1 = new Date();
+    var countDownDate = now1.setHours( now1.getHours() + 1);
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Output the result in an element with id="demo"
+    document.getElementById("datetime").innerHTML = minutes + "m " + seconds + "s ";
+
+    // If the count down is over, write some text
+    if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+    }, 1000);
     $(".sim-row-edit-icon").click(function () {
-        $(this).find('i').toggleClass('fas fa-eye-slash');
+    $(this).find('i').toggleClass('fas fa-eye-slash');
     });
     $(".sim-row-edit-icon1").click(function () {
-        $(this).find('i').toggleClass('fas fa-microphone-slash');
+    $(this).find('i').toggleClass('fas fa-microphone-slash');
     });
     $(".sim-row-edit-icon2").click(function () {
-        $(this).find('i').toggleClass('fas fa-bell-slash');
+    $(this).find('i').toggleClass('fas fa-bell-slash');
     });
 </script>
+
+
 <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/ConnectionHub.js"></script>

@@ -1,11 +1,14 @@
-@model IEnumerable<AppUser>
+@model TotalInformation
 
 @{
   ViewData["Title"] = "Index";
   Layout = "_LayoutAdmin";
-  var numberStudentOnline = 0;
-  var numberTeacherOnline = 0;
+  var numberUserOnline = 0;
   var numberClassOnline = 0;
+  foreach(Room room in Model.Rooms){
+    numberUserOnline += room.UserCalls.Count() ;
+  }
+  numberClassOnline = Model.Rooms.Count();
 }
 @section Content{
    <div class="right__content">
@@ -14,17 +17,12 @@
     <div class="right__cards">
       <a class="right__card" asp-action="UserManager" asp-controller="Admin">
         <div class="right__cardTitle">Người dùng</div>
-        <div class="right__cardNumber">@Model.Count()</div>
+        <div class="right__cardNumber">@Model.Users.Count()</div>
         <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
       </a>
       <a class="right__card" href="view_customers.html">
         <div class="right__cardTitle">Học sinh online</div>
-        <div class="right__cardNumber">@numberStudentOnline</div>
-        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
-      </a>
-      <a class="right__card" href="view_p_category.html">
-        <div class="right__cardTitle">Giáo viên online</div>
-        <div class="right__cardNumber">@numberTeacherOnline</div>
+        <div class="right__cardNumber">@numberUserOnline</div>
         <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
       </a>
       <a class="right__card" href="view_orders.html">
