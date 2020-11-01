@@ -4,15 +4,7 @@
     Layout = "_LayoutAccount";
 }
 @model Classes
-<<<<<<< HEAD
-    <head>
-        @{
-            ViewBag.Title = "Create Page";
-        }
-        <link type="text/css" rel="stylesheet" href="~/pages/create/css/create.css">
-        <link type="text/css" rel="stylesheet" href="~/pages/create/css/bootstrap.min.css">
-    </head>
-=======
+
 @{
     ViewBag.Title = "Create Page";
 }
@@ -24,31 +16,69 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="left-container">
-                    <div class="text-container">
-                        <h2>Cuộc gọi video chất lượng</h2>
-                        <h2>Giờ đây miễn phí cho tất cả mọi người</h2>
-                        <p>Chúng tôi tạo ra dịch vụ này để cung cấp việc học tập miễn phí cho tất cả mọi người</p>
-                    </div>
-                    <div class="button-container">
-                        <a href="#" onclick="document.getElementById('id01').style.display='block'">
-                            <button type="button" class="btn btn-primary">
-                                Bắt Đầu
-                            </button>
-                        </a>
-                        <a href="#" onclick="document.getElementById('id02').style.display='block'">
-                            <button type="button" class="btn btn-primary">
-                                </i>Vào Lớp
-                            </button>
-                        </a>
+            <div class="Menu-add-class">
+                <div class="link-follow">
+                    <ul>
+                        <li><a href="#" onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-plus-circle"></i></a></li>
+                    </ul>
+                </div>
+                <h1 class="text-center">Danh Sách Lớp</h1>
+            </div>
+            <hr>
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#">vào lớp</a>
+                        </div>
                     </div>
                 </div>
-                <hr>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="right-container">
-                    <img src="~/pages/create/img/reference.jpg">
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#">vào lớp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#">vào lớp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#">vào lớp</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,75 +101,5 @@
             <button onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Hủy</button>
         </div>
     </form>
-</div>
-<div id="id02" class="modal">
-    <div class="modal-content-create cont-create">
-        <div class="container">
-            <div class="row">
-                <h1 class="text-center">Danh Sách Lớp</h1>
-                <hr>
-                <div class="col-md-4 product-grid">
-                    <div class="swiper-slide">
-                        <div class="slider-box">
-                            <p class="time">Lớp</p>
-                            <div class="img-box">
-                                <img src="~/pages/create/img/icon.jpeg">
-                            </div>
-                            <p class="detail">Chủ đề : học nói</p>
-                            <div class="cart">
-                                <a href="#">vào lớp</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 product-grid">
-                    <div class="swiper-slide">
-                        <div class="slider-box">
-                            <p class="time">Lớp</p>
-                            <div class="img-box">
-                                <img src="~/pages/create/img/icon.jpeg">
-                            </div>
-                            <p class="detail">Chủ đề : học nói</p>
-                            <div class="cart">
-                                <a href="#">vào lớp</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 product-grid">
-                    <div class="swiper-slide">
-                        <div class="slider-box">
-                            <p class="time">Lớp</p>
-                            <div class="img-box">
-                                <img src="~/pages/create/img/icon.jpeg">
-                            </div>
-                            <p class="detail">Chủ đề : học nói</p>
-                            <div class="cart">
-                                <a href="#">vào lớp</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 product-grid">
-                    <div class="swiper-slide">
-                        <div class="slider-box">
-                            <p class="time">Lớp</p>
-                            <div class="img-box">
-                                <img src="~/pages/create/img/icon.jpeg">
-                            </div>
-                            <p class="detail">Chủ đề : học nói</p>
-                            <div class="cart">
-                                <a href="#">vào lớp</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="close-set">
-                <input type="button" onclick="document.getElementById('id02').style.display='none'" class="btn btn-primary" value="Cancel" />
-            </div>
-        </div>
-    </div>
 </div>
 <script src="~/pages/create/bootstrap.min.js"></script>

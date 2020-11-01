@@ -204,3 +204,33 @@ button:hover {
 .close-set{
     margin-bottom: 20px;
 }
+.link-follow {
+    float: right;
+    margin-right: 20px;
+}
+
+.link-follow ul li {
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: 5px;
+}
+
+.link-follow ul li a {
+    background: #888 none repeat scroll 0 0;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 18px;
+    display: inline-block;
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    transition: .5s;
+    width: 52px;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.link-follow ul li a:hover {
+    background: #333333 none repeat scroll 0 0;
+    color: #fff;
+}
