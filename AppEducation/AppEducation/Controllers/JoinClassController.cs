@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using AppEducation.Models;
 using Microsoft.AspNetCore.Authorization;
 using AppEducation.Models.Users;
+using AppEducation.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace AppEducation.Controllers
 {
@@ -17,16 +19,18 @@ namespace AppEducation.Controllers
     {
         private readonly AppIdentityDbContext _context;
         private readonly ILogger<HomeController> _logger;
+        private readonly IHubContext<ConnectionHub> _hubContext;
 
-        public JoinClassController(ILogger<HomeController> logger, AppIdentityDbContext context)
+        public JoinClassController(ILogger<HomeController> logger, AppIdentityDbContext context, IHubContext<ConnectionHub> hubContext )
         {
             _logger = logger;
             _context = context;
+            _hubContext = hubContext;
         }
 
         public IActionResult Index()
         {
-
+                
             return View();
         }
         public IActionResult Create()
@@ -60,7 +64,8 @@ namespace AppEducation.Controllers
             }
             return View();
         }
-        [Authorize]
+        //[Authorize]
+        [AllowAnonymous]
         public IActionResult Present(Classes cls)
         {
             return View(cls);

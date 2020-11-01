@@ -18,14 +18,15 @@
                                     <div id="teacher-part">
                                         <p class="user-title">Giáo viên</p>
                                         <div class="contact-list-panel">
-                                            <ul id="contacts" class="list-group list-group-striped">
+                                            <ul id="contacts-teacher" class="list-group list-group-striped">
+                                            hihi
                                             </ul>
                                         </div>
                                     </div>
                                     <div id="student-part">
-                                        <p class="user-title">Học sinh (<span class="user-count">1</span>)</p>
+                                        <p class="user-title">Học sinh (<span class="user-count"></span>)</p>
                                         <div class="contact-list-panel">
-                                            <ul id="contacts" class="list-group list-group-striped">
+                                            <ul id="contacts-student" class="list-group list-group-striped">
                                             </ul>
                                         </div>
                                     </div>
@@ -112,9 +113,10 @@
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="btn-border" data-dismiss="modal">
-                                                            Thoát khỏi lớp
-                                                        </button><button class="btn-full" data-dismiss="modal">
+                                                        <button  class="btn-border">
+                                                            <a asp-action="Create" asp-controller="JoinClass">Thoát khỏi lớp</a>
+                                                        </button>
+                                                        <button class="btn-full" data-dismiss="modal">
                                                             Đóng
                                                         </button>
                                                     </div>
@@ -142,8 +144,9 @@
                                             <video id="screen" autoplay="autoplay"></video>
                                         </div>
                                         <div>
-                                            <button class="btn-lg btn-warning">Reset</button>
+                                            <button class="btn-lg btn-warning">Chọn trình chiếu</button>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -216,32 +219,10 @@
                                                     <div id="chat-group" class="tab-pane fade">
                                                         <div>
                                                             <ul id="chat-userlist" class="list-group chat-userlist">
-                                                                <a class="nav-link" data-toggle="tab"
+                                                                <!-- Show list user in chatbox -->
+                                                                <a id="" class="nav-link" data-toggle="tab"
                                                                 href="#chat-particular">
-                                                                    <li class="contact-list-item">
-                                                                        <div class="group-icon-device">
-                                                                            <div class="box-icon-device">
-                                                                                <div class="icon-user icon-teacher">
-                                                                                    <svg
-                                                                                    class="icon icon-px_ic_teacher">
-                                                                                        <use
-                                                                                        xlink:href="#icon-px_ic_teacher">
-                                                                                        </use>
-                                                                                    </svg>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="contact-list-item-name">
-                                                                            <span title="TEACHER" class="user-role">
-                                                                                <span
-                                                                                class="role-device">TEACHER</span><br>
-                                                                            </span>
-                                                                            <span class="user-name"
-                                                                            title=" Milicevic Olivera-131224">
-                                                                                Milicevic Olivera-131224</span>
-                                                                        </div>
-                                                                        <div class="box-number-noti"></div>
-                                                                    </li>
+
                                                                 </a>
                                                             </ul>
                                                         </div>
