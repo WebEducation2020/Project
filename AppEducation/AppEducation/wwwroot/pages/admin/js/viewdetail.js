@@ -1,8 +1,9 @@
 $(document).ready(function(){
     $('a.details').click(function() {
         var id = $(this).attr("id");
+        console.log(id);
         $.ajax({
-            url: '/Admin/ProfileUser', type: "GET", dataType: json,
+            url: '/Admin/DetailAsJson', type: "GET", dataType: json,
             data: {id:id},
             success: function (data) {
                 content = "<h3>User Detail</h3>";
@@ -18,10 +19,12 @@ $(document).ready(function(){
                 $('#details').html(content);
             },
             error: function (xhr,status,error){
+                console.log(data);
                 alert(xhr.responseText);
                 alert(status);
                 alert(error);
             }
         });
+
     });
 });

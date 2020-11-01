@@ -27,7 +27,7 @@ namespace AppEducation.Controllers
         }
         public ViewResult UserManager() => View(userManager.Users);
 
-        public JsonResult DetailAsJson(string id)
+        public async Task<JsonResult> DetailAsJson(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
