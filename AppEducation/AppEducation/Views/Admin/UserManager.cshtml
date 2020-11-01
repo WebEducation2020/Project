@@ -4,6 +4,10 @@
     ViewData["Title"] = "Index";
     
 }
+@section Head{
+    <link type="text/css" rel="stylesheet" href="~/pages/admin/css/viewdetails.css"/>
+}
+
 @section Content{
 <div class="right__content">
     <div class="right__title">Danh Sách Người Dùng</div>
@@ -17,7 +21,6 @@
                         <th>ID</th>
                         <th>User Name</th>
                         <th style="text-align: left;">Email</th>
-
                         <th>Modify</th>
                     </tr>
                 </thead>
@@ -41,8 +44,7 @@
                                 <td data-label="Email" style="text-align: left;">@user.Email</td>
                                 <td data-label="Modify">
                                     <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                                        <a class="btn btn-sm btn-primary" asp-action="Details"
-                                        asp-route-id="@user.Id">Details</a>
+                                        <a id="@user.Id" class="details btn btn-sm btn-primary"   onclick="document.getElementById('id02').style.display='block'">Details</a>
                                         <button type="submit" class="btn btn-sm btn-danger">
                                             Delete
                                         </button>
@@ -65,7 +67,23 @@
                 </tfoot>
             </table>
         </div>
-     
+       
+
+        </div>
+    </div>
+</div>
+<div id="id02" class="modal">
+    <div class="modal-content-create cont-create">
+        <div class="container">
+            <div class="row">
+                <div class="close-set text-right ">
+                <h1 class="text-center">Thông tin chi tiết</h1> <hr>
+                <input class="btn btn-lg" type="button" onclick="document.getElementById('id02').style.display='none'" class="btn btn-primary" value="Thoát" />
+                </div>
+                <div id="details"></div>
+            </div>
+        </div>
     </div>
 </div>
 }
+
