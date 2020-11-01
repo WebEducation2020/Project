@@ -368,20 +368,20 @@ const countStudent = (userList) => {
     return result;
 }
 // update lại danh sách thành viên trong lớp 
-wsconn.on('updateUserList', (userList) => {
-    console.log("update list users " + JSON.stringify(userList));
+wsconn.on('updateUserList', (UserCalls) => {
+    console.log("update list users " + JSON.stringify(UserCalls));
     var listUserTag = document.querySelector("#chat-userlist");
     var strTmp1 = "";
     var strTmp2 = "";
     var strTmp3 = "";
-    userList.forEach(user => {
+    UserCalls.forEach(user => {
         if (user.isCaller) {
             strTmp1 += "<li class=\"contact-list-item\">\
                             <div class=\"group-icon-device\">\
                                 <div class=\"box-icon-device\">\
                                     <div class=\"icon-network connect-good\"></div>\
                                     <div class=\"icon-user icon-teacher\">\
-                                            <svg class=\"icon icon-px_ic_teacher\">\
+                                            <svg class=\"icon icon-px_ic_teacher\"><i class=\"fas fa-user-edit\"></i>\
                                             </svg>\
                                     </div>\
                                 </div>\
@@ -389,7 +389,7 @@ wsconn.on('updateUserList', (userList) => {
                             <div class=\"contact-list-item-name\">\
                                 <span data-title=\"teacher\" class=\"user-role\">\
                                 <span class=\"role-device\">teacher</span><br></span>\
-                                <span class=\"user-name\" title=\""+ user.userName +"\">" + user.userName + "</span>\
+                                <span class=\"user-name\" title=\""+ user.fullName +"\">" + user.fullName + "</span>\
                             </div>\
                         </li>";
 
@@ -398,14 +398,14 @@ wsconn.on('updateUserList', (userList) => {
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
                         <div class=\"icon-user icon-teacher\">\
-                            <svg class=\"icon icon-px_ic_teacher\"><use xlink:href=\"#icon-px_ic_teacher\"></use></svg>\
+                            <svg class=\"icon icon-px_ic_teacher\"><i class=\"fas fa-user-edit\"></i></svg>\
                         </div>\
                     </div>\
                  </div>\
             <div class=\"contact-list-item-name\">\
                 <span title=\"TEACHER\" class=\"user-role\">\
                     <span class=\"role-device\">TEACHER</span><br></span>\
-                    <span class=\"user-name\" title=\""+ user.username + "\">" + user.userName + "</span >\
+                    <span class=\"user-name\" title=\""+ user.fullName + "\">" + user.fullName + "</span >\
             </div>\
             <div class=\"box-number-noti\"></div></li></a>";
         }
@@ -415,16 +415,14 @@ wsconn.on('updateUserList', (userList) => {
                                 <div class=\"box-icon-device\">\
                                     <div class=\"icon-network connect-good\"></div>\
                                     <div class=\"icon-user icon-teacher\">\
-                                            <svg class=\"icon icon-px_ic__Device__Website\">\
-                                                <use xlink:href=\"#icon-px_ic__Device__Website\"></use>\
-                                            </svg>\
+                                            <svg class=\"icon icon-px_ic__Device__Website\"><i class=\"fas fa-user-graduate\"></i></svg>\
                                     </div>\
                                 </div>\
                             </div>\
                             <div class=\"contact-list-item-name\">\
                                 <span data-title=\"student\" class=\"user-role\">\
                                 <span class=\"role-device\">student</span><br>\
-                                </span><span class=\"user-name\" title=\""+ user.userName + "\"> "+ user.userName+ "</span>\
+                                </span><span class=\"user-name\" title=\""+ user.fullName + "\"> "+ user.fullName+ "</span>\
                             </div>\
                         </li>";
             strTmp2 += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID  + "\"); >\
@@ -432,21 +430,23 @@ wsconn.on('updateUserList', (userList) => {
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
                         <div class=\"icon-user icon-teacher\">\
-                            <svg class=\"icon icon-px_ic_teacher\"><use xlink:href=\"#icon-px_ic_teacher\"></use></svg>\
+                            <svg class=\"icon icon-px_ic_teacher\"><i class=\"fas fa-user-edit\"></i></svg>\
                         </div>\
                     </div>\
                  </div>\
             <div class=\"contact-list-item-name\">\
                 <span title=\"STUDENT\" class=\"user-role\">\
                     <span class=\"role-device\">STUDENT</span><br></span>\
-                    <span class=\"user-name\" title=\""+ user.username + "\">" + user.userName + "</span >\
+                    <span class=\"user-name\" title=\""+ user.fullName + "\">" + user.fullName + "</span >\
             </div>\
             <div class=\"box-number-noti\"></div></li></a>";
         }
     });
-    document.querySelector("#student-part").querySelector("span.user-count").innerHTML = countStudent(userList);
-    document.querySelector("#teacher-part").querySelector("#contacts").innerHTML = strTmp1;
-    document.querySelector("#student-part").querySelector("#contacts").innerHTML = strTmp3;
+    console.log(strTmp1)
+    console.log(strTmp3)
+    document.querySelector("#student-part").querySelector("span.user-count").innerHTML = countStudent(UserCalls);
+    document.querySelector("#contacts-teacher").innerHTML = strTmp1;
+    document.querySelector("#contacts-student").innerHTML = strTmp3;
     listUserTag.innerHTML = strTmp2;
 });
 // khi có một người mới vào phòng 

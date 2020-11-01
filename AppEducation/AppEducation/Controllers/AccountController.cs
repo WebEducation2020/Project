@@ -129,6 +129,16 @@ namespace AppEducation.Controllers {
           
         }
         #endregion 
+
+        #region Logout
+        [Authorize]
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
+        }
+        #endregion 
         [Authorize(Roles = "Student,Teacher")]
         public async Task<IActionResult> Profile(){
         

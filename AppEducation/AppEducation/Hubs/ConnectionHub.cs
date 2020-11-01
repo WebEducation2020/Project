@@ -183,6 +183,7 @@ namespace AppEducation.Hubs
                 await Clients.Client(u.ConnectionID).UpdateUserList(room.UserCalls);
             }
         }
+    
         private Room GetRoomByConnectionID(string cid)
         {
             Room matchingRoom = _rooms.SingleOrDefault(r => r.UserCalls.SingleOrDefault(u => u.ConnectionID == cid) != null);
