@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewData["Title"] - MTA EDUCATION</title>
-    <link rel="stylesheet" href="~/pages/profile/css/all.min.css">
-    <link rel="stylesheet" href="~/pages/profile/css/bootstrap.css">
-    <link rel="stylesheet" href="~/pages/profile/css/bootstrap.min.css">
+    @RenderSection("Head", required: false)
     <link rel="stylesheet" href="~/pages/profile/css/font.google.css">
     <link rel="stylesheet" href="~/pages/profile/css/OneSignalSDKStyles.css">
     <link rel="stylesheet" href="~/pages/profile/css/profile.css">
@@ -18,7 +16,7 @@
     <link rel="stylesheet" href="~/pages/profile/css/HeaderUser.css">
     <link rel="stylesheet" href="~/pages/profile/css/FooterUser.css">
     <link rel="stylesheet" href="~/pages/profile/css/MainUser.css">
-    @RenderSection("Head", required: false)
+    
 </head>
 
 <body>

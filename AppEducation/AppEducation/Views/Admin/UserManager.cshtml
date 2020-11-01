@@ -10,7 +10,7 @@
     <div class="right__table">
         <p class="right__tableTitle">Thông tin tài khoản</p>
         <div class="right__tableWrapper">
-            <table>
+            <table id="example1" class="table table-striped table-bordered table-sm"  cellspacing="0" >
                 <thead>
                     <tr>
                         <th>Order Number</th>
@@ -53,11 +53,19 @@
                         }
                     }
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>ID</th>
+                        <th>User Name</th>
+                        <th style="text-align: left;">Email</th>
+
+                        <th>Modify</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
-        <a href="" class="right__tableMore">
-            <p>Xem tất cả các người dùng online</p> <img src="assets/arrow-right-black.svg" alt="">
-        </a>
+     
     </div>
 </div>
 }

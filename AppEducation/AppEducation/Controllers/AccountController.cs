@@ -131,9 +131,8 @@ namespace AppEducation.Controllers {
         #endregion 
 
         #region Logout
-        [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken] 
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
