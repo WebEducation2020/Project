@@ -62,10 +62,10 @@ namespace AppEducation.Controllers
             {
                 Classes cls = _context.Classes.Find(joinClassInfor.NewClass.ClassID);
                 if (cls == null)
-                    return View();
+                    return RedirectToAction("Create","JoinClass", joinClassInfor);
                 return RedirectToAction("Present", "JoinClass", cls);
             }
-            return View();
+            return RedirectToAction("Create","JoinClass", joinClassInfor);
         }
         //[Authorize]
         [AllowAnonymous]
