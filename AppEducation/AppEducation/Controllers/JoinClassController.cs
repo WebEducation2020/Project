@@ -43,12 +43,12 @@ namespace AppEducation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles="Teacher")]
-        public IActionResult Create(JoinClassInfor joinClassInfor)
+        public async Task<IActionResult> Create(JoinClassInfor joinClassInfor)
         {
             if (ModelState.IsValid)
             {
                 _context.Classes.Add(joinClassInfor.NewClass);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Present", "JoinClass", joinClassInfor.NewClass);
             }
             return View();

@@ -36,7 +36,7 @@
                                     <div class="img-box">
                                         <img src="~/pages/create/img/icon.jpeg">
                                     </div>
-                                    <p class="detail">Chủ đề :  @classes.ClassName</p>
+                                    <p class="detail">Chủ đề : @classes.Topic</p>
                                     <div class="cart">
                                         <a asp-action="Join" asp-controller="JoinClass" data-toggle="modal" data-target="#modalForm">vào lớp</a>
                                     </div>
@@ -70,8 +70,8 @@
                     </div>
 
                     <div class="md-form mb-4">
-                        <input type="text" id="form2" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="form2" asp-for="NewClass.Topic">Chủ Đề</label>
+                        <input type="text" id="form1" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="form1" asp-for="NewClass.Topic">Chủ Đề</label>
                     </div>
 
                 </div>
