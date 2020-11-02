@@ -52,9 +52,14 @@ namespace AppEducation.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+
+           
             AppUser user = await userManager.FindByIdAsync(id);
+            context.UserProfiles.Remove(user.Profile);
+            await context.SaveChangesAsync();
             if (user != null)
-            {
+            {   
+                
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
