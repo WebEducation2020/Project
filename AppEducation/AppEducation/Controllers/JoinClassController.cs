@@ -56,11 +56,11 @@ namespace AppEducation.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles="Student")]
-        public IActionResult Join(Classes _class)
+        public IActionResult Join(JoinClassInfor joinClassInfor)
         {
             if (ModelState.IsValid)
             {
-                Classes cls = _context.Classes.Find(_class.ClassID);
+                Classes cls = _context.Classes.Find(joinClassInfor.NewClass.ClassID);
                 if (cls == null)
                     return View();
                 return RedirectToAction("Present", "JoinClass", cls);

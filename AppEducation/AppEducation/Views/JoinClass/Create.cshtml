@@ -85,7 +85,7 @@
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form class="modal-content" method="POST">
+        <form class="modal-content" asp-action="Join" asp-controller="JoinClass" method="POST">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">Nhập Mã Phòng</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -94,7 +94,7 @@
             </div>
             <div class="modal-body mx-3">
                 <div class="md-form mb-5">
-                    <input type="text" id="form3" class="form-control validate">
+                    <input   type="text" id="form3" class="form-control validate" asp-for="NewClass.ClassID">
                     <label data-error="wrong" data-success="right" for="form3">Mã Phòng</label>
             </div>
             <div class="modal-footer d-flex justify-content-center">
