@@ -23,6 +23,7 @@
                 <h1 class="text-center">Danh Sách Lớp</h1>
             </div>
             <hr>
+
             @* @foreach (Classes class in Model.AvailableClasses)
             {
                    <div class="col-md-3 product-grid">
@@ -42,6 +43,63 @@
             }
               *@
            
+
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 product-grid">
+                <div class="swiper-slide">
+                    <div class="slider-box">
+                        <p class="time">Lớp</p>
+                        <div class="img-box">
+                            <img src="~/pages/create/img/icon.jpeg">
+                        </div>
+                        <p class="detail">Chủ đề : học nói</p>
+                        <div class="cart">
+                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -77,6 +135,28 @@
                 </div>
             </form>
          
+    </div>
+</div>
+<div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" method="POST">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Nhập Mã Phòng</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <input type="text" id="form3" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="form3">Mã Phòng</label>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-indigo">Vào Lớp<i class="fas fa-paper-plane-o ml-1"></i></button>
+            </div>
+        </form>
+
     </div>
 </div>
 <script src="~/pages/create/bootstrap.min.js"></script>
