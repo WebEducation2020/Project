@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using AppEducation.Models;
 using AppEducation.Models.Users;
 using AppEducation.Hubs;
-
+using System.Text.Json.Serialization;
 namespace AppEducation
 {
     public class Startup

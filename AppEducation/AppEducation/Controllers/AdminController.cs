@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using AppEducation.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using System.Linq;
 namespace AppEducation.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -12,9 +15,11 @@ namespace AppEducation.Controllers
     {
         private UserManager<AppUser> userManager;
         private TotalInformation totalInfo;
+        private AppIdentityDbContext context;
         private List<Room> rooms;
-        public AdminController(UserManager<AppUser> usrMgr, List<Room> rms)
+        public AdminController(UserManager<AppUser> usrMgr, List<Room> rms, AppIdentityDbContext ctx)
         {
+            context = ctx;
             userManager = usrMgr;
             rooms = rms;
         }
@@ -27,16 +32,19 @@ namespace AppEducation.Controllers
         }
         public ViewResult UserManager() => View(userManager.Users);
 
-        public async Task<JsonResult> DetailAsJson(string id)
+        public async Task<JsonResult> detailasjson(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
+            
             if (user != null)
             {
-                return Json(user.Profile);
+                UserProfile profile =  context.UserProfiles.First( p => p.UserId == user.Id) ; 
+                string data =  JsonConvert.SerializeObject(profile);
+                return Json(data);
             }
             else
             {
-                return Json("");
+                return Json(null);
             }
         }
 

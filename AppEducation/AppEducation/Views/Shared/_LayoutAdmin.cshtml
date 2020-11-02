@@ -89,7 +89,6 @@
         </div>
   </div>
 
-  @RenderSection("Script", required: false)
   
   <!-- jQuery -->
 <script src="~/pages/admin/plugins/jquery/jquery.min.js"></script>
@@ -110,5 +109,7 @@
 <script src="~/pages/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="~/pages/admin/js/main.js"></script>
 <script src="~/pages/admin/js/table.js"></script>
+@RenderSection("Script", required: false)
+  
 </body>
 </html>
