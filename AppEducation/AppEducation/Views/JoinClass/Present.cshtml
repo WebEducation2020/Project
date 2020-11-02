@@ -19,7 +19,6 @@
                                         <p class="user-title">Giáo viên</p>
                                         <div class="contact-list-panel">
                                             <ul id="contacts-teacher" class="list-group list-group-striped">
-                                            hihi
                                             </ul>
                                         </div>
                                     </div>
@@ -173,7 +172,7 @@
                                         <div class=" vcr-box vcr-public-chat">
                                             <div class="tab">
                                                 <ul class="nav nav-tabs">
-                                                    <li class="nav-item active">
+                                                    <li id="public" class="nav-item active">
                                                         <a class="nav-link active" data-toggle="tab"
                                                         href="#chat-public">
                                                             <div class="box-icon-chat icon-public">
@@ -183,7 +182,7 @@
                                                             </div>Công khai
                                                         </a>
                                                     </li>
-                                                    <li class="nav-item">
+                                                    <li id="private" class="nav-item">
                                                         <a class="nav-link" data-toggle="tab" href="#chat-group">
                                                             <div class="box-icon-chat icon-public">
                                                                 <svg class="icon icon-px_ic__Option">
@@ -260,11 +259,11 @@
         </div>
     </div>
 </div>
-
 <script>
     const username = "@User.Identity.Name";
     console.log(username);
     const classid = "@Model.ClassID";
+    const isteacher = "@this.User.IsInRole("Teacher")";
 </script>
 <script>
     // Set the date we're counting down to

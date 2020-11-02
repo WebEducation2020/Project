@@ -22,9 +22,9 @@ namespace AppEducation.Hubs
             _rooms = rooms;
             _context = context;
         }
-        public async Task Join(string username, string classid)
+        public async Task Join(string username, string classid,bool isCaller)
         {
-            UserCall usr = new UserCall { FullName = username, ConnectionID = Context.ConnectionId ,IsCaller =false,InCall= false};
+            UserCall usr = new UserCall { FullName = username, ConnectionID = Context.ConnectionId ,IsCaller = isCaller,InCall= false};
             Classes clr = _context.Classes.Find(classid);
             if (clr == null)
             {
@@ -36,7 +36,6 @@ namespace AppEducation.Hubs
                 Room room = GetRoomByClassID(classid);
                 if (room == null)
                 {
-                    usr.IsCaller = true;
                     _rooms.Add(new Room
                     {
                         RoomIF = clr,
@@ -52,12 +51,11 @@ namespace AppEducation.Hubs
                     await Clients.Client(usr.ConnectionID).initDevices(usr);
                     room.UserCalls.ForEach(async u =>
                     {
-                        if( u != usr)
+                        if (u != usr)
                         {
                             await Clients.Client(u.ConnectionID).NotifyNewMember(usr);
                         }
                     });
-                    
                 }
             }
         }

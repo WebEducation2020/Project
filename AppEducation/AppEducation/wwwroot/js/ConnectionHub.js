@@ -39,14 +39,16 @@ let isCaller = false;
 var connections = {};
 var localDataChannels = {};
 var remoteDataChannels = {};
-
+var isChatPublic = true;
+var isChatPrivate = false;
+let PartnerChatConnectionID;
 // khởi chạy hub với hàm start(), khi client kết nối sẽ gọi tới hàm Join Trong connectionHub.cs vs tham sô là username 
 // và classid 
-const initialize = async () => {
+const Join = () => {
     console.log("Start connection for hub!")
     wsconn.start() // when this succeeds, fulfilling the returned promise
-        .then(async () => {
-            await wsconn.invoke("Join", username, classid)
+        .then(() => {
+            wsconn.invoke("Join", username, classid, isCaller)
                 .catch((err) => {
                     console.log("Join Fail | " + err);
                 });
@@ -54,12 +56,14 @@ const initialize = async () => {
         .catch(err => console.log(err));
 };
 // khi page load xong, gọi tới hàm initialize để khởi chạy Hub
-document.addEventListener("DOMContentLoaded", async () => {
-    console.log("Ready for Hub");
-    await initialize();
+document.addEventListener("DOMContentLoaded", () => {
+    if (isteacher == "True") {
+        isCaller = true;
+    }
+    initializeDevices();
 });
 // hàm này gọi khi luồng media từ Màn hình đc lấy ra và đính vào thẻ video để hiển thị nội dung chia sẻ
-const callbackDisplayMediaSuccess = async (stream) => {
+const callbackDisplayMediaSuccess = (stream) => {
     console.log("WebRTC: got screen media stream");
     var screen = document.querySelector("#screen");
     screenStream = stream;
@@ -85,7 +89,7 @@ const callbackOnaddtrackScreen = async (e) => {
 
 // tương tự với luồng từ camera 
 
-const callbackUserMediaSuccess = async (stream) => {
+const callbackUserMediaSuccess = (stream) => {
     console.log("WebRTC: got camera media stream");
     var camera = document.querySelector("#camera");
     cameraStream = stream;
@@ -93,7 +97,7 @@ const callbackUserMediaSuccess = async (stream) => {
     localcamera = new MediaStream(stream.getTracks());
 }
 //tuong tu vơi audio
-const callbackAudioMediaSuccess = async (stream) => {
+const callbackAudioMediaSuccess = (stream) => {
     console.log("WebRTC: got audio media stream");
     var camera = document.querySelector("#camera");
     localaudio = new MediaStream(stream.getTracks());
@@ -105,25 +109,30 @@ const callbackAudioMediaSuccess = async (stream) => {
     }
 }
 // hàm này thực hiện khởi tạo các luồn video,screen, audio.
-const initializeDevices = async (UserCall) => {
-    console.log(JSON.stringify(UserCall));
+const initializeDevices = () => {
     console.log('WebRTC: InitializeUserMedia: ');
     if (isCaller) { // nếu là giáo viên sẽ chia sẻ cả camera và màn hình
-        await navigator.mediaDevices.getDisplayMedia(screenConstraints) //screen
+        navigator.mediaDevices.getDisplayMedia(screenConstraints) //screen
             .then((stream) => callbackDisplayMediaSuccess(stream))
             .catch(err => console.log(err));
-        await navigator.mediaDevices.getUserMedia(cameraConstraints)    //camera
+        navigator.mediaDevices.getUserMedia(cameraConstraints)    //camera
             .then((stream) => callbackUserMediaSuccess(stream))
             .catch(err => console.log(err));
-        await navigator.mediaDevices.getUserMedia(audioConstraints)
-            .then(stream => callbackAudioMediaSuccess(stream))
+        navigator.mediaDevices.getUserMedia(audioConstraints)
+            .then(stream => {
+                callbackAudioMediaSuccess(stream);
+                Join();
+            })
             .catch(err => console.log(err));
     }
     else { // học sinh
         localcamera = new MediaStream();
         localscreen = new MediaStream();
-        await navigator.mediaDevices.getUserMedia(audioConstraints)     //audio
-            .then(stream => callbackAudioMediaSuccess(stream))
+        navigator.mediaDevices.getUserMedia(audioConstraints)     //audio
+            .then(stream => {
+                callbackAudioMediaSuccess(stream);
+                Join();
+            })
             .catch(err => console.log(err));
     }
 }
@@ -346,11 +355,7 @@ const initiateOffer = async (partnerClientId) => {
         }).catch(err => console.error('WebRTC: Error while setting local description', err));
     }).catch(err => console.error('WebRTC: Error while creating offer', err));
 }
-// khi hub yêu càu khời tạo devices cho client 
-wsconn.on("initDevices", async (UserCall) => {
-    isCaller = UserCall.isCaller; // nếu là giáo viên iscaller = true , nếu là học sinh iscaller = false
-    await initializeDevices(UserCall);
-});
+
 //đếm giáo viên - k cần thiêt :) 
 const countTeacher = (userList) => {
     var result = 0;
@@ -442,18 +447,18 @@ wsconn.on('updateUserList', (UserCalls) => {
             <div class=\"box-number-noti\"></div></li></a>";
         }
     });
-    console.log(strTmp1)
-    console.log(strTmp3)
     document.querySelector("#student-part").querySelector("span.user-count").innerHTML = countStudent(UserCalls);
     document.querySelector("#contacts-teacher").innerHTML = strTmp1;
     document.querySelector("#contacts-student").innerHTML = strTmp3;
     listUserTag.innerHTML = strTmp2;
 });
 // khi có một người mới vào phòng 
-wsconn.on("NotifyNewMember",async (newMember) => {
+wsconn.on("NotifyNewMember", (newMember) => {
     console.log("New member !");
-    await wsconn.invoke("CallUser",newMember) // thực thi các cuộc goi kết nối tới người mới 
-        .catch(err => console.log(err));
+    if (localaudio && localcamera) {
+        wsconn.invoke("CallUser", newMember) // thực thi các cuộc goi kết nối tới người mới 
+            .catch(err => console.log(err));
+    }
 });
 // cuoc goi toi từ phía callingUser
 wsconn.on('incomingCall', async (callingUser) => {
@@ -552,23 +557,16 @@ const receiveMessage = (message, elementTag) => {
 }
 
 
-document.querySelector("div#chat-public").querySelector("textarea.text-area").addEventListener('keypress', (e) => {
-    if (e.key == "Enter") {
-        var messageTextArea = document.querySelector("div#chat-public").querySelector("textarea.text-area");
-        const message = messageTextArea.value;
-        for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
-            localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
-        };
-        messageTextArea.value = "";
-        addnewMessageForMe(message, document.querySelector("div#chatconversation"));
-    }
-});
+
 const getLocalDataChannel = (connectionID) => {
     return localDataChannels[connectionID] != null ? localDataChannels[connectionID] : null;
 }
 const getRemoteDataChannel = (connectionID) => {
     return remoteDataChannels[connectionID] != null ? remoteDataChannels[connectionID] : null;
 }
+
+
+
 const addEvent = (connectionID) => {
     var localDtChannel = getLocalDataChannel(connectionID);
     var remoteDtChannel = getRemoteDataChannel(connectionID);
@@ -583,3 +581,17 @@ const addEvent = (connectionID) => {
         }
     });
 }
+document.querySelector("textarea.text-area").addEventListener('keypress', (e) => {
+    if ("nav-item active" == document.querySelector("li#public").getAttribute("class")) {
+        if (e.key == "Enter") {
+            var messageTextArea = document.querySelector("textarea.text-area");
+            const message = messageTextArea.value;
+            for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
+                localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
+            };
+            messageTextArea.value = "";
+            addnewMessageForMe(message, document.querySelector("div#chatconversation"));
+        }
+    }
+    else if ("nav-item active" == document.querySelector) {}
+});
