@@ -90,7 +90,7 @@
 <div class="modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <form class="modal-content" method="post" asp-action="Create" asp-controller="JoinClass">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">Đăng Kí Lớp</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -99,25 +99,25 @@
             </div>
             <div class="modal-body mx-3">
                 <div class="md-form mb-5">
-                    <input type="text" id="form3" class="form-control validate">
+                    <input type="text" id="form3" class="form-control validate" asp-for="ClassID">
                     <label data-error="wrong" data-success="right" for="form3">Mã Phòng</label>
                 </div>
 
                 <div class="md-form mb-4">
                     <input type="email" id="form2" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="form2">Tên Lớp</label>
+                    <label data-error="wrong" data-success="right" for="form2" asp-for="ClassName">Tên Lớp</label>
                 </div>
 
                 <div class="md-form mb-4">
                     <input type="email" id="form2" class="form-control validate">
-                    <label data-error="wrong" data-success="right" for="form2">Chủ Đề</label>
+                    <label data-error="wrong" data-success="right" for="form2" asp-for="Topic">Chủ Đề</label>
                 </div>
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-indigo">Tạo Lớp<i class="fas fa-paper-plane-o ml-1"></i></button>
+                <button type="submit" class="btn btn-indigo">Tạo Lớp<i class="fas fa-paper-plane-o ml-1"></i></button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <script src="~/pages/create/bootstrap.min.js"></script>
