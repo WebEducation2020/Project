@@ -23,62 +23,25 @@
                 <h1 class="text-center">Danh Sách Lớp</h1>
             </div>
             <hr>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#">vào lớp</a>
+            @* @foreach (Classes class in Model.AvailableClasses)
+            {
+                   <div class="col-md-3 product-grid">
+                    <div class="swiper-slide">
+                        <div class="slider-box">
+                            <p class="time">Lớp</p>
+                            <div class="img-box">
+                                <img src="~/pages/create/img/icon.jpeg">
+                            </div>
+                            <p class="detail">Chủ đề : @class.ClassName</p>
+                            <div class="cart">
+                                <a asp-action="Join" asp-controller="JoinClass">vào lớp</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
+              *@
+           
         </div>
     </div>
 </section>

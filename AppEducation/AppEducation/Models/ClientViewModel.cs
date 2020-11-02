@@ -6,7 +6,7 @@ using AppEducation.Models.Users;
 namespace AppEducation.Models
 {
   public class JoinClassInfor {
-      public List<Room> AvailableRooms {get; set;}
+      public List<Classes> AvailableClasses {get; set;}
       public Classes NewClass {get; set;}
   }
 }

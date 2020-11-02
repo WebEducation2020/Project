@@ -35,7 +35,9 @@ namespace AppEducation.Controllers
         }
         public IActionResult Create()
         {
-            return View();
+            JoinClassInfor joinClassInfor = new JoinClassInfor();
+            _context.Classes.ToList().ForEach( x => joinClassInfor.AvailableClasses.Add(x));
+            return View(joinClassInfor);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
