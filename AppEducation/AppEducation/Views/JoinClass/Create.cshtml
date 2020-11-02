@@ -23,83 +23,28 @@
                 <h1 class="text-center">Danh Sách Lớp</h1>
             </div>
             <hr>
-
-            @* @foreach (Classes class in Model.AvailableClasses)
-            {
-                   <div class="col-md-3 product-grid">
-                    <div class="swiper-slide">
-                        <div class="slider-box">
-                            <p class="time">Lớp</p>
-                            <div class="img-box">
-                                <img src="~/pages/create/img/icon.jpeg">
+                @if(Model.AvailableClasses.Count() == 0)
+                {
+                    <div> <h2> No available class online </h2> </div>
+                }else{
+                    @foreach (Classes classes in Model.AvailableClasses.ToList())
+                    {
+                        <div class="col-md-3 product-grid">
+                            <div class="swiper-slide">
+                                <div class="slider-box">
+                                    <p class="time">Lớp</p>
+                                    <div class="img-box">
+                                        <img src="~/pages/create/img/icon.jpeg">
+                                    </div>
+                                    <p class="detail">Chủ đề :  @classes.ClassName</p>
+                                    <div class="cart">
+                                        <a asp-action="Join" asp-controller="JoinClass" data-toggle="modal" data-target="#modalForm">vào lớp</a>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="detail">Chủ đề : @class.ClassName</p>
-                            <div class="cart">
-                                <a asp-action="Join" asp-controller="JoinClass">vào lớp</a>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            }
-              *@
-           
-
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 product-grid">
-                <div class="swiper-slide">
-                    <div class="slider-box">
-                        <p class="time">Lớp</p>
-                        <div class="img-box">
-                            <img src="~/pages/create/img/icon.jpeg">
-                        </div>
-                        <p class="detail">Chủ đề : học nói</p>
-                        <div class="cart">
-                            <a href="#" data-toggle="modal" data-target="#modalForm">vào lớp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    }
+                }
         </div>
     </div>
 </section>

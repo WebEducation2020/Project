@@ -35,8 +35,9 @@ namespace AppEducation.Controllers
         }
         public IActionResult Create()
         {
+            IEnumerable<Classes> classes = _context.Classes;
             JoinClassInfor joinClassInfor = new JoinClassInfor();
-            _context.Classes.ToList().ForEach( x => joinClassInfor.AvailableClasses.Add(x));
+            joinClassInfor.AvailableClasses = classes;
             return View(joinClassInfor);
         }
         [HttpPost]
