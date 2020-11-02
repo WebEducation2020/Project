@@ -55,7 +55,7 @@ namespace AppEducation.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Student")]
+        [Authorize(Roles="Student,Teacher")]
         public IActionResult Join(JoinClassInfor joinClassInfor)
         {
             if (ModelState.IsValid)
