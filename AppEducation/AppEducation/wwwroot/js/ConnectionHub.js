@@ -292,7 +292,6 @@ const initializeConnection = (partnerClientId) => {
         // sự kiện khi bên kia nhận được tin nhắn 
         remotedataChannel.onmessage = (e) => {
             var data = JSON.parse(e.data);
-            console.log(data.message.length);
             if (data.type == "particular") { // nếu là nhắn tin riêng
                 receiveMessage(data.message, document.querySelector("#chat-particular").querySelector("#chatconversation"))
             }
@@ -518,9 +517,8 @@ const consoleLogger = (val) => {
 // 3 sự kiện tắt bật mic, cam, screen
 document.querySelector("#mic").addEventListener("click", () => {
     console.log("turn on/off mic");
-    var cameraStream = document.querySelector("#camera").srcObject;
-    var AudioTrack = cameraStream.getAudioTracks()[0];
-    AudioTrack.enabled = !AudioTrack.enabled;
+    var localaudiotrack = localaudio.getAudioTracks()[0];
+    localaudiotrack.enabled = !localaudiotrack.enabled;
 });
 
 document.querySelector("#cam").addEventListener("click", () => {
@@ -528,6 +526,13 @@ document.querySelector("#cam").addEventListener("click", () => {
     var cameraStream = document.querySelector("#camera").srcObject;
     var cameraTrack = cameraStream.getVideoTracks()[0];
     cameraTrack.enabled = !cameraTrack.enabled;
+});
+document.querySelector("#speaker").addEventListener("click", () => {
+    console.log("turn on/off speaker");
+    var remotetracks = remoteAudio.getAudioTracks();
+    remotetracks.forEach(track => {
+        track.enabled = !track.enabled;
+    });
 });
 async function getConnectedDevices(type) {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -568,19 +573,22 @@ const getRemoteDataChannel = (connectionID) => {
 
 
 const addEvent = (connectionID) => {
-    var localDtChannel = getLocalDataChannel(connectionID);
-    var remoteDtChannel = getRemoteDataChannel(connectionID);
-    var messageBox = document.querySelector("#chat-particular").querySelector("textarea.text-area");
-    messageBox.addEventListener("keypress", function sendMessage(e){
-        if (e.key == "Enter") {
-            var messageBox = document.querySelector("#chat-particular").querySelector("textarea.text-area").value;
-            localDtChannel.send(JSON.stringify({ "message": messageBox.value, "type": "particular" }));
-
-            addnewMessageForMe(messageBox.value, document.querySelector("#chat-particular").querySelector("#chatconversation"));
-            messageBox.value = "";
-        }
-    });
+    PartnerChatConnectionID = connectionID;
+    isChatPrivate = true;
+    isChatPublic = false;
+    document.querySelector("textarea.text-area").disabled = false;
+    
 }
+document.querySelector("li#public").addEventListener("click", e => {
+    isChatPublic = true;
+    isChatPrivate = false;
+    document.querySelector("textarea.text-area").disabled = false;
+});
+document.querySelector("li#private").addEventListener("click", e => {
+    isChatPublic = false;
+    isChatPrivate = false;
+    document.querySelector("textarea.text-area").disabled = true;
+})
 document.querySelector("textarea.text-area").addEventListener('keypress', (e) => {
     if ("nav-item active" == document.querySelector("li#public").getAttribute("class")) {
         if (e.key == "Enter") {
@@ -590,8 +598,17 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
                 localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
             };
             messageTextArea.value = "";
-            addnewMessageForMe(message, document.querySelector("div#chatconversation"));
+            addnewMessageForMe(message, document.querySelector("#chat-public").querySelector("#chatconversation"));
         }
     }
-    else if ("nav-item active" == document.querySelector) {}
+    else if ("nav-item active" == document.querySelector("li#private").getAttribute("class") && isChatPrivate && !isChatPublic) {
+        if (e.key == "Enter") {
+            var localDtChannel = getLocalDataChannel(PartnerChatConnectionID);
+            var messageTextArea = document.querySelector("textarea.text-area");
+            const message = messageTextArea.value;
+            localDtChannel.send(JSON.stringify({ "message": message, "type": "particular" }));
+            messageTextArea.value = "";
+            addnewMessageForMe(message, document.querySelector("#chat-particular").querySelector("#chatconversation"));
+        }
+    }
 });
