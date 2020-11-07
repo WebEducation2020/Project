@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 const isDebugging = true;
 
 var hubUrl = document.location.pathname + 'ConnectionHub';
@@ -136,7 +137,6 @@ const initializeDevices = () => {
             .catch(err => console.log(err));
     }
 }
-
 // cấu hình ICE candidate (cái này mô tả các giao thức và định tuyến cần thiết lập cho webrtc để kế nối
 // ngang hành) cho kết nối
 const receivedCandidateSignal = async (connection, partnerClientId, candidate) => {
@@ -293,7 +293,7 @@ const initializeConnection = (partnerClientId) => {
         remotedataChannel.onmessage = (e) => {
             var data = JSON.parse(e.data);
             if (data.type == "particular") { // nếu là nhắn tin riêng
-                receiveMessage(data.message, document.querySelector("#chat-particular").querySelector("#chatconversation"))
+                receiveMessage(data.message, document.querySelector("#" + PartnerChatConnectionID).querySelector("#chatconversation"))
             }
             else if (data.type == "public") { // nếu là nhắn tin cho tất cả mọi người trong lớp học 
                 receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"));
@@ -396,8 +396,8 @@ wsconn.on('updateUserList', (UserCalls) => {
                                 <span class=\"user-name\" title=\""+ user.fullName +"\">" + user.fullName + "</span>\
                             </div>\
                         </li>";
-
-            strTmp2 += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID + "\"); >\
+            if (user.fullName != username) {
+                strTmp2 += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"" + user.connectionID + "\" href=\"#" + user.connectionID + "\" onclick=addEvent(\"" + user.connectionID + "\"); >\
             <li class=\"contact-list-item\">\
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
@@ -412,6 +412,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                     <span class=\"user-name\" title=\""+ user.fullName + "\">" + user.fullName + "</span >\
             </div>\
             <div class=\"box-number-noti\"></div></li></a>";
+            }
         }
         else {
             strTmp3 += "<li class=\"contact-list-item\">\
@@ -429,7 +430,8 @@ wsconn.on('updateUserList', (UserCalls) => {
                                 </span><span class=\"user-name\" title=\""+ user.fullName + "\"> "+ user.fullName+ "</span>\
                             </div>\
                         </li>";
-            strTmp2 += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID  + "\"); >\
+            if (user.fullName != username) {
+                strTmp2 += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#P" + user.connectionID + "\" onclick=addEvent(\"" + user.connectionID + "\"); >\
             <li class=\"contact-list-item\">\
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
@@ -444,6 +446,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                     <span class=\"user-name\" title=\""+ user.fullName + "\">" + user.fullName + "</span >\
             </div>\
             <div class=\"box-number-noti\"></div></li></a>";
+            }
         }
     });
     document.querySelector("#student-part").querySelector("span.user-count").innerHTML = countStudent(UserCalls);
@@ -451,8 +454,16 @@ wsconn.on('updateUserList', (UserCalls) => {
     document.querySelector("#contacts-student").innerHTML = strTmp3;
     listUserTag.innerHTML = strTmp2;
 });
+const makeNewBoxChatPrivate = (connectionID) => {
+    var tmp = "<div id=\"P" + connectionID + "\"><div id=\"sideToolbarContainerChat\">\
+            <div id=\"chat_container\" data-userid-private=\"0\" class=\"sideToolbarContainer__inner\">\
+                <div id=\"chatconversation\">\
+                </div></div></div></div>";
+    document.querySelector("#chat-particular").innerHTML += tmp;
+}
 // khi có một người mới vào phòng 
 wsconn.on("NotifyNewMember", (newMember) => {
+    makeNewBoxChatPrivate(newMember.connectionID);
     console.log("New member !");
     if (localaudio && localcamera) {
         wsconn.invoke("CallUser", newMember) // thực thi các cuộc goi kết nối tới người mới 
@@ -585,10 +596,16 @@ document.querySelector("li#public").addEventListener("click", e => {
     document.querySelector("textarea.text-area").disabled = false;
 });
 document.querySelector("li#private").addEventListener("click", e => {
+    document.querySelector("#P" + PartnerChatConnectionID).style.display = "block";
     isChatPublic = false;
     isChatPrivate = false;
     document.querySelector("textarea.text-area").disabled = true;
-})
+});
+document.querySelector("a#bk-icon").addEventListener("click", e => {
+    isChatPublic = false;
+    isChatPrivate = false;
+    document.querySelector("textarea.text-area").disabled = true;
+});
 document.querySelector("textarea.text-area").addEventListener('keypress', (e) => {
     if ("nav-item active" == document.querySelector("li#public").getAttribute("class")) {
         if (e.key == "Enter") {
@@ -608,7 +625,7 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             const message = messageTextArea.value;
             localDtChannel.send(JSON.stringify({ "message": message, "type": "particular" }));
             messageTextArea.value = "";
-            addnewMessageForMe(message, document.querySelector("#chat-particular").querySelector("#chatconversation"));
+            addnewMessageForMe(message, document.querySelector("#P" + PartnerChatConnectionID).querySelector("#chatconversation"));
         }
     }
 });
