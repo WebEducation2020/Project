@@ -163,6 +163,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="vcrx-item-box vcrx-chat">
                                 <div class="box-chat box-list">
                                     <div class="vcr-body-chat">
@@ -207,7 +208,7 @@
                                                         <div>
                                                             <div id="sideToolbarContainerChat">
                                                                 <div id="chat_container" data-userid-private="0"
-                                                                class="sideToolbarContainer__inner">
+                                                                     class="sideToolbarContainer__inner">
                                                                     <div id="chatconversation">
                                                                     </div>
 
@@ -221,6 +222,15 @@
                                                                 <!-- Show list user in chatbox -->
                                                             </ul>
                                                         </div>
+                                                    </div>
+                                                    <div class="text-bar">
+                                                        <progress id="sendProgress" max="0" value="0"></progress>
+                                                        <input type="file" id="fileInput" name="files"/>
+                                                        <input type="button" id="sendFile" value="Send File" />
+                                                        <a id="download" ></a>
+                                                        <textarea class="text-area" spellcheck="false" id="usermsg"
+                                                                  data-i18n="[placeholder]chat.messagebox"
+                                                                  placeholder="Nhập tin nhắn"></textarea>
                                                     </div>
                                                     <div id="chat-particular" class="tab-pane">
                                                         <a id="bk-icon" class="nav-link" data-toggle="tab" href="#chat-group">
@@ -241,11 +251,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-bar">
-                                        <textarea class="text-area" spellcheck="false" id="usermsg"
-                                        data-i18n="[placeholder]chat.messagebox"
-                                        placeholder="Nhập tin nhắn"></textarea>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

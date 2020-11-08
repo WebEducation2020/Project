@@ -42,7 +42,12 @@ var localDataChannels = {};
 var remoteDataChannels = {};
 var isChatPublic = true;
 var isChatPrivate = false;
-let PartnerChatConnectionID;
+let PartnerChatConnectionID; 
+let myConnectionID;
+var fileInput = document.querySelector("input#fileInput");
+var sendFileButton = document.querySelector("input#sendFile");
+var sendProgress = document.querySelector("progress#sendProgress");
+var downloadAnchor = document.querySelector("a#download");
 // khởi chạy hub với hàm start(), khi client kết nối sẽ gọi tới hàm Join Trong connectionHub.cs vs tham sô là username 
 // và classid 
 const Join = () => {
@@ -53,6 +58,8 @@ const Join = () => {
                 .catch((err) => {
                     console.log("Join Fail | " + err);
                 });
+            wsconn.invoke("getConnectionID")
+                .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
 };
@@ -278,7 +285,7 @@ const initializeConnection = (partnerClientId) => {
     console.log('WebRTC: Initializing connection...');
     var connection = new RTCPeerConnection(peerConnectionConfig);
     // tạo Kênh dữ liệu để chat 
-    var LocaldataChannel = connection.createDataChannel("chat-publish");
+    var LocaldataChannel = connection.createDataChannel("chat");
     LocaldataChannel.binaryType = "arraybuffer";
     LocaldataChannel.addEventListener('open', event => {
         console.log("open datachanel");
@@ -288,21 +295,35 @@ const initializeConnection = (partnerClientId) => {
     });
     connection.addEventListener('datachannel', (event) => {
         var remotedataChannel = event.channel;
-        remotedataChannel.binaryType = "arraybuffer";
+        console.log(remotedataChannel);
         // sự kiện khi bên kia nhận được tin nhắn 
-        remotedataChannel.onmessage = (e) => {
-            var data = JSON.parse(e.data);
-            if (data.type == "particular") { // nếu là nhắn tin riêng
-                receiveMessage(data.message, document.querySelector("#" + PartnerChatConnectionID).querySelector("#chatconversation"))
-            }
-            else if (data.type == "public") { // nếu là nhắn tin cho tất cả mọi người trong lớp học 
-                receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"));
-            }
-            else if (data.type == "group") { // nhắn tin trong nhóm 
-                receiveMessage(data.message, document.querySelector("#chat-group").querySelector("#chatconversation"));
+        if (remotedataChannel.label == "chat") {
+            remotedataChannel.binaryType = "arraybuffer";
+            remotedataChannel.onmessage = (e) => {
+                var data = JSON.parse(e.data);
+                console.log(data.connectionID);
+                if (data.type == "particular") { // nếu là nhắn tin riêng
+                    if (!document.querySelector("#P" + data.connectionID)) {
+                        makeNewBoxChatPrivate(data.connectionID);
+                    }
+                    receiveMessage(data.message, document.querySelector("#P" + data.connectionID).querySelector("#chatconversation"))
+                }
+                else if (data.type == "public") { // nếu là nhắn tin cho tất cả mọi người trong lớp học 
+                    receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"));
+                }
+                else if (data.type == "group") { // nhắn tin trong nhóm 
+                    receiveMessage(data.message, document.querySelector("#chat-group").querySelector("#chatconversation"));
+                }
             }
         }
-        remoteDataChannels[partnerClientId] = remotedataChannel;
+        else if (remotedataChannel.label == "send-file") {
+            let receiveSize = 0;
+            let receiveBuffer = [];
+            receiveChannelCallBack(remotedataChannel,receiveSize,receiveBuffer);
+        }
+        remotedataChannel.onclose = (e) => {
+            console.log(`Closed data channel with label: ${receiveChannel.label}`);
+        }
     });
     localDataChannels[partnerClientId] = LocaldataChannel;
     //
@@ -371,6 +392,10 @@ const countStudent = (userList) => {
     })
     return result;
 }
+wsconn.on("getConnectionID", (callingUser) => {
+    console.log("My connection ID : " + callingUser.connectionID);
+    myConnectionID = callingUser.connectionID;
+});
 // update lại danh sách thành viên trong lớp 
 wsconn.on('updateUserList', (UserCalls) => {
     console.log("update list users " + JSON.stringify(UserCalls));
@@ -463,7 +488,6 @@ const makeNewBoxChatPrivate = (connectionID) => {
 }
 // khi có một người mới vào phòng 
 wsconn.on("NotifyNewMember", (newMember) => {
-    makeNewBoxChatPrivate(newMember.connectionID);
     console.log("New member !");
     if (localaudio && localcamera) {
         wsconn.invoke("CallUser", newMember) // thực thi các cuộc goi kết nối tới người mới 
@@ -567,6 +591,7 @@ const receiveMessage = (message, elementTag) => {
             <div class=\"chatmessage chatmessageReceived\">\
                 <div class=\"username remoteuser\"></div>\
                 <div class=\"timestamp\">19:10:01</div>\
+                <div class=\"timestamp\">19:10:01</div>\
                 <div class=\"usermessage\"><p class=\"userMessageContentReceived\">" + message +"</p></div>\
             </div>\
         </div>";
@@ -588,7 +613,6 @@ const addEvent = (connectionID) => {
     isChatPrivate = true;
     isChatPublic = false;
     document.querySelector("textarea.text-area").disabled = false;
-    
 }
 document.querySelector("li#public").addEventListener("click", e => {
     isChatPublic = true;
@@ -596,7 +620,6 @@ document.querySelector("li#public").addEventListener("click", e => {
     document.querySelector("textarea.text-area").disabled = false;
 });
 document.querySelector("li#private").addEventListener("click", e => {
-    document.querySelector("#P" + PartnerChatConnectionID).style.display = "block";
     isChatPublic = false;
     isChatPrivate = false;
     document.querySelector("textarea.text-area").disabled = true;
@@ -614,8 +637,10 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
                 localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
             };
-            messageTextArea.value = "";
             addnewMessageForMe(message, document.querySelector("#chat-public").querySelector("#chatconversation"));
+            messageTextArea.value = "";
+            if (e.preventDefault) e.preventDefault();
+            return false;
         }
     }
     else if ("nav-item active" == document.querySelector("li#private").getAttribute("class") && isChatPrivate && !isChatPublic) {
@@ -623,9 +648,133 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             var localDtChannel = getLocalDataChannel(PartnerChatConnectionID);
             var messageTextArea = document.querySelector("textarea.text-area");
             const message = messageTextArea.value;
-            localDtChannel.send(JSON.stringify({ "message": message, "type": "particular" }));
-            messageTextArea.value = "";
+            localDtChannel.send(JSON.stringify({ "message": message, "type": "particular", "connectionID": myConnectionID }));
+            
+            if (!document.querySelector("#P" + PartnerChatConnectionID)) {
+                makeNewBoxChatPrivate(PartnerChatConnectionID);
+            }
             addnewMessageForMe(message, document.querySelector("#P" + PartnerChatConnectionID).querySelector("#chatconversation"));
+            messageTextArea.value = "";
+            if (e.preventDefault) e.preventDefault();
+            return false;
         }
     }
 });
+
+// ******************************* Send File *********************************//
+
+var handleFileInputChange = async () => {
+    const file = fileInput.files[0];
+    if (!file) {
+        console.log("NO file chosen !");
+    } else {
+        sendFileButton.disabled = false;
+    }
+};
+var closeDataChannels = (dataChannel) => {
+    console.log('Closing data channels');
+    dataChannel.close();
+    console.log(`Closed data channel with label: ${dataChannel.label}`);
+};
+var sendData = (sendChannel) => {
+    const file = fileInput.files[0];
+    console.log(`File is ${[file.name, file.size, file.type, file.lastModified].join(' ')}`);
+    if (file.size === 0) {
+        //statusMessage.textContent = 'File is empty, please select a non-empty file';
+        closeDataChannels(sendChannel);
+        return;
+
+    }
+    sendProgress.max = file.size;
+    const chunkSize = 16384;
+    let offset = 0;
+    var fileReader = new FileReader();
+    fileReader.addEventListener('error', error => console.error('Error reading file:', error));
+    fileReader.addEventListener('abort', event => console.log('File reading aborted:', event));
+    fileReader.addEventListener('load', e => {
+        console.log('FileRead.onload ', e);
+        sendChannel.send(e.target.result);
+        offset += e.target.result.byteLength;
+        sendProgress.value = offset;
+        if (offset < file.size) {
+            readSlice(offset);
+        }
+        else if (offset == file.size) {
+            sendChannel.send(JSON.stringify({ "type": "done", "filename": file.name }));
+        }
+    });
+    const readSlice = o => {
+        console.log('readSlice ', o);
+        const slice = file.slice(offset, o + chunkSize);
+        fileReader.readAsArrayBuffer(slice);
+    };
+    readSlice(0);
+}
+var createDataChannels = () => {
+    for (var conn in connections) {
+        console.log(connections[conn]);
+        var fileDtChannel = connections[conn].createDataChannel("send-file");
+        fileDtChannel.binaryType = "arraybuffer";
+        fileDtChannel.addEventListener("open", (e) => {
+            const readyState = fileDtChannel.readyState;
+            console.log(`Send channel state is: ${readyState}`);
+            if (readyState === 'open') {
+                sendData(fileDtChannel);
+            }
+        });
+        fileDtChannel.addEventListener('close', (e) => {
+            const readyState = fileDtChannel.readyState;
+            console.log(`Send channel state is: ${readyState}`);
+        });
+        fileDtChannel.addEventListener('error', error => console.error('Error in sendChannel:', error));
+        fileDtChannel.onmessage = e => {
+            console.log(e.data);
+        };
+    }
+    sendFileButton.disabled = true;
+    fileInput.disabled = true;
+}
+function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChannel) {
+    console.log(event.data);
+
+    if (event.data.byteLength) {
+        console.log("Received Message :" + event.data.byteLength );
+        receiveBuffer.push(event.data);
+        receiveSize += event.data.byteLength;
+        //sendProgress.value = receiveSize;
+    }
+    else{
+        var data = JSON.parse(event.data);
+        console.log(data);
+        const received = new Blob(receiveBuffer);
+        receiveBuffer = [];
+        downloadAnchor.href = URL.createObjectURL(received);
+        downloadAnchor.download = data.filename;
+        downloadAnchor.textContent =
+            `Click to download '${data.filename}' (${receiveSize} bytes)`;
+        downloadAnchor.style.display = 'block';
+
+        //closeDataChannels(receiveChannel);
+    }
+};
+function onReceiveChannelStateChange(receiveChannel) {
+    const readyState = receiveChannel.readyState;
+    console.log(`Receive channel state is: ${readyState}`);
+}
+var receiveChannelCallBack = (receiveChannel,receiveSize,receiveBuffer) => {
+    console.log('Receive Channel Callback');
+    receiveChannel.binaryType = "arraybuffer";
+    receiveChannel.onmessage = e => onReceiveMessageCallback(e,receiveSize,receiveBuffer,receiveChannel);
+    receiveChannel.onopen = onReceiveChannelStateChange(receiveChannel);
+    receiveChannel.onclose = onReceiveChannelStateChange(receiveChannel);
+    receiveSize = 0;
+    downloadAnchor.textContent = '';
+    downloadAnchor.removeAttribute('download');
+    if (downloadAnchor.href) {
+        URL.revokeObjectURL(downloadAnchor.href);
+        downloadAnchor.removeAttribute('href');
+    }
+};
+
+fileInput.addEventListener("change", handleFileInputChange, false);
+sendFileButton.addEventListener("click", createDataChannels);
