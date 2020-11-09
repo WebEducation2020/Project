@@ -171,6 +171,12 @@ namespace AppEducation.Hubs
             // These folks are in a call together, let's let em talk WebRTC
             await Clients.Client(targetConnectionId).ReceiveSignal(callingUser, signal);
         }
+        public async Task getConnectionID()
+        {
+            Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
+            UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
+            await Clients.Client(Context.ConnectionId).getConnectionID(callingUser);
+        }
 
         #region Private Helpers
 
@@ -202,6 +208,7 @@ namespace AppEducation.Hubs
         Task CallAccepted(UserCall callingUser);
         Task CallDeclined(UserCall u, string v);
         Task CallEnded(UserCall targetConnectionId, string v);
+        Task getConnectionID(UserCall callingUser);
         Task IncomingCall(UserCall callingUser);
         Task initDevices(UserCall UserCalls);
         Task NotifyNewMember(UserCall usr);
