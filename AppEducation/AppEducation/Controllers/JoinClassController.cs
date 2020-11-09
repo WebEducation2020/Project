@@ -54,8 +54,7 @@ namespace AppEducation.Controllers
                 WriteCookies("ClassName", joinClassInfor.NewClass.ClassName, true);
                 WriteCookies("ClassID", joinClassInfor.NewClass.ClassID, true);
                 WriteCookies("Topic", joinClassInfor.NewClass.Topic, true);
-                Classes newClass = new Classes { ClassID = ComputeSha256Hash(joinClassInfor.NewClass.ClassID) , ClassName= joinClassInfor.NewClass.ClassName, Topic = joinClassInfor.NewClass.Topic};
-                return RedirectToAction("Present", "JoinClass", newClass);
+                return RedirectToAction("Present", "JoinClass", joinClassInfor.NewClass);
             }
             return View();
         }
@@ -73,8 +72,7 @@ namespace AppEducation.Controllers
                  WriteCookies("ClassName", cls.ClassName, true);
                  WriteCookies("ClassID", cls.ClassID, true);
                  WriteCookies("Topic", cls.Topic, true);
-                 Classes newClass = new Classes { ClassID = ComputeSha256Hash( cls.ClassID) , ClassName= cls.ClassName, Topic = cls.Topic};
-                 return RedirectToAction("Present", "JoinClass", newClass);
+                 return RedirectToAction("Present", "JoinClass", cls);
                 }
             }
             return RedirectToAction("Create","JoinClass", joinClassInfor);
