@@ -137,6 +137,7 @@ namespace AppEducation.Controllers
             ClassInfo.ClassID = Request.Cookies["ClassID"];
             ClassInfo.Topic =  Request.Cookies["Topic"];
             return ClassInfo;
+            // hihihi
         }
         #endregion 
 
