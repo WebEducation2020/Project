@@ -5,6 +5,7 @@
 @model Classes
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <div id="topica-vcr">
     <div class="AtlaskitThemeProvider__LegacyReset-sc-431dkp-0 tOoji">
         <div class="wrapper">
@@ -222,16 +223,7 @@
                                                                 <!-- Show list user in chatbox -->
                                                             </ul>
                                                         </div>
-                                                    </div>
-                                                    <div class="text-bar">
-                                                        <progress id="sendProgress" max="0" value="0"></progress>
-                                                        <input type="file" id="fileInput" name="files"/>
-                                                        <input type="button" id="sendFile" value="Send File" />
-                                                        <a id="download" ></a>
-                                                        <textarea class="text-area" spellcheck="false" id="usermsg"
-                                                                  data-i18n="[placeholder]chat.messagebox"
-                                                                  placeholder="Nhập tin nhắn"></textarea>
-                                                    </div>
+                                                    </div>                                                   
                                                     <div id="chat-particular" class="tab-pane">
                                                         <a id="bk-icon" class="nav-link" data-toggle="tab" href="#chat-group">
                                                             <div class="back">
@@ -251,7 +243,38 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                    <div class="text-bar">
+                                        <div class="modal fade" id="modalSubscriptionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 400px;height: 185px;">
+                                            <div style="padding: 10px;">
+                                                <div class="modal-header text-center">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-pane">
+                                                    <form>
+                                                        <div class="file-field input-field">
+                                                            <div class="btn">
+                                                                <span>
+                                                                    FILE
+                                                                </span>
+                                                                <input type="file" id="fileInput" name="files" />
+                                                            </div>
+                                                            <div class="file-path-wrapper">
+                                                                <input type="text" id="fileInput" class="file-path" placeholder="choose multiple file">
+                                                            </div>
+                                                            <input type="button" id="sendFile" value="Send File" class="btn" style="margin-left: 150px;" />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalSubscriptionForm">Chọn gửi tệp tin</a>
+                                        </div>
+                                        <a id="download"></a>
+                                        <textarea class="text-area" spellcheck="false" id="usermsg" data-i18n="[placeholder]chat.messagebox" placeholder="Nhập tin nhắn"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -306,7 +329,6 @@
     $(this).find('i').toggleClass('fas fa-bell-slash');
     });
 </script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/ConnectionHub.js"></script>
