@@ -47,7 +47,6 @@ let myConnectionID;
 var fileInput = document.querySelector("input#fileInput");
 var sendFileButton = document.querySelector("input#sendFile");
 var sendProgress = document.querySelector("progress#sendProgress");
-var downloadAnchor = document.querySelector("a#download");
 // khởi chạy hub với hàm start(), khi client kết nối sẽ gọi tới hàm Join Trong connectionHub.cs vs tham sô là username 
 // và classid 
 const Join = () => {
@@ -422,7 +421,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                             </div>\
                         </li>";
             if (user.fullName != username) {
-                strTmp2 += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"" + user.connectionID + "\" href=\"#" + user.connectionID + "\" onclick=addEvent(\"" + user.connectionID + "\"); >\
+                strTmp2 += "<a id=\"part-chat\" class=\"nav-link\" data-toggle=\"tab\" data-cid=\"#chat-particular\" href=\"#P" + user.connectionID + "\" onclick=addEvent(\"" + user.connectionID + "\"); >\
             <li class=\"contact-list-item\">\
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
@@ -456,7 +455,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                             </div>\
                         </li>";
             if (user.fullName != username) {
-                strTmp2 += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#P" + user.connectionID + "\" onclick=addEvent(\"" + user.connectionID + "\"); >\
+                strTmp2 += "<a class=\"nav-link\" data-toggle=\"tab\" datacid=\"" + user.connectionID + "\" href=\"#chat-particular\" onclick=addEvent(\"" + user.connectionID + "\"); >\
             <li class=\"contact-list-item\">\
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
@@ -591,11 +590,11 @@ const receiveMessage = (message, elementTag) => {
             <div class=\"chatmessage chatmessageReceived\">\
                 <div class=\"username remoteuser\"></div>\
                 <div class=\"timestamp\">19:10:01</div>\
-                <div class=\"timestamp\">19:10:01</div>\
                 <div class=\"usermessage\"><p class=\"userMessageContentReceived\">" + message +"</p></div>\
             </div>\
         </div>";
 }
+
 
 
 
@@ -613,6 +612,8 @@ const addEvent = (connectionID) => {
     isChatPrivate = true;
     isChatPublic = false;
     document.querySelector("textarea.text-area").disabled = false;
+    document.querySelector("#chat-group").style.display = "none";
+    document.querySelector("#chat-particular").style.display = "block";
 }
 document.querySelector("li#public").addEventListener("click", e => {
     isChatPublic = true;
@@ -623,12 +624,16 @@ document.querySelector("li#private").addEventListener("click", e => {
     isChatPublic = false;
     isChatPrivate = false;
     document.querySelector("textarea.text-area").disabled = true;
+    document.querySelector("#chat-group").style.display = "block";
+    document.querySelector("a#bk-icon").onclick = turnbackGroup;
 });
-document.querySelector("a#bk-icon").addEventListener("click", e => {
+const turnbackGroup = () => {
     isChatPublic = false;
     isChatPrivate = false;
     document.querySelector("textarea.text-area").disabled = true;
-});
+    document.querySelector("#chat-group").style.display = "block";
+    document.querySelector("#chat-particular").style.display = "none";
+};
 document.querySelector("textarea.text-area").addEventListener('keypress', (e) => {
     if ("nav-item active" == document.querySelector("li#public").getAttribute("class")) {
         if (e.key == "Enter") {
@@ -649,7 +654,7 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             var messageTextArea = document.querySelector("textarea.text-area");
             const message = messageTextArea.value;
             localDtChannel.send(JSON.stringify({ "message": message, "type": "particular", "connectionID": myConnectionID }));
-            
+            wsconn.invoke("Message", message, "particular", PartnerChatConnectionID);
             if (!document.querySelector("#P" + PartnerChatConnectionID)) {
                 makeNewBoxChatPrivate(PartnerChatConnectionID);
             }
@@ -676,6 +681,12 @@ var closeDataChannels = (dataChannel) => {
     dataChannel.close();
     console.log(`Closed data channel with label: ${dataChannel.label}`);
 };
+var addNewFile = (filename) => {
+    var tmp = "<div><a download href=\"\"><div><i class=\"fas fa-file-word\"></i></div>\
+                    <div><span>" + filename + "</span></div></a>\
+                </div>";
+    document.querySelector("#chat-public").querySelector("#chatconversation").innerHTML += tmp;
+}
 var sendData = (sendChannel) => {
     const file = fileInput.files[0];
     console.log(`File is ${[file.name, file.size, file.type, file.lastModified].join(' ')}`);
@@ -709,6 +720,7 @@ var sendData = (sendChannel) => {
         fileReader.readAsArrayBuffer(slice);
     };
     readSlice(0);
+    addNewFile(file.name);
 }
 var createDataChannels = () => {
     for (var conn in connections) {
@@ -734,6 +746,18 @@ var createDataChannels = () => {
     sendFileButton.disabled = true;
     fileInput.disabled = true;
 }
+var addNewFileRemote = (received, filename) => {
+    var tmp = "<div><a id=\"download\"><div><i class=\"fas fa-file-word\"></i></div>\
+                    <div><span>" + filename + "</span></div></a>\
+                </div>";
+    document.querySelector("#chat-public").querySelector("#chatconversation").innerHTML += tmp;
+    var downloadAnchor = document.querySelector("a#download");
+    downloadAnchor.href = URL.createObjectURL(received);
+    downloadAnchor.download = filename;
+    downloadAnchor.textContent = filename;
+    downloadAnchor.style.display = 'block';
+};
+
 function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChannel) {
     console.log(event.data);
 
@@ -741,20 +765,16 @@ function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChan
         console.log("Received Message :" + event.data.byteLength );
         receiveBuffer.push(event.data);
         receiveSize += event.data.byteLength;
-        //sendProgress.value = receiveSize;
+        sendProgress.value = receiveSize;
     }
     else{
         var data = JSON.parse(event.data);
         console.log(data);
         const received = new Blob(receiveBuffer);
         receiveBuffer = [];
-        downloadAnchor.href = URL.createObjectURL(received);
-        downloadAnchor.download = data.filename;
-        downloadAnchor.textContent =
-            `Click to download '${data.filename}' (${receiveSize} bytes)`;
-        downloadAnchor.style.display = 'block';
+        addNewFileRemote(received,data.filename);
 
-        //closeDataChannels(receiveChannel);
+        closeDataChannels(receiveChannel);
     }
 };
 function onReceiveChannelStateChange(receiveChannel) {
