@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using AppEducation.Models.Users;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace AppEducation.Controllers
 {
@@ -28,6 +30,9 @@ namespace AppEducation.Controllers
         
         public IActionResult Index()
         {
+            if(HttpContext.User.Identity.Name != null){
+                return RedirectToAction("Create","Account");
+            }
             return View();
         }
         #region Cookies 

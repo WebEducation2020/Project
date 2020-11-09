@@ -139,7 +139,7 @@ namespace AppEducation.Controllers
                             return RedirectToAction(loginModel.RequestPath ?? "Index", "Admin");
                         }
                         else
-                            return Redirect(loginModel.RequestPath ?? "/Account/Profile");
+                            return Redirect(loginModel.RequestPath ?? "/JoinClass/Create");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
