@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using AppEducation.Models.Users;
 using AppEducation.Hubs;
 using Microsoft.AspNetCore.SignalR;
-
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 namespace AppEducation.Controllers
 {
 
@@ -49,7 +51,11 @@ namespace AppEducation.Controllers
             {
                 _context.Classes.Add(joinClassInfor.NewClass);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Present", "JoinClass", joinClassInfor.NewClass);
+                WriteCookies("ClassName", joinClassInfor.NewClass.ClassName, true);
+                WriteCookies("ClassID", joinClassInfor.NewClass.ClassID, true);
+                WriteCookies("Topic", joinClassInfor.NewClass.Topic, true);
+                Classes newClass = new Classes { ClassID = ComputeSha256Hash(joinClassInfor.NewClass.ClassID) , ClassName= joinClassInfor.NewClass.ClassName, Topic = joinClassInfor.NewClass.Topic};
+                return RedirectToAction("Present", "JoinClass", newClass);
             }
             return View();
         }
@@ -63,15 +69,30 @@ namespace AppEducation.Controllers
                 Classes cls = _context.Classes.Find(joinClassInfor.NewClass.ClassID);
                 if (cls == null)
                     return RedirectToAction("Create","JoinClass", joinClassInfor);
-                return RedirectToAction("Present", "JoinClass", cls);
+                else {
+                 WriteCookies("ClassName", cls.ClassName, true);
+                 WriteCookies("ClassID", cls.ClassID, true);
+                 WriteCookies("Topic", cls.Topic, true);
+                 Classes newClass = new Classes { ClassID = ComputeSha256Hash( cls.ClassID) , ClassName= cls.ClassName, Topic = cls.Topic};
+                 return RedirectToAction("Present", "JoinClass", newClass);
+                }
             }
             return RedirectToAction("Create","JoinClass", joinClassInfor);
         }
-        //[Authorize]
+        [Authorize]
         [AllowAnonymous]
         public IActionResult Present(Classes cls)
         {
+            Classes oldClass = ReadCookies();
+            if(cls.ClassName == null){
+                if( oldClass != null){
+                    return View(oldClass);
+                }else{
+                    return RedirectToAction("Create","JoinClass");
+                }
+            }
             return View(cls);
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -79,5 +100,45 @@ namespace AppEducation.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        static string ComputeSha256Hash(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())  
+            {  
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));  
+  
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();  
+                for (int i = 0; i < bytes.Length; i++)  
+                {  
+                    builder.Append(bytes[i].ToString("x2"));  
+                }  
+                return builder.ToString();  
+            }  
+            
+        }
+        #region Cookies 
+        public void WriteCookies(string setting, string settingValue, bool isPersistent) {
+            if(isPersistent)
+            {
+                CookieOptions options= new CookieOptions();
+                options.Expires = DateTime.Now.AddMinutes(60);
+                Response.Cookies.Append(setting,settingValue, options);
+            }else
+            {
+                Response.Cookies .Append(setting, settingValue);
+            }
+            ViewBag.Message = "Cookie Written Successfully!";
+        }
+        public Classes ReadCookies(){
+            var ClassInfo = new Classes();
+            ClassInfo.ClassName  = Request.Cookies["ClassName"];
+            ClassInfo.ClassID = Request.Cookies["ClassID"];
+            ClassInfo.Topic =  Request.Cookies["Topic"];
+            return ClassInfo;
+        }
+        #endregion 
+
     }
 }

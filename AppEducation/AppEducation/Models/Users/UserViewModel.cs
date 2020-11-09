@@ -23,6 +23,7 @@ namespace AppEducation.Models.Users
         [Required]
         [MaxLength(30)]
         public string Password { get; set; }
+        public string RequestPath {get ; set;}
     }
     public class RegisterModel
     {

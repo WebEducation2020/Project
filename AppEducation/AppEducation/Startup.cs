@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using AppEducation.Models;
 using AppEducation.Models.Users;
 using AppEducation.Hubs;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 namespace AppEducation
 {
     public class Startup
@@ -26,7 +27,7 @@ namespace AppEducation
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -47,7 +48,13 @@ namespace AppEducation
 
             services.AddMvc();
             services.AddControllersWithViews();
-            services.AddAuthentication();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.None : CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+
+            });
+            services.AddHttpContextAccessor();
             services.AddAuthorization();
             services.AddSignalR();
             services.AddSingleton<List<Room>>();
@@ -71,6 +78,7 @@ namespace AppEducation
             app.UseStaticFiles();
             app.UseFileServer();
             app.UseRouting();
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
