@@ -48,13 +48,7 @@ namespace AppEducation
 
             services.AddMvc();
             services.AddControllersWithViews();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
-                options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.None : CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.Lax;
-
-            });
-            services.AddHttpContextAccessor();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddAuthorization();
             services.AddSignalR();
             services.AddSingleton<List<Room>>();
