@@ -12,8 +12,9 @@ using AppEducation.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authentication;
-namespace AppEducation.Controllers {
-    public class AccountController : Controller 
+namespace AppEducation.Controllers
+{
+    public class AccountController : Controller
     {
         private AppIdentityDbContext context;
         private UserManager<AppUser> userManager;
@@ -23,7 +24,7 @@ namespace AppEducation.Controllers {
         private IPasswordHasher<AppUser> passwordHasher;
         private readonly ILogger<AccountController> logger;
 
-        public AccountController(AppIdentityDbContext context, SignInManager<AppUser> signInManager, IPasswordHasher<AppUser> passwordHasher,  IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator ,UserManager<AppUser> userManager, ILogger<AccountController> logger)
+        public AccountController(AppIdentityDbContext context, SignInManager<AppUser> signInManager, IPasswordHasher<AppUser> passwordHasher, IUserValidator<AppUser> userValidator, IPasswordValidator<AppUser> passwordValidator, UserManager<AppUser> userManager, ILogger<AccountController> logger)
         {
             this.context = context;
             this.passwordValidator = passwordValidator;
@@ -33,9 +34,9 @@ namespace AppEducation.Controllers {
             this.logger = logger;
             this.signInManager = signInManager;
         }
-        [Authorize(Roles = "Student,Teacher")]
+        [Authorize(Roles = "Student, Teacher")]
         public IActionResult Index() => RedirectToAction("Profile");
-        
+
         #region Register method
         [AllowAnonymous]
         public IActionResult Register() => View();
@@ -43,15 +44,19 @@ namespace AppEducation.Controllers {
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel model) {
-            if(string.IsNullOrEmpty(model.Birthday)){
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (string.IsNullOrEmpty(model.Birthday))
+            {
                 ModelState.AddModelError(nameof(model.Birthday), "Please enter your birthday");
             }
-            if(ModelState.GetValidationState("Date") == ModelValidationState.Valid && DateTime.Now > Convert.ToDateTime(model.Birthday)) {
+            if (ModelState.GetValidationState("Date") == ModelValidationState.Valid && DateTime.Now > Convert.ToDateTime(model.Birthday))
+            {
                 ModelState.AddModelError(nameof(model.Birthday), "Please enter a date in the past");
             }
-            if(string.IsNullOrEmpty(model.Email)){
-                ModelState.AddModelError(nameof(model.Email),"Please enter your email");
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "Please enter your email");
 
             }
             if (ModelState.IsValid)
@@ -78,13 +83,16 @@ namespace AppEducation.Controllers {
                     AppUser usernew = await userManager.FindByNameAsync(user.UserName);
                     profile.UserId = usernew.Id;
                     context.UserProfiles.Add(profile);
-                    if(profile.Job == "Teacher"){
-                        var roleResult  = await userManager.AddToRoleAsync(usernew,"Teacher");
-                    }else{
+                    if (profile.Job == "Teacher")
+                    {
+                        var roleResult = await userManager.AddToRoleAsync(usernew, "Teacher");
+                    }
+                    else
+                    {
                         var roleResult = await userManager.AddToRoleAsync(usernew, "Student");
                     }
                     context.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -100,33 +108,44 @@ namespace AppEducation.Controllers {
 
         #region Login
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl){
-            ViewBag.returnUrl = returnUrl ;
+        public IActionResult Login(string returnUrl)
+        {
+            ViewBag.returnUrl = returnUrl;
             return View();
         }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel loginModel , string returnUrl) {
-            if(string.IsNullOrEmpty(loginModel.UserName)) {
+        public async Task<IActionResult> Login(LoginModel loginModel, string returnUrl)
+        {
+            if (string.IsNullOrEmpty(loginModel.UserName))
+            {
                 ModelState.AddModelError("", "Please enter your email or username");
             }
-
-            if(ModelState.IsValid){
+            if (string.IsNullOrEmpty(loginModel.Password))
+            {
+                ModelState.AddModelError("", "Please enter your password");
+            }
+            if (ModelState.IsValid)
+            {
                 AppUser user = await userManager.FindByNameAsync(loginModel.UserName);
-                if(user != null){
-                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false);
-                    if(result.Succeeded) {
-                        if(user.UserName == "admin")
-                            return RedirectToAction("Index","Admin");
+                if (user != null)
+                {
+                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, loginModel.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        if (user.UserName == "admin")
+                        {
+                            return RedirectToAction(loginModel.RequestPath ?? "Index", "Admin");
+                        }
                         else
-                            return Redirect(returnUrl ?? "/Account/Profile");
+                            return Redirect(loginModel.RequestPath ?? "/Account/Profile");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
             }
             return View(loginModel);
-          
+
         }
         #endregion 
 
@@ -136,21 +155,25 @@ namespace AppEducation.Controllers {
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
         #endregion 
         [Authorize(Roles = "Student,Teacher")]
-        public async Task<IActionResult> Profile(){
-        
+        public async Task<IActionResult> Profile()
+        {
+
             AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            UserProfile profile =  context.UserProfiles.First( p => p.UserId == currentUser.Id ) ;
+            UserProfile profile = context.UserProfiles.First(p => p.UserId == currentUser.Id);
             return View(profile);
         }
         [Authorize(Roles = "Student,Teacher")]
-        public IActionResult ChangeProfile(UserProfile profile){
-            if(ModelState.IsValid){
-                UserProfile  old = context.UserProfiles.First( p => p.Email == profile.Email);
-                if(old != null)
+        public IActionResult ChangeProfile(UserProfile profile)
+        {
+            if (ModelState.IsValid)
+            {
+                UserProfile old = context.UserProfiles.First(p => p.Email == profile.Email);
+                if (old != null)
                 {
                     old.FullName = profile.FullName;
                     old.Birthday = profile.Birthday;
@@ -159,10 +182,10 @@ namespace AppEducation.Controllers {
                     old.Sex = profile.Sex;
                     context.SaveChanges();
                 }
-             
+
             }
             return RedirectToAction("Profile");
         }
-        
+
     }
 }
