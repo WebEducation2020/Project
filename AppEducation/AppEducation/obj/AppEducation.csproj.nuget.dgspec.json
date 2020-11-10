@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
+    "D:\\WEB\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {}
   },
   "projects": {
-    "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
+    "D:\\WEB\\Project\\AppEducation\\AppEducation\\AppEducation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "projectUniqueName": "D:\\WEB\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
         "projectName": "AppEducation",
-        "projectPath": "D:\\SQl\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
+        "projectPath": "D:\\WEB\\Project\\AppEducation\\AppEducation\\AppEducation.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "D:\\SQl\\Project\\AppEducation\\AppEducation\\obj\\",
+        "outputPath": "D:\\WEB\\Project\\AppEducation\\AppEducation\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
