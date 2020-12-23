@@ -65,42 +65,33 @@
                             <div class="box-media-control">
                                 <div class="group-media-control">
                                     <div class="media-control">
-                                        <div title="Cam" id="cam" class="mic-control media-box">
-                                            <div class="sim-row-edit-icon" aria-hidden="true">
-                                                <i class="fa fa-eye"></i>
-                                            </div>
+                                        <div title="Cam" id="cam" class="sim-row-edit-icon mic-control media-box">
+                                            <i class="fa fa-eye"></i>
                                         </div>
-                                        <div title="Mic" id="mic" class="mic-control media-box">
-                                            <div class="sim-row-edit-icon1">
-                                                <i class="fa fa-microphone"></i>
-                                            </div>
+                                        <div title="Mic" id="mic" class="sim-row-edit-icon1 mic-control media-box">
+                                            <i class="fa fa-microphone"></i>
                                         </div>
-                                        <div title="Loa" id="speaker" class="volumn-control media-box">
-                                            <div class="sim-row-edit-icon2">
-                                                <i class="fa fa-bell"></i>
-                                            </div>
+                                        <div title="Loa" id="speaker" class="sim-row-edit-icon2 volumn-control media-box">
+                                            <i class="fa fa-bell"></i>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="box-header-tag">
-                                </span>
                             </div>
                             <div class="box-header-control">
                                 <div class="group-header-control">
                                     <div class="log-out">
                                         <button title="Đăng xuất" class="btn-logout" data-toggle="modal"
-                                        data-target="#myModallogOut">
+                                                data-target="#myModallogOut">
                                             <svg class="icon icon-px_ic__Logout">
                                                 <use xlink:href="#icon-px_ic__Logout"></use>
                                             </svg> Thoát
                                         </button>
-                                        <div id="myModallogOut" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
+                                        <div id="myModallogOut" class="modal fade" role="dialog" style="height:200px;width:300px;">
+                                            <div>
+                                                <div>
                                                     <div class="modal-header">
                                                         <button id="close" type="button" class="close"
-                                                        data-dismiss="modal" aria-label="Close">
+                                                                data-dismiss="modal" aria-label="Close">
                                                             <svg class="icon icon-px_ic___Delete">
                                                                 <use xlink:href="#icon-px_ic___Delete"></use>
                                                             </svg>
@@ -113,7 +104,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button  class="btn-border">
+                                                        <button class="btn-border">
                                                             <a asp-action="GetOutClass" asp-controller="JoinClass">Thoát khỏi lớp</a>
                                                         </button>
                                                         <button class="btn-full" data-dismiss="modal">
@@ -146,7 +137,7 @@
                                         <div>
                                             <button class="btn-lg btn-warning">Chọn trình chiếu</button>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +167,7 @@
                                                 <ul class="nav nav-tabs">
                                                     <li id="public" class="nav-item active">
                                                         <a class="nav-link active" data-toggle="tab"
-                                                        href="#chat-public">
+                                                           href="#chat-public">
                                                             <div class="box-icon-chat icon-public">
                                                                 <svg class="icon icon-px_ic__Chat">
                                                                     <use xlink:href="#icon-px_ic__Chat"></use>
@@ -222,7 +213,7 @@
                                                                 <!-- Show list user in chatbox -->
                                                             </ul>
                                                         </div>
-                                                    </div>                                                   
+                                                    </div>
                                                     <div id="chat-particular" class="tab-pane">
                                                         <a id="bk-icon" class="nav-link" data-toggle="tab" href="#chat-group">
                                                             <div class="back">
@@ -262,7 +253,10 @@
                                                             <div class="file-path-wrapper">
                                                                 <input type="text" id="fileInput" class="file-path" placeholder="choose multiple file">
                                                             </div>
-                                                            <input type="button" id="sendFile" value="Send File" class="btn" style="margin-left: 150px;" />
+                                                            @*<input type="button" id="sendFile" value="Send File" class="btn close" data-dismiss="modal" aria-label="Close" style="margin-left: 150px;" />*@
+                                                            <button type="button" id="sendFile" class="btn close" data-dismiss="modal" aria-label="Close" style="margin-left: 150px;">
+                                                                <span>Send File</span>
+                                                            </button>
                                                         </div>
                                                     </form>
                                                 </div>
