@@ -11,10 +11,11 @@ var peerConnectionConfig = { "iceServers": [{ "urls": "stun:stun.l.google.com:19
 var wsconn = new signalR.HubConnectionBuilder().withUrl("/ConnectionHub").build();
 //Tạo đối tượng video track -  cho phép show màn hình chính
 const screenConstraints = {
-    video: {  
-        width: 1080,
-        height: 720
-    },
+    video: {
+        width: 1280,
+        height:720,
+        displaySurface: "monitor"
+    }
 }
 // tạo đối tượng video track - camera of caller
 const cameraConstraints = {
@@ -45,8 +46,7 @@ var isChatPrivate = false;
 let PartnerChatConnectionID; 
 let myConnectionID;
 var fileInput = document.querySelector("input#fileInput");
-var sendFileButton = document.querySelector("input#sendFile");
-var sendProgress = document.querySelector("progress#sendProgress");
+var sendFileButton = document.querySelector("button#sendFile");
 // khởi chạy hub với hàm start(), khi client kết nối sẽ gọi tới hàm Join Trong connectionHub.cs vs tham sô là username 
 // và classid 
 const Join = () => {
@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // hàm này gọi khi luồng media từ Màn hình đc lấy ra và đính vào thẻ video để hiển thị nội dung chia sẻ
 const callbackDisplayMediaSuccess = (stream) => {
+    
     console.log("WebRTC: got screen media stream");
     var screen = document.querySelector("#screen");
     screenStream = stream;
@@ -119,7 +120,7 @@ const callbackAudioMediaSuccess = (stream) => {
 const initializeDevices = () => {
     console.log('WebRTC: InitializeUserMedia: ');
     if (isCaller) { // nếu là giáo viên sẽ chia sẻ cả camera và màn hình
-        navigator.mediaDevices.getDisplayMedia(screenConstraints) //screen
+        navigator.mediaDevices.getDisplayMedia({ video: true }) //screen
             .then((stream) => callbackDisplayMediaSuccess(stream))
             .catch(err => console.log(err));
         navigator.mediaDevices.getUserMedia(cameraConstraints)    //camera
@@ -580,7 +581,7 @@ const addnewMessageForMe = (message, elementTag) => {
     elementTag.innerHTML += "<div class=\"box-content-chat\">\
         <div class=\"chatmessage\">\
             <div class=\"username localuser\"></div>\
-            <div class=\"timestamp\">14:54:44</div>\
+            <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] +"</div>\
             <div class=\"usermessage\"><p class=\"userMessageContent\" >" + message +"</p></div>\
         </div></div>";
 }
@@ -589,7 +590,7 @@ const receiveMessage = (message, elementTag) => {
         <div class=\"box-content-chat\">\
             <div class=\"chatmessage chatmessageReceived\">\
                 <div class=\"username remoteuser\"></div>\
-                <div class=\"timestamp\">19:10:01</div>\
+                <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] + "</div>\
                 <div class=\"usermessage\"><p class=\"userMessageContentReceived\">" + message +"</p></div>\
             </div>\
         </div>";
@@ -639,13 +640,15 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
         if (e.key == "Enter") {
             var messageTextArea = document.querySelector("textarea.text-area");
             const message = messageTextArea.value;
-            for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
-                localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
-            };
-            addnewMessageForMe(message, document.querySelector("#chat-public").querySelector("#chatconversation"));
-            messageTextArea.value = "";
-            if (e.preventDefault) e.preventDefault();
-            return false;
+            if (message != "") {
+                for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
+                    localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
+                };
+                addnewMessageForMe(message, document.querySelector("#chat-public").querySelector("#chatconversation"));
+                messageTextArea.value = "";
+                if (e.preventDefault) e.preventDefault();
+                return false;
+            }
         }
     }
     else if ("nav-item active" == document.querySelector("li#private").getAttribute("class") && isChatPrivate && !isChatPublic) {
@@ -653,15 +656,17 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             var localDtChannel = getLocalDataChannel(PartnerChatConnectionID);
             var messageTextArea = document.querySelector("textarea.text-area");
             const message = messageTextArea.value;
-            localDtChannel.send(JSON.stringify({ "message": message, "type": "particular", "connectionID": myConnectionID }));
-            wsconn.invoke("Message", message, "particular", PartnerChatConnectionID);
-            if (!document.querySelector("#P" + PartnerChatConnectionID)) {
-                makeNewBoxChatPrivate(PartnerChatConnectionID);
+            if (message != "") {
+                localDtChannel.send(JSON.stringify({ "message": message, "type": "particular", "connectionID": myConnectionID }));
+                wsconn.invoke("Message", message, "particular", PartnerChatConnectionID);
+                if (!document.querySelector("#P" + PartnerChatConnectionID)) {
+                    makeNewBoxChatPrivate(PartnerChatConnectionID);
+                }
+                addnewMessageForMe(message, document.querySelector("#P" + PartnerChatConnectionID).querySelector("#chatconversation"));
+                messageTextArea.value = "";
+                if (e.preventDefault) e.preventDefault();
+                return false;
             }
-            addnewMessageForMe(message, document.querySelector("#P" + PartnerChatConnectionID).querySelector("#chatconversation"));
-            messageTextArea.value = "";
-            if (e.preventDefault) e.preventDefault();
-            return false;
         }
     }
 });
@@ -682,9 +687,13 @@ var closeDataChannels = (dataChannel) => {
     console.log(`Closed data channel with label: ${dataChannel.label}`);
 };
 var addNewFile = (filename) => {
-    var tmp = "<div><a download href=\"\"><div><i class=\"fas fa-file-word\"></i></div>\
-                    <div><span>" + filename + "</span></div></a>\
-                </div>";
+    var tmp = "<div class=\"box-content-chat\">\
+        <div class=\"chatmessage\">\
+            <div class=\"username localuser\"></div>\
+            <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] + "</div>\
+            <div class=\"usermessage\"><p class=\"userMessageContent\" ><a download href=\"\"><div><i class=\"fas fa-file-word\"></i></div>\
+                    <div><span>" + filename + "</span></div></a></p></div>\
+        </div></div>";
     document.querySelector("#chat-public").querySelector("#chatconversation").innerHTML += tmp;
 }
 var sendData = (sendChannel) => {
@@ -696,7 +705,7 @@ var sendData = (sendChannel) => {
         return;
 
     }
-    sendProgress.max = file.size;
+    //sendProgress.max = file.size;
     const chunkSize = 16384;
     let offset = 0;
     var fileReader = new FileReader();
@@ -706,12 +715,10 @@ var sendData = (sendChannel) => {
         console.log('FileRead.onload ', e);
         sendChannel.send(e.target.result);
         offset += e.target.result.byteLength;
-        sendProgress.value = offset;
-        if (offset < file.size) {
-            readSlice(offset);
-        }
-        else if (offset == file.size) {
+        //sendProgress.value = offset;
+        if (offset == file.size) {
             sendChannel.send(JSON.stringify({ "type": "done", "filename": file.name }));
+            callbackSendFileSuccess();
         }
     });
     const readSlice = o => {
@@ -743,13 +750,16 @@ var createDataChannels = () => {
             console.log(e.data);
         };
     }
-    sendFileButton.disabled = true;
-    fileInput.disabled = true;
+
 }
 var addNewFileRemote = (received, filename) => {
-    var tmp = "<div><a id=\"download\"><div><i class=\"fas fa-file-word\"></i></div>\
-                    <div><span>" + filename + "</span></div></a>\
-                </div>";
+    var tmp = "<div class=\"box-content-chat\">\
+        <div class=\"chatmessage\">\
+            <div class=\"username localuser\"></div>\
+            <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] + "</div>\
+            <div class=\"usermessage\"><p class=\"userMessageContent\" ><a id=\"download\"><div><i class=\"fas fa-file-word\"></i></div>\
+                    <div><span>" + filename + "</span></div></a></p></div>\
+        </div></div>";
     document.querySelector("#chat-public").querySelector("#chatconversation").innerHTML += tmp;
     var downloadAnchor = document.querySelector("a#download");
     downloadAnchor.href = URL.createObjectURL(received);
@@ -765,7 +775,7 @@ function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChan
         console.log("Received Message :" + event.data.byteLength );
         receiveBuffer.push(event.data);
         receiveSize += event.data.byteLength;
-        sendProgress.value = receiveSize;
+        
     }
     else{
         var data = JSON.parse(event.data);
@@ -798,3 +808,16 @@ var receiveChannelCallBack = (receiveChannel,receiveSize,receiveBuffer) => {
 
 fileInput.addEventListener("change", handleFileInputChange, false);
 sendFileButton.addEventListener("click", createDataChannels);
+
+const callbackSendFileSuccess = () => {
+    alert("Gui file thanh cong");
+}
+
+// ************************** Zoom ******************************//
+
+document.querySelector("#zoom").addEventListener("click", () => {
+    var video_element = document.querySelector("#screen");
+    if (video_element.requestFullscreen) {
+        video_element.requestFullscreen();
+    }
+});
