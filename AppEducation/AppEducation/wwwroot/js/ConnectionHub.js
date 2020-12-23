@@ -589,7 +589,7 @@ const receiveMessage = (message, elementTag) => {
     elementTag.innerHTML += "\
         <div class=\"box-content-chat\">\
             <div class=\"chatmessage chatmessageReceived\">\
-                <div class=\"username remoteuser\"></div>\
+                <div class=\"username remoteuser\">" + username  +"</div>\
                 <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] + "</div>\
                 <div class=\"usermessage\"><p class=\"userMessageContentReceived\">" + message +"</p></div>\
             </div>\
