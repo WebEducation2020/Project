@@ -17,6 +17,7 @@ namespace AppEducation.Models.Users{
         public DbSet<UserProfile> UserProfiles {get; set;}
 
         public DbSet<Classes> Classes { get; set; }
+        public DbSet<HistoryOfClass> HOClasses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,8 +33,10 @@ namespace AppEducation.Models.Users{
             // modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<Classes>()
                 .HasKey(t => t.ClassID);
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<HistoryOfClass>()
+                .HasKey(t => t.hocID);
 
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserProfile>().ToTable("UserProfiles");
             modelBuilder.Entity<UserProfile>().HasKey( t => t.UserProfileId);
           

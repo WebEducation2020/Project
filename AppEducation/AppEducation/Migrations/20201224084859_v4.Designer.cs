@@ -4,14 +4,16 @@ using AppEducation.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppEducation.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201224084859_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,21 +38,22 @@ namespace AppEducation.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("hocID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ClassID");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("hocID");
 
                     b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("AppEducation.Models.HistoryOfClass", b =>
                 {
-                    b.Property<string>("hocID")
+                    b.Property<string>("hocId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ClassID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("_classClassID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("endTime")
@@ -59,7 +62,9 @@ namespace AppEducation.Migrations
                     b.Property<DateTime>("startTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("hocID");
+                    b.HasKey("hocId");
+
+                    b.HasIndex("_classClassID");
 
                     b.ToTable("HOClasses");
                 });
@@ -306,10 +311,13 @@ namespace AppEducation.Migrations
                     b.HasOne("AppEducation.Models.Users.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("AppEducation.Models.HistoryOfClass", "HOC")
+            modelBuilder.Entity("AppEducation.Models.HistoryOfClass", b =>
+                {
+                    b.HasOne("AppEducation.Models.Classes", "_class")
                         .WithMany()
-                        .HasForeignKey("hocID");
+                        .HasForeignKey("_classClassID");
                 });
 
             modelBuilder.Entity("AppEducation.Models.Users.UserProfile", b =>

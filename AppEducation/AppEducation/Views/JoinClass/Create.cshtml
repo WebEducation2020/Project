@@ -39,8 +39,9 @@
                                     <div class="img-box">
                                         <img src="~/pages/create/img/icon.jpeg">
                                     </div>
-                                    <p class="detail">Chủ đề : @classes.Topic</p>
-                                    <p class="giaovien">Giao Vien : @classes.User.UserName</p>
+                                    <span class="detail">Chủ đề : @classes.Topic</span>
+                                    <span class="giaovien">Giao Vien : @classes.User.UserName</span>
+                                    <span class="online">Online: @classes.OnlineStudent</span>
                                     <div class="cart">
                                         <a asp-action="Join" asp-controller="JoinClass" data-toggle="modal" data-target="#modalForm">vào lớp</a>
                                     </div>

@@ -4,14 +4,16 @@ using AppEducation.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppEducation.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201224082203_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,32 +38,11 @@ namespace AppEducation.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("hocID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ClassID");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("hocID");
-
                     b.ToTable("Classes");
-                });
-
-            modelBuilder.Entity("AppEducation.Models.HistoryOfClass", b =>
-                {
-                    b.Property<string>("hocID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("endTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("startTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("hocID");
-
-                    b.ToTable("HOClasses");
                 });
 
             modelBuilder.Entity("AppEducation.Models.Users.AppUser", b =>
@@ -306,10 +287,6 @@ namespace AppEducation.Migrations
                     b.HasOne("AppEducation.Models.Users.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.HasOne("AppEducation.Models.HistoryOfClass", "HOC")
-                        .WithMany()
-                        .HasForeignKey("hocID");
                 });
 
             modelBuilder.Entity("AppEducation.Models.Users.UserProfile", b =>

@@ -132,28 +132,25 @@ namespace AppEducation.Hubs
             Room callingRoom = GetRoomByConnectionID(Context.ConnectionId);
             UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
             // if room is mine . Remove all user in call
+            
             if (callingRoom.UserCalls.Count == 1)
             {
                 // do something
-                Room room = GetRoomByConnectionID(callingUser.ConnectionID);
-                _context.Classes.Remove(_context.Classes.Find(room.RoomIF.ClassID));
+                _context.Classes.Find(callingRoom.RoomIF.ClassID).HOC.endTime = DateTime.Now;
+                _rooms.Remove(callingRoom);
                 await _context.SaveChangesAsync();
-            }
-            // do something if not
-            if (callingUser == null)
-            {
-                return;
             }
 
             // Send a hang up message to each user in the call, if there is one
             if (callingRoom != null)
             {
-                foreach(UserCall user in callingRoom.UserCalls.Where(u => u.ConnectionID != callingUser.ConnectionID))
+                foreach (UserCall user in callingRoom.UserCalls.Where(u => u.ConnectionID != callingUser.ConnectionID))
                 {
                     await Clients.Client(user.ConnectionID).CallEnded(callingUser, string.Format("{0} has hung up.", callingUser.FullName));
+
                 }
+                await SendUserListUpdate(callingRoom);
             }
-            await SendUserListUpdate(callingRoom);
         }
 
         // WebRTC Signal Handler

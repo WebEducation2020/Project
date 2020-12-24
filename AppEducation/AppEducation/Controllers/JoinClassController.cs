@@ -43,8 +43,8 @@ namespace AppEducation.Controllers
             IEnumerable<Classes> classes = _context.Classes;
             JoinClassInfor joinClassInfor = new JoinClassInfor();
             joinClassInfor.AvailableClasses = classes;
-            joinClassInfor.AvailableClasses.ToList().ForEach(async c => {
-                c.User = await userManager.FindByIdAsync(c.UserId);
+            joinClassInfor.AvailableClasses.ToList().ForEach( c => {
+                c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
             });
             return View(joinClassInfor);
         }
@@ -55,9 +55,14 @@ namespace AppEducation.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
                 joinClassInfor.NewClass.User = currentUser;
+                HistoryOfClass hoc = new HistoryOfClass
+                {
+                    hocID = joinClassInfor.NewClass.ClassID,
+                    startTime = DateTime.Now,
+                };
+                joinClassInfor.NewClass.HOC = hoc;
                 _context.Classes.Add(joinClassInfor.NewClass);
                 await _context.SaveChangesAsync();
                 WriteCookies("ClassName", joinClassInfor.NewClass.ClassName, true);
@@ -78,16 +83,17 @@ namespace AppEducation.Controllers
                 if (cls == null)
                     return RedirectToAction("Create","JoinClass", joinClassInfor);
                 else {
-                 WriteCookies("ClassName", cls.ClassName, true);
-                 WriteCookies("ClassID", cls.ClassID, true);
-                 WriteCookies("Topic", cls.Topic, true);
-                 return RedirectToAction("Present", "JoinClass", cls);
+                    WriteCookies("ClassName", cls.ClassName, true);
+                    WriteCookies("ClassID", cls.ClassID, true);
+                    WriteCookies("Topic", cls.Topic, true);
+                    cls.OnlineStudent += 1;
+                    _context.SaveChanges();
+                    return RedirectToAction("Present", "JoinClass", cls);
                 }
             }
             return RedirectToAction("Create","JoinClass", joinClassInfor);
         }
         [Authorize]
-        [AllowAnonymous]
         public IActionResult Present(Classes cls)
         {
             Classes oldClass = ReadCookies();
