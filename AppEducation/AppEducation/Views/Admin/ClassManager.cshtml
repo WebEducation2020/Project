@@ -35,37 +35,41 @@
                         <th>Order Number</th>
                         <th>ID</th>
                         <th>Class Name</th>
-                        <th >Topic</th>
+                        <th>Topic</th>
                         <th>Active</th>
                         <th>Online Student</th>
+                        <th>Modify</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @{ 
-                        var i = 0;
-                        foreach (Classes cls in Model)
-                        {
-                            <tr>
-                                <td data-label="Order Number">@i</td>
-                                <td data-label="ID">@cls.ClassID</td>
-                                <td data-label="ClassName">@cls.ClassName</td>
-                                <td data-label="Topic" >@cls.Topic</td>
-                                <td data-label="Active" >@cls.isActive</td> 
-                                <td data-label="OnlineStudent">@cls.OnlineStudent</td>
-                                <!--<td data-label="Modify">-->
-                                    @*@Html.ActionLink("Edit", "Edit", "Admin", new { id = user.Id }) |
-                                    @Html.ActionLink("Details", "Details", "Admin", new { id = user.Id })
-                                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
-                                    </form>*@
-                                <!--</td>-->
-                            </tr>
-                            i++;
-                        }
+                @{ 
+                    var i = 0;
+                    foreach (Classes cls in Model)
+                    {
+                        <tr>
+                            <td data-label="Order Number">@i</td>
+                            <td data-label="ID">@cls.ClassID</td>
+                            <td data-label="ClassName">@cls.ClassName</td>
+                            <td data-label="Topic">@cls.Topic</td>
+                            <td data-label="Active">@cls.isActive</td>
+                            <td data-label="OnlineStudent">@cls.OnlineStudent</td>
+
+                            @if (cls.isActive == true)
+                            {
+                                <td data-label="Modify">Đang Học Online</td>
+
+                            }
+                            else
+                            {
+                            <td data-label="Modify">
+                                @Html.ActionLink("Detail", "DetailsTime", "Admin", new { id = cls.ClassID })
+                            </td>
+                            }                                       
+                        </tr>
+                        i++;
                     }
+                }
                 </tbody>
             </table>
         </div>

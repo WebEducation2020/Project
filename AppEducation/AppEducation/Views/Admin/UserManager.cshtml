@@ -9,20 +9,7 @@
         <div class="row">
             <div class="col-md-6 col-xs-12">
                 <a class="btn btn-success" asp-action="Create" asp-controller="Admin">Tạo mới</a>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <form asp-action="Index" method="get">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
-                        </div>
-                        <div class="cold-md-3">
-                            <button type="submit" class="btn btn-primary">Tìm</button>
-                            <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-dark">Reset</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            </div>          
         </div>
     </div>
     <div class="card-body">
@@ -56,7 +43,7 @@
                                 <td data-label="UserName">@user.UserName</td>
                                 <td data-label="Email" style="text-align: left;">@user.Email</td>
                                 <td data-label="Modify">
-                                    @Html.ActionLink("Edit", "Edit", "Admin", new { id = user.Id }) |
+                                    @Html.ActionLink("Edit", "EditProfile", "Admin", new { id = user.Id }) |
                                     @Html.ActionLink("Details", "Details", "Admin", new { id = user.Id }) 
                                     <form asp-action="Delete" asp-route-id="@user.Id" method="post">
                                         <button type="submit" class="btn btn-sm btn-danger">

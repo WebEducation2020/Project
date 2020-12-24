@@ -38,21 +38,142 @@ namespace AppEducation.Controllers
             IEnumerable<Classes> cls = context.Classes;
             return View(cls);
         }
-        public async Task<JsonResult> detailasjson(string id)
+        [HttpGet]
+        public async Task<IActionResult> DetailsTime(string id)
+        {
+            Classes classes = await context.Classes.FindAsync(id);
+
+            HistoryOfClass profile = context.HOClasses.SingleOrDefault(p => p.hocID == classes.ClassID);
+
+            return View(profile);
+        }
+        /*        public async Task<JsonResult> detailasjson(string id)
+                {
+                    AppUser user = await userManager.FindByIdAsync(id);
+
+                    if (user != null)
+                    {
+                        UserProfile profile = context.UserProfiles.First(p => p.UserId == user.Id);
+                        string data = JsonConvert.SerializeObject(profile);
+                        return Json(data);
+                    }
+                    else
+                    {
+                        return Json(null);
+                    }
+                }*/
+        public async Task<ViewResult> EditProfile(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
+            UserProfile profile = context.UserProfiles.SingleOrDefault(p => p.UserId == user.Id);
 
-            if (user != null)
-            {
-                UserProfile profile = context.UserProfiles.First(p => p.UserId == user.Id);
-                string data = JsonConvert.SerializeObject(profile);
-                return Json(data);
-            }
-            else
-            {
-                return Json(null);
-            }
+            return View("SaveProfile",profile);
         }
+        public async Task<IActionResult> SaveProfile(UserProfile profile)
+        {
+            if (ModelState.IsValid)
+            {
+
+                AppUser appUser =await context.Users.FindAsync(profile.UserId);
+                UserProfile old = context.UserProfiles.SingleOrDefault(p => p.UserProfileId == profile.UserProfileId);
+                if (old != null)
+                {
+                    if (old.FullName != profile.FullName)
+                    {
+                        old.FullName = profile.FullName;
+                    }
+                    if (old.Birthday != profile.Birthday)
+                    {
+                        old.Birthday = profile.Birthday;
+                    }
+                    if (old.PhoneNumber != profile.PhoneNumber)
+                    {
+                        old.PhoneNumber = profile.PhoneNumber;
+                    }
+                    if (old.Job != profile.Job)
+                    {
+                        old.Job = profile.Job;
+                    }
+                    if (old.Sex != profile.Sex)
+                        old.Sex = profile.Sex;
+                    if (old.Password != profile.Password)
+                    {
+                        var token = await userManager.GeneratePasswordResetTokenAsync(appUser);
+
+                        var res = await userManager.ResetPasswordAsync(appUser, token, profile.Password);
+                        if (res.Succeeded)
+                        {
+                            old.Password = profile.Password;
+                        }
+                    }
+                    context.SaveChanges();
+                    var result = await userManager.UpdateAsync(appUser);
+                    if (result.Succeeded)
+                    {                       
+                        return RedirectToAction("UserManager");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Error", "Change not success!");
+                    }
+                }
+
+            }
+            return RedirectToAction("UserManager");
+        }
+        //public async Task<IActionResult> EditProfile(string id)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+        //        UserProfile old = context.UserProfiles.First(p => p.UserId == currentUser.Id);
+        //        if (old != null)
+        //        {
+        //            if (old.FullName != profile.FullName)
+        //            {
+        //                old.FullName = profile.FullName;
+        //            }
+        //            if (old.Birthday != profile.Birthday)
+        //            {
+        //                old.Birthday = profile.Birthday;
+        //            }
+        //            if (old.PhoneNumber != profile.PhoneNumber)
+        //            {
+        //                currentUser.PhoneNumber = profile.PhoneNumber;
+        //            }
+        //            if (old.Job != profile.Job)
+        //            {
+        //                old.Job = profile.Job;
+        //            }
+        //            if (old.Sex != profile.Sex)
+        //                old.Sex = profile.Sex;
+        //            if (old.Password != profile.Password)
+        //            {
+        //                var token = await userManager.GeneratePasswordResetTokenAsync(currentUser);
+
+        //                var res = await userManager.ResetPasswordAsync(currentUser, token, profile.Password);
+        //                if (res.Succeeded)
+        //                {
+        //                    old.Password = profile.Password;
+        //                }
+        //            }
+        //            context.SaveChanges();
+        //            var result = await userManager.UpdateAsync(currentUser);
+        //            if (result.Succeeded)
+        //            {
+        //                return RedirectToAction("Profile");
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("Error", "Change not success!");
+        //            }
+        //        }
+
+        //    }
+        //    return RedirectToAction("Profile");
+        //}
+
         public async Task<ViewResult> ShowClassOnline()
         {
            
