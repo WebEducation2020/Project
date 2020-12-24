@@ -42,7 +42,7 @@ namespace AppEducation.Controllers
         {
             IEnumerable<Classes> classes = _context.Classes;
             JoinClassInfor joinClassInfor = new JoinClassInfor();
-            joinClassInfor.AvailableClasses = classes;
+            joinClassInfor.AvailableClasses = classes.Where(c => c.isActive == true);
             joinClassInfor.AvailableClasses.ToList().ForEach( c => {
                 c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
             });

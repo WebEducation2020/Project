@@ -42,13 +42,13 @@ namespace AppEducation.Hubs
                         UserCalls = new List<UserCall> { usr }
                     });
                     await SendUserListUpdate(GetRoomByClassID(classid));
-                    await Clients.Client(usr.ConnectionID).initDevices(usr);
+                    //await Clients.Client(usr.ConnectionID).initDevices(usr);
                 }
                 else
                 {
                     room.UserCalls.Add(usr);
                     await SendUserListUpdate(room);
-                    await Clients.Client(usr.ConnectionID).initDevices(usr);
+                    //await Clients.Client(usr.ConnectionID).initDevices(usr);
                     room.UserCalls.ForEach(async u =>
                     {
                         if (u != usr)
