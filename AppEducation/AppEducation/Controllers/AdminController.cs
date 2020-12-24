@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Linq;
+using System;
+
 namespace AppEducation.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -35,11 +37,11 @@ namespace AppEducation.Controllers
         public async Task<JsonResult> detailasjson(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
-            
+
             if (user != null)
             {
-                UserProfile profile =  context.UserProfiles.First( p => p.UserId == user.Id) ; 
-                string data =  JsonConvert.SerializeObject(profile);
+                UserProfile profile = context.UserProfiles.First(p => p.UserId == user.Id);
+                string data = JsonConvert.SerializeObject(profile);
                 return Json(data);
             }
             else
@@ -47,23 +49,31 @@ namespace AppEducation.Controllers
                 return Json(null);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            UserProfile profile = context.UserProfiles.SingleOrDefault(p => p.UserId == user.Id);
 
+            return View(profile);
+        }
         // Delete User 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
-            IQueryable<UserProfile> profiles =  context.UserProfiles.Where(p => p.UserId == user.Id);
-            foreach( UserProfile profile  in profiles ){
+            IQueryable<UserProfile> profiles = context.UserProfiles.Where(p => p.UserId == user.Id);
+            foreach (UserProfile profile in profiles)
+            {
                 context.UserProfiles.Remove(profile);
             }
             await context.SaveChangesAsync();
             if (user != null)
-            {   
+            {
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                   
+
                     return RedirectToAction("Index");
                 }
                 else
@@ -84,6 +94,108 @@ namespace AppEducation.Controllers
             {
                 ModelState.AddModelError("", error.Description);
             }
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Create(RegisterModel request)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        AppUser user = new AppUser
+        //        {
+        //            UserName = request.UserName,
+        //            Email = request.Email,
+        //            PhoneNumber = request.PhoneNumber
+        //        };
+        //        UserProfile profile = new UserProfile
+        //        {
+        //            Birthday = request.Birthday,
+        //            Job = request.Job,
+        //            Password = request.Password,
+        //            PhoneNumber = request.PhoneNumber,
+        //            Sex = request.Sex,
+        //            Email = request.Email
+        //        };
+
+        //        IdentityResult result = await userManager.CreateAsync(user, profile.Password);
+        //        if (result.Succeeded)
+        //            return RedirectToAction("Index");
+        //        else
+        //        {
+        //            foreach (IdentityError error in result.Errors)
+        //                ModelState.AddModelError("", error.Description);
+        //        }
+        //    }
+        //    return View(request);
+        //}
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(RegisterModel model)
+        {
+            if (string.IsNullOrEmpty(model.Birthday))
+            {
+                ModelState.AddModelError(nameof(model.Birthday), "Please enter your birthday");
+            }
+            if (ModelState.GetValidationState("Date") == ModelValidationState.Valid && DateTime.Now > Convert.ToDateTime(model.Birthday))
+            {
+                ModelState.AddModelError(nameof(model.Birthday), "Please enter a date in the past");
+            }
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "Please enter your email");
+
+            }
+            if (ModelState.IsValid)
+            {
+                AppUser user = new AppUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber
+                };
+                UserProfile profile = new UserProfile
+                {
+                    Birthday = model.Birthday,
+                    Job = model.Job,
+                    Password = model.Password,
+                    PhoneNumber = model.PhoneNumber,
+                    Sex = model.Sex,
+                    Email = model.Email
+                };
+                IdentityResult result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // save info user
+                    AppUser usernew = await userManager.FindByNameAsync(user.UserName);
+                    profile.UserId = usernew.Id;
+                    context.UserProfiles.Add(profile);
+                    if (profile.Job == "Teacher")
+                    {
+                        var roleResult = await userManager.AddToRoleAsync(usernew, "Teacher");
+                    }
+                    else
+                    {
+                        var roleResult = await userManager.AddToRoleAsync(usernew, "Student");
+                    }
+                    context.SaveChanges();
+                    return RedirectToAction("UserManager", "Admin");
+                }
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
         }
     }
 }

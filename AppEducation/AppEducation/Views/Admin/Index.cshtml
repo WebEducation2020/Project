@@ -1,36 +1,50 @@
-@model TotalInformation
 
 @{
-  ViewData["Title"] = "Index";
-  Layout = "_LayoutAdmin";
-  var numberUserOnline = 0;
-  var numberClassOnline = 0;
-  foreach(Room room in Model.Rooms){
-    numberUserOnline += room.UserCalls.Count() ;
-  }
-  numberClassOnline = Model.Rooms.Count();
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@section Content{
-   <div class="right__content">
-    <div class="right__title">Bảng điều khiển</div>
-    <p class="right__desc">Bảng điều khiển</p>
-    <div class="right__cards">
-      <a class="right__card" asp-action="UserManager" asp-controller="Admin">
-        <div class="right__cardTitle">Người dùng</div>
-        <div class="right__cardNumber">@Model.Users.Count()</div>
-        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
-      </a>
-      <a class="right__card" href="view_customers.html">
-        <div class="right__cardTitle">Học sinh online</div>
-        <div class="right__cardNumber">@numberUserOnline</div>
-        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
-      </a>
-      <a class="right__card" href="view_orders.html">
-        <div class="right__cardTitle">Lớp online</div>
-        <div class="right__cardNumber">@numberClassOnline</div>
-        <div class="right__cardDesc">Xem Chi Tiết <img src="~/pages/admin/assets/arrow-right.svg" alt=""></div>
-      </a>
+<div class="container-fluid">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">Primary Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" asp-action="UserManager" asp-controller="Admin">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">Warning Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">Success Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Danger Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-}
- 
+</div>
+
