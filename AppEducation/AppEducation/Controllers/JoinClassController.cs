@@ -45,6 +45,7 @@ namespace AppEducation.Controllers
             joinClassInfor.AvailableClasses = classes.Where(c => c.isActive == true);
             joinClassInfor.AvailableClasses.ToList().ForEach( c => {
                 c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
+                c.HOC = _context.HOClasses.SingleOrDefault(u => u.hocID == c.ClassID);
             });
             return View(joinClassInfor);
         }

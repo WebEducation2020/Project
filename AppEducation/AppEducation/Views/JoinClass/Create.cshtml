@@ -25,12 +25,11 @@
                 <h1 class="text-center">Danh Sách Lớp</h1>
             </div>
             <hr>
-                @if(Model.AvailableClasses.Count() == 0)
-                {
-                    <div> <h2> No available class online </h2> </div>
-                }else{
+                
                     @foreach (Classes classes in Model.AvailableClasses.ToList())
                     {
+                        if (classes.isActive)
+                        {
                         <div class="col-md-3 product-grid">
                             <div class="swiper-slide">
                                 <div class="slider-box">
@@ -48,8 +47,9 @@
                                 </div>
                             </div>
                         </div>
-                    }
-                }
+                            }
+                        }
+                    
         </div>
     </div>
 </section>
