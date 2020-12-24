@@ -1,9 +1,11 @@
-
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
 @{
-    ViewData["Title"] = "UserManager";
+    ViewData["Title"] = "ClassManager";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@model IEnumerable<AppUser>
+@model IEnumerable<Classes>
 <div class="card mb-4">
     <div class="card-header">
         <div class="row">
@@ -32,55 +34,40 @@
                     <tr>
                         <th>Order Number</th>
                         <th>ID</th>
-                        <th>User Name</th>
-                        <th style="text-align: left;">Email</th>
-                        <th>Modify</th>
+                        <th>Class Name</th>
+                        <th >Topic</th>
+                        <th>Active</th>
+                        <th>Online Student</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @if (Model.Count() == 0)
-                    {
-                        <tr>
-                            <td> No user registered </td>
-                        </tr>
-                    }
-                    else
-                    {
+                    @{ 
                         var i = 0;
-                        foreach (AppUser user in Model)
+                        foreach (Classes cls in Model)
                         {
                             <tr>
                                 <td data-label="Order Number">@i</td>
-                                <td data-label="ID">@user.Id</td>
-                                <td data-label="UserName">@user.UserName</td>
-                                <td data-label="Email" style="text-align: left;">@user.Email</td>
-                                <td data-label="Modify">
-                                    @Html.ActionLink("Edit", "Edit", "Admin", new { id = user.Id }) |
-                                    @Html.ActionLink("Details", "Details", "Admin", new { id = user.Id }) 
+                                <td data-label="ID">@cls.ClassID</td>
+                                <td data-label="ClassName">@cls.ClassName</td>
+                                <td data-label="Topic" >@cls.Topic</td>
+                                <td data-label="Active" >@cls.isActive</td> 
+                                <td data-label="OnlineStudent">@cls.OnlineStudent</td>
+                                <!--<td data-label="Modify">-->
+                                    @*@Html.ActionLink("Edit", "Edit", "Admin", new { id = user.Id }) |
+                                    @Html.ActionLink("Details", "Details", "Admin", new { id = user.Id })
                                     <form asp-action="Delete" asp-route-id="@user.Id" method="post">
                                         <button type="submit" class="btn btn-sm btn-danger">
                                             Delete
                                         </button>
-                                    </form>
-                                </td>
+                                    </form>*@
+                                <!--</td>-->
                             </tr>
                             i++;
                         }
                     }
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Order Number</th>
-                        <th>ID</th>
-                        <th>User Name</th>
-                        <th style="text-align: left;">Email</th>
-                        <th>Modify</th>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     </div>
 </div>
-
-

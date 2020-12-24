@@ -33,7 +33,11 @@ namespace AppEducation.Controllers
             return View(totalInfo);
         }
         public ViewResult UserManager() => View(userManager.Users);
-
+        public IActionResult ClassManager()
+        {
+            IEnumerable<Classes> cls = context.Classes;
+            return View(cls);
+        }
         public async Task<JsonResult> detailasjson(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);

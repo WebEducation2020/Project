@@ -69,6 +69,7 @@ namespace AppEducation.Controllers
                 };
                 UserProfile profile = new UserProfile
                 {
+                    FullName = model.UserName,
                     Birthday = model.Birthday,
                     Job = model.Job,
                     Password = model.Password,
@@ -167,20 +168,55 @@ namespace AppEducation.Controllers
             UserProfile profile = context.UserProfiles.First(p => p.UserId == currentUser.Id);
             return View(profile);
         }
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Student,Teacher")]
-        public IActionResult ChangeProfile(UserProfile profile)
+        public async Task<IActionResult> ChangeProfile(UserProfile profile)
         {
             if (ModelState.IsValid)
             {
-                UserProfile old = context.UserProfiles.First(p => p.Email == profile.Email);
+                AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                
+                UserProfile old = context.UserProfiles.First(p => p.UserId == currentUser.Id);
                 if (old != null)
                 {
-                    old.FullName = profile.FullName;
-                    old.Birthday = profile.Birthday;
-                    old.PhoneNumber = profile.PhoneNumber;
-                    old.Job = profile.Job;
-                    old.Sex = profile.Sex;
+                    if( old.FullName != profile.FullName)
+                    {
+                        old.FullName = profile.FullName;
+                    }
+                    if( old.Birthday != profile.Birthday)
+                    {
+                        old.Birthday = profile.Birthday;
+                    }
+                    if( old.PhoneNumber != profile.PhoneNumber)
+                    {
+                        currentUser.PhoneNumber = profile.PhoneNumber;
+                    }
+                    if( old.Job != profile.Job)
+                    {
+                        old.Job = profile.Job;
+                    }
+                    if(old.Sex != profile.Sex)
+                        old.Sex = profile.Sex;
+                    if (old.Password != profile.Password)
+                    {
+                        var token = await userManager.GeneratePasswordResetTokenAsync(currentUser);
+
+                        var res = await userManager.ResetPasswordAsync(currentUser, token, profile.Password);
+                        if (res.Succeeded)
+                        {
+                            old.Password = profile.Password;
+                        }
+                    }
                     context.SaveChanges();
+                    var result = await userManager.UpdateAsync(currentUser);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Profile");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Error", "Change not success!");
+                    }
                 }
 
             }
