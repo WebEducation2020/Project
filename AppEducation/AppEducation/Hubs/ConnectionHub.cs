@@ -133,12 +133,18 @@ namespace AppEducation.Hubs
             UserCall callingUser = callingRoom.UserCalls.SingleOrDefault(u => u.ConnectionID == Context.ConnectionId);
             // if room is mine . Remove all user in call
             
-            if (callingRoom.UserCalls.Count == 1)
+            if (callingRoom.UserCalls.Count <= 1)
             {
                 // do something
-                _context.Classes.Find(callingRoom.RoomIF.ClassID).HOC.endTime = DateTime.Now;
+                //_context.Classes.Find(callingRoom.RoomIF.ClassID).HOC.endTime = DateTime.Now;
                 _rooms.Remove(callingRoom);
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                _context.Classes.SingleOrDefault(c => c.ClassID == callingRoom.RoomIF.ClassID).OnlineStudent -= 1;
+                _context.SaveChanges();
+                callingRoom.UserCalls.Remove(callingUser);
             }
 
             // Send a hang up message to each user in the call, if there is one

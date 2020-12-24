@@ -317,10 +317,16 @@ const initializeConnection = (partnerClientId) => {
                 }
             }
         }
-        else if (remotedataChannel.label == "send-file") {
+        else if (remotedataChannel.label == "send-file" || remotedataChannel == "send-file-private") {
+            console.log("here");
             let receiveSize = 0;
             let receiveBuffer = [];
-            receiveChannelCallBack(remotedataChannel,receiveSize,receiveBuffer);
+            if (remotedataChannel.label == "send-file")
+                receiveChannelCallBack(remotedataChannel, receiveSize, receiveBuffer, true);
+            else {
+                receiveChannelCallBack(remotedataChannel, receiveSize, receiveBuffer, false);
+            }
+
         }
         remotedataChannel.onclose = (e) => {
             console.log(`Closed data channel with label: ${receiveChannel.label}`);
@@ -613,6 +619,7 @@ const addEvent = (connectionID) => {
     PartnerChatConnectionID = connectionID;
     isChatPrivate = true;
     isChatPublic = false;
+    document.querySelector("#a_sf").style.display = "block";
     document.querySelector("textarea.text-area").disabled = false;
     document.querySelector("#chat-group").style.display = "none";
     document.querySelector("#chat-particular").style.display = "block";
@@ -621,10 +628,12 @@ document.querySelector("li#public").addEventListener("click", e => {
     isChatPublic = true;
     isChatPrivate = false;
     document.querySelector("textarea.text-area").disabled = false;
+    document.querySelector("#a_sf").style.display = "block";
 });
 document.querySelector("li#private").addEventListener("click", e => {
     isChatPublic = false;
     isChatPrivate = false;
+    document.querySelector("#a_sf").style.display = "none";
     document.querySelector("textarea.text-area").disabled = true;
     document.querySelector("#chat-group").style.display = "block";
     document.querySelector("a#bk-icon").onclick = turnbackGroup;
@@ -688,6 +697,9 @@ var closeDataChannels = (dataChannel) => {
     console.log(`Closed data channel with label: ${dataChannel.label}`);
 };
 var addNewFile = (filename) => {
+    if (!document.querySelector("#P" + PartnerChatConnectionID)) {
+        makeNewBoxChatPrivate(PartnerChatConnectionID);
+    }
     var tmp = "<div class=\"box-content-chat\">\
         <div class=\"chatmessage\">\
             <div class=\"username localuser\"></div>\
@@ -695,9 +707,10 @@ var addNewFile = (filename) => {
             <div class=\"usermessage\"><p class=\"userMessageContent\" ><a download href=\"\"><div><i class=\"fas fa-file-word\"></i></div>\
                     <div><span>" + filename + "</span></div></a></p></div>\
         </div></div>";
-    document.querySelector("#chat-public").querySelector("#chatconversation").innerHTML += tmp;
+    document.querySelector("#P" + PartnerChatConnectionID).querySelector("#chatconversation").innerHTML += tmp;
 }
-var sendData = (sendChannel) => {
+var sendData = (sendChannel, isPrivate) => {
+    console.log("hi");
     const file = fileInput.files[0];
     console.log(`File is ${[file.name, file.size, file.type, file.lastModified].join(' ')}`);
     if (file.size === 0) {
@@ -718,8 +731,14 @@ var sendData = (sendChannel) => {
         offset += e.target.result.byteLength;
         //sendProgress.value = offset;
         if (offset == file.size) {
-            sendChannel.send(JSON.stringify({ "type": "done", "filename": file.name }));
-            callbackSendFileSuccess();
+            if (isPrivate) {
+                sendChannel.send(JSON.stringify({ "type": "done", "filename": file.name, "connectID": myConnectionID }));
+                callbackSendFileSuccess();
+            }
+            else {
+                sendChannel.send(JSON.stringify({ "type": "done", "filename": file.name }));
+                callbackSendFileSuccess();
+            }
         }
     });
     const readSlice = o => {
@@ -730,30 +749,8 @@ var sendData = (sendChannel) => {
     readSlice(0);
     addNewFile(file.name);
 }
-var createDataChannels = () => {
-    for (var conn in connections) {
-        console.log(connections[conn]);
-        var fileDtChannel = connections[conn].createDataChannel("send-file");
-        fileDtChannel.binaryType = "arraybuffer";
-        fileDtChannel.addEventListener("open", (e) => {
-            const readyState = fileDtChannel.readyState;
-            console.log(`Send channel state is: ${readyState}`);
-            if (readyState === 'open') {
-                sendData(fileDtChannel);
-            }
-        });
-        fileDtChannel.addEventListener('close', (e) => {
-            const readyState = fileDtChannel.readyState;
-            console.log(`Send channel state is: ${readyState}`);
-        });
-        fileDtChannel.addEventListener('error', error => console.error('Error in sendChannel:', error));
-        fileDtChannel.onmessage = e => {
-            console.log(e.data);
-        };
-    }
 
-}
-var addNewFileRemote = (received, filename) => {
+var addNewFileRemotePublic = (received, filename) => {
     var tmp = "<div class=\"box-content-chat\">\
         <div class=\"chatmessage\">\
             <div class=\"username localuser\"></div>\
@@ -768,8 +765,26 @@ var addNewFileRemote = (received, filename) => {
     downloadAnchor.textContent = filename;
     downloadAnchor.style.display = 'block';
 };
+var addNewFileRemotePrivate = (received, filename, connectID) => {
+    if (!document.querySelector("#P" + connectionID)) {
+        makeNewBoxChatPrivate(data.connectionID);
+    }
+    var tmp = "<div class=\"box-content-chat\">\
+        <div class=\"chatmessage\">\
+            <div class=\"username localuser\"></div>\
+            <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] + "</div>\
+            <div class=\"usermessage\"><p class=\"userMessageContent\" ><a id=\"download\"><div><i class=\"fas fa-file-word\"></i></div>\
+                    <div><span>" + filename + "</span></div></a></p></div>\
+        </div></div>";
+    document.querySelector("#P" + connectID).querySelector("#chatconversation").innerHTML += tmp;
+    var downloadAnchor = document.querySelector("a#download");
+    downloadAnchor.href = URL.createObjectURL(received);
+    downloadAnchor.download = filename;
+    downloadAnchor.textContent = filename;
+    downloadAnchor.style.display = 'block';
+}
 
-function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChannel) {
+function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChannel,isPublic) {
     console.log(event.data);
 
     if (event.data.byteLength) {
@@ -783,8 +798,10 @@ function onReceiveMessageCallback(event, receiveSize, receiveBuffer, receiveChan
         console.log(data);
         const received = new Blob(receiveBuffer);
         receiveBuffer = [];
-        addNewFileRemote(received,data.filename);
-
+        if(isPublic)
+            addNewFileRemotePublic(received,data.filename);
+        else
+            addNewFileRemotePrivate(received, data.filename);
         closeDataChannels(receiveChannel);
     }
 };
@@ -792,10 +809,10 @@ function onReceiveChannelStateChange(receiveChannel) {
     const readyState = receiveChannel.readyState;
     console.log(`Receive channel state is: ${readyState}`);
 }
-var receiveChannelCallBack = (receiveChannel,receiveSize,receiveBuffer) => {
+var receiveChannelCallBack = (receiveChannel,receiveSize,receiveBuffer,isPublic) => {
     console.log('Receive Channel Callback');
     receiveChannel.binaryType = "arraybuffer";
-    receiveChannel.onmessage = e => onReceiveMessageCallback(e,receiveSize,receiveBuffer,receiveChannel);
+    receiveChannel.onmessage = e => onReceiveMessageCallback(e,receiveSize,receiveBuffer,receiveChannel,isPublic);
     receiveChannel.onopen = onReceiveChannelStateChange(receiveChannel);
     receiveChannel.onclose = onReceiveChannelStateChange(receiveChannel);
     receiveSize = 0;
@@ -806,9 +823,60 @@ var receiveChannelCallBack = (receiveChannel,receiveSize,receiveBuffer) => {
         downloadAnchor.removeAttribute('href');
     }
 };
+var createDataChannelsPublic = () => {
+    console.log("Create Data Channels public !!!");
+    for (var conn in connections) {
+        console.log(connections[conn]);
+        var fileDtChannel = connections[conn].createDataChannel("send-file");
+        fileDtChannel.binaryType = "arraybuffer";
+        fileDtChannel.addEventListener("open", (e) => {
+            const readyState = fileDtChannel.readyState;
+            console.log(`Send channel state is: ${readyState}`);
+            if (readyState === 'open') {
+                sendData(fileDtChannel,false);
+            }
+        });
+        fileDtChannel.addEventListener('close', (e) => {
+            const readyState = fileDtChannel.readyState;
+            console.log(`Send channel state is: ${readyState}`);
+        });
+        fileDtChannel.addEventListener('error', error => console.error('Error in sendChannel:', error));
+        fileDtChannel.onmessage = e => {
+            console.log(e.data);
+        };
+    }
+}
+var createDataChannelPrivate = (connectID) => {
+    console.log("Create Data Channels private !!!");
+    var fileDtChannel = connections[connectID].createDataChannel("send-file-private");
+        fileDtChannel.binaryType = "arraybuffer";
+        fileDtChannel.addEventListener("open", (e) => {
+            const readyState = fileDtChannel.readyState;
+            console.log(`Send channel state is: ${readyState}`);
+            if (readyState === 'open') {
+                sendData(fileDtChannel,true);
+            }
+        });
+        fileDtChannel.addEventListener('close', (e) => {
+            const readyState = fileDtChannel.readyState;
+            console.log(`Send channel state is: ${readyState}`);
+        });
+        fileDtChannel.addEventListener('error', error => console.error('Error in sendChannel:', error));
+        fileDtChannel.onmessage = e => {
+            console.log(e.data);
+        }
+}
+var SendFile = () => {
+    if ("nav-item active" == document.querySelector("li#public").getAttribute("class")) {
+        createDataChannelsPublic();
+    }
+    else if ("nav-item active" == document.querySelector("li#private").getAttribute("class") && isChatPrivate && !isChatPublic) {
+        createDataChannelPrivate(PartnerChatConnectionID);
+    }
+}
 
 fileInput.addEventListener("change", handleFileInputChange, false);
-sendFileButton.addEventListener("click", createDataChannels);
+sendFileButton.addEventListener("click", SendFile);
 
 const callbackSendFileSuccess = () => {
     alert("Gui file thanh cong");
