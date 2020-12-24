@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="~/pages/profile/css/all.min.css">
     <link rel="stylesheet" href="~/pages/profile/css/bootstrap.css">
     <link rel="stylesheet" href="~/pages/profile/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/pages/profile/css/profile.css" />
+}
+@{ 
+    
 }
 <section>
     <div class="main">
@@ -39,85 +43,75 @@
                     <div class="user-layout-children">
                         <div class="user-info">
                             <p class="title">Thông tin cá nhân</p>
-                            <div class="box user-info-box col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-3"><span class="text-normal"><strong>Thông tin cơ
-                                                    bản</strong></span></div>
-                                        <div class="col-md-9 text-right update-button">
+                            <form asp-controller="Account" asp-action="ChangeProfile" method="post">
+                                <div class="box user-info-box col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-3"><span class="text-normal"><strong>Thông tin cơ
+                                                        bản</strong></span></div>
+                                            <div class="col-md-9 text-right update-button">
                                             
-                                            <button id="changes" onclick="changeFunction()" type="button">Chỉnh sửa</button>
-                                            <button id="save" asp-action="ChangeProfile" asp-area="" asp-controller="AccountController" type="button" >Lưu</button>
-                                        </div>
-                                    </div>                                   
-                                    <div>
-                                        <div class="col-md-12 border-top">
-                                            <div class="col-md-3"><span>Họ và tên</span></div>
-                                            <div class="col-md-9">
-                                                <span class="oldInput">@Model.FullName</span>
-                                                <input class="form-control newInput" name="UserName" style="display: none;" > 
+                                                <button id="changes" class="col-md-3" onclick="changeFunction()" type="button">Chỉnh sửa</button>
+                                                <button id="save" class="col-md-3" type="submit" >Lưu</button>
+                                                <button id="cancel" class="col-md-3" type="button">Hủy</button>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 border-top">
-                                            <div class="col-md-3"><span>Email</span></div>
-                                            <div class="col-md-9">
-                                                <span class="oldInput">@Model.Email</span>
-                                                <input  class="form-control newInput" name="Email"  style="display: none;"> 
+                                        </div>                                   
+                                        <div>
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3"><span>Họ và tên</span></div>
+                                                <div class="col-md-9">
+                                                    @*<span class="oldInput">@Model.FullName</span>*@
+                                                    <input class="form-control newInput" asp-for="FullName" value="@Model.FullName" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 border-top">
-                                            <div class="col-md-3"><span>Số điện thoại</span></div>
-                                            <div class="col-md-9"><span class="oldInput">@Model.PhoneNumber</span></div>
-                                            <input class="form-control newInput" name="Phone" style="display: none;"> 
-                                        </div>
-                                        <div class="col-md-12 border-top">
-                                            <div class="col-md-3">
-                                                <span>Ngày sinh</span>
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3"><span>Email</span></div>
+                                                <div class="col-md-9">
+                                                    @*<span class="oldInput">@Model.Email</span>*@
+                                                    <input class="form-control newInput" asp-for="Email" value="@Model.Email" disabled>
+                                                </div>
                                             </div>
-                                            <div class="col-md-9">
-                                                <span class="oldInput">@Model.Birthday</span>
-                                                <input  class="newInput form-control" name="BirthDay"  style="display: none;"> 
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3"><span>Số điện thoại</span></div>
+                                                @*<div class="col-md-9"><span class="oldInput">@Model.PhoneNumber</span></div>*@
+                                                <input class="form-control newInput" asp-for="PhoneNumber" value="@Model.PhoneNumber" disabled>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 border-top">
-                                            <div class="col-md-3"><span>Giới tính</span></div>
-                                            <div class="col-md-9">
-                                                @if(Model.Sex == true)
-                                                {
-                                                  <span class="oldInput">Nam</span>
-                                                }else
-                                                {
-                                                    <span class="oldInput">Nữ</span>
-                                                }
-                                                <select class="newInput"  style="display: none;">
-                                                    <ol>Nam</ol>
-                                                    <ol>Nữ</ol>
-                                                </select>
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3">
+                                                    <span>Ngày sinh</span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @*<span class="oldInput">@Model.Birthday</span>*@
+                                                    <input type="date" class="newInput form-control" asp-for="Birthday" value="@Model.Birthday" disabled>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 border-top">
-                                            <div class="col-md-3"><span>Trình độ</span></div>
-                                            <div class="col-md-9">
-                                                <span class="text-capitalize oldInput">@Model.Job</span>
-                                                <select class="newInput"  style="display: none;">
-                                                    <ol>Teacher</ol>
-                                                    <ol>Student</ol>
-                                                </select>
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3"><span>Giới tính</span></div>
+                                                <div class="col-md-9">
+                                                    <span>Nam</span>
+                                                    <input class="newInput" asp-for="Sex" disabled />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3"><span>Trình độ</span></div>
+                                                <div class="col-md-9">
+                                                    @*<span class="text-capitalize oldInput">@Model.Job</span>*@
+                                                    <input class="newInput form-control" asp-for="Job" value="@Model.Job" disabled />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 border-top">
+                                                <div class="col-md-3"><span>Mật Khẩu</span></div>
+                                                <div class="col-md-9">
+                                                    @*<span class="text-capitalize oldInput">@Model.Job</span>*@
+                                                    <input asp-for="Password" type="password" value="@Model.Password" disabled />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="box user-password-box col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-3"><span>Đổi mật khẩu</span></div>
-                                        <div class="col-md-9"><a class="pull-right update-button" role="button">Chỉnh
-                                                sửa</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                           
+                                
+                            </form>
                         </div>
                     </div>
                 </div>

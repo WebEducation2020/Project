@@ -301,18 +301,19 @@ const initializeConnection = (partnerClientId) => {
             remotedataChannel.binaryType = "arraybuffer";
             remotedataChannel.onmessage = (e) => {
                 var data = JSON.parse(e.data);
+                console.log(data);
                 console.log(data.connectionID);
                 if (data.type == "particular") { // nếu là nhắn tin riêng
                     if (!document.querySelector("#P" + data.connectionID)) {
                         makeNewBoxChatPrivate(data.connectionID);
                     }
-                    receiveMessage(data.message, document.querySelector("#P" + data.connectionID).querySelector("#chatconversation"))
+                    receiveMessage(data.message, document.querySelector("#P" + data.connectionID).querySelector("#chatconversation"),data.user)
                 }
                 else if (data.type == "public") { // nếu là nhắn tin cho tất cả mọi người trong lớp học 
-                    receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"));
+                    receiveMessage(data.message, document.querySelector("#chat-public").querySelector("#chatconversation"),data.user);
                 }
                 else if (data.type == "group") { // nhắn tin trong nhóm 
-                    receiveMessage(data.message, document.querySelector("#chat-group").querySelector("#chatconversation"));
+                    receiveMessage(data.message, document.querySelector("#chat-group").querySelector("#chatconversation"),data.user);
                 }
             }
         }
@@ -585,11 +586,11 @@ const addnewMessageForMe = (message, elementTag) => {
             <div class=\"usermessage\"><p class=\"userMessageContent\" >" + message +"</p></div>\
         </div></div>";
 }
-const receiveMessage = (message, elementTag) => {
+const receiveMessage = (message, elementTag,name) => {
     elementTag.innerHTML += "\
         <div class=\"box-content-chat\">\
             <div class=\"chatmessage chatmessageReceived\">\
-                <div class=\"username remoteuser\">" + username  +"</div>\
+                <div class=\"username remoteuser\">" + name  +"</div>\
                 <div class=\"timestamp\">"+ Date(Date.now()).toString().split(" ")[4] + "</div>\
                 <div class=\"usermessage\"><p class=\"userMessageContentReceived\">" + message +"</p></div>\
             </div>\
@@ -642,7 +643,7 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             const message = messageTextArea.value;
             if (message != "") {
                 for (const [cntionID, localdtChannel] of Object.entries(localDataChannels)) {
-                    localdtChannel.send(JSON.stringify({ "message": message, "type": "public" }));
+                    localdtChannel.send(JSON.stringify({ "message": message, "type": "public", "user": username }));
                 };
                 addnewMessageForMe(message, document.querySelector("#chat-public").querySelector("#chatconversation"));
                 messageTextArea.value = "";
@@ -657,7 +658,7 @@ document.querySelector("textarea.text-area").addEventListener('keypress', (e) =>
             var messageTextArea = document.querySelector("textarea.text-area");
             const message = messageTextArea.value;
             if (message != "") {
-                localDtChannel.send(JSON.stringify({ "message": message, "type": "particular", "connectionID": myConnectionID }));
+                localDtChannel.send(JSON.stringify({ "message": message, "type": "particular", "connectionID": myConnectionID, "user": username }));
                 wsconn.invoke("Message", message, "particular", PartnerChatConnectionID);
                 if (!document.querySelector("#P" + PartnerChatConnectionID)) {
                     makeNewBoxChatPrivate(PartnerChatConnectionID);
