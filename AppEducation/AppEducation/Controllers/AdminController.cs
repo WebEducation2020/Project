@@ -49,6 +49,37 @@ namespace AppEducation.Controllers
                 return Json(null);
             }
         }
+        public async Task<ViewResult> ShowClassOnline()
+        {
+           
+            List<Classes> classes = context.Classes.ToList();
+            List<ClassInfo> classInfos = new List<ClassInfo>();
+            if (classes.Count() != 0)
+            {
+                foreach(Classes class_ in classes)
+                {
+                    ClassInfo _classinfor = new ClassInfo();
+                    if(class_.isActive == true)
+                    {
+                        _classinfor.ClassID = class_.ClassID;
+                        _classinfor.ClassName = class_.ClassName;
+                        _classinfor.Topic = class_.Topic;
+                        _classinfor.TeacherId = class_.UserId;
+                        _classinfor.OnlineStudent = class_.OnlineStudent;
+                        classInfos.Add(_classinfor);
+                    }
+                }
+            }
+            if(classInfos.Count() != 0)
+            {
+                foreach(ClassInfo _classinfo in classInfos)
+                {
+                    AppUser user = await userManager.FindByIdAsync(_classinfo.TeacherId);
+                    _classinfo.TeacherId = user.UserName;
+                }
+            }
+            return View(classInfos);
+        }
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {

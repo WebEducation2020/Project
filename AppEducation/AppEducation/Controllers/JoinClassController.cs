@@ -62,6 +62,7 @@ namespace AppEducation.Controllers
                     hocID = joinClassInfor.NewClass.ClassID,
                     startTime = DateTime.Now,
                 };
+                joinClassInfor.NewClass.isActive = true;
                 joinClassInfor.NewClass.HOC = hoc;
                 _context.Classes.Add(joinClassInfor.NewClass);
                 await _context.SaveChangesAsync();
