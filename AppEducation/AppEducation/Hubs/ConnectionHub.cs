@@ -138,11 +138,9 @@ namespace AppEducation.Hubs
             if (callingRoom.UserCalls.Count <= 1)
             {
                 // do something
-                var hoc = _context.HOClasses.Find(callingRoom.RoomIF.ClassID);
-                var format = "yyyy-MM-dd HH:mm:ss.fff";
-                var stringDate = DateTime.Now.ToString(format);
-                var convertedBack = DateTime.ParseExact(stringDate, format, CultureInfo.InvariantCulture);
-                hoc.endTime = convertedBack;
+                _context.Classes.Find(callingRoom.RoomIF.ClassID).isActive = false;
+                var hoc = _context.HOClasses.Find(callingRoom.RoomIF.hocID);
+                hoc.endTime = DateTime.Now;
 
                 _rooms.Remove(callingRoom);
                 await _context.SaveChangesAsync();
