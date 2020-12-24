@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.SignalR;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+
 namespace AppEducation.Controllers
 {
 
@@ -22,12 +24,13 @@ namespace AppEducation.Controllers
         private readonly AppIdentityDbContext _context;
         private readonly ILogger<HomeController> _logger;
         private readonly IHubContext<ConnectionHub> _hubContext;
-
-        public JoinClassController(ILogger<HomeController> logger, AppIdentityDbContext context, IHubContext<ConnectionHub> hubContext )
+        private UserManager<AppUser> userManager;
+        public JoinClassController(ILogger<HomeController> logger, AppIdentityDbContext context, IHubContext<ConnectionHub> hubContext, UserManager<AppUser> userManager)
         {
             _logger = logger;
             _context = context;
             _hubContext = hubContext;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
@@ -40,6 +43,9 @@ namespace AppEducation.Controllers
             IEnumerable<Classes> classes = _context.Classes;
             JoinClassInfor joinClassInfor = new JoinClassInfor();
             joinClassInfor.AvailableClasses = classes;
+            joinClassInfor.AvailableClasses.ToList().ForEach(async c => {
+                c.User = await userManager.FindByIdAsync(c.UserId);
+            });
             return View(joinClassInfor);
         }
         [HttpPost]
@@ -49,6 +55,9 @@ namespace AppEducation.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+                joinClassInfor.NewClass.User = currentUser;
                 _context.Classes.Add(joinClassInfor.NewClass);
                 await _context.SaveChangesAsync();
                 WriteCookies("ClassName", joinClassInfor.NewClass.ClassName, true);

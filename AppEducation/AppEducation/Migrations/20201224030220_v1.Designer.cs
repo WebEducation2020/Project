@@ -4,14 +4,16 @@ using AppEducation.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AppEducation.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201224030220_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,15 +29,13 @@ namespace AppEducation.Migrations
                     b.Property<string>("ClassName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TeacherID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Topic")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ClassID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Classes");
                 });
@@ -275,13 +275,6 @@ namespace AppEducation.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("AppEducation.Models.Classes", b =>
-                {
-                    b.HasOne("AppEducation.Models.Users.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("AppEducation.Models.Users.UserProfile", b =>

@@ -30,9 +30,7 @@ namespace AppEducation.Controllers
         
         public IActionResult Index()
         {
-            if(HttpContext.User.Identity.Name != null){
-                return RedirectToAction("Create","Account");
-            }
+            
             return View();
         }
         #region Cookies 

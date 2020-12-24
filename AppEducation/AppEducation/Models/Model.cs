@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AppEducation.Models.Users;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +12,8 @@ namespace AppEducation.Models
         public string ClassID { get; set; }
         public string ClassName { get; set; }
         public string Topic { get; set; }
+        public string UserId { get; set; }
+        public AppUser User { get; set; }
     }
     public class Room
     {

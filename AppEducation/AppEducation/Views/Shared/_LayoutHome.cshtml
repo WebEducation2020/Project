@@ -38,10 +38,20 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="account-area text-right">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span>@User.Identity.Name</span>
+                                <ul>
+                                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></li>
+                                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">Đăng Xuất</a></li>
+                                </ul>
+                            }
+                            @if(!User.Identity.IsAuthenticated) {
                             <ul>
                                 <li><a asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></li>
                                 <li><a asp-area="" asp-controller="Account" asp-action="Login">Đăng nhập</a></li>
                             </ul>
+                            }
                         </div>
                     </div>
                 </div>

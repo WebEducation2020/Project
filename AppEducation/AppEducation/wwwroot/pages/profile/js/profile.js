@@ -3,7 +3,7 @@ var oldinput = document.getElementsByClassName("oldInput");
 var saveButton = document.getElementById("save");
 var changeButton = document.getElementById("changes");
 var cancelButton = document.getElementById("cancel");
-
+var seePW = document.getElementById("seePW");
 function changeFunction(){
     for (var i = 0; i < newinput.length; i++) {
         newinput[i].disabled = false;
@@ -19,6 +19,15 @@ cancelButton.onclick = () => {
     changeButton.style.display = "block";
     saveButton.style.display = 'none';
     cancelButton.style.display = "none";
+}
+seePW.onclick = () => {
+    var pw = document.getElementById("Password");
+    if (pw.getAttribute("type") == "password") {
+        pw.setAttribute("type", "text");
+    }
+    else {
+        pw.setAttribute("type", "password");
+    }
 }
 
 var modal = document.getElementById("myModal");
