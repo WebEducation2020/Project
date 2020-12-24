@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,13 +20,13 @@ namespace AppEducation.Models
         public AppUser User { get; set; }
         [DefaultValue(0)]
         public int OnlineStudent { get; set; }
+        public string hocID { get; set; }
         public HistoryOfClass HOC { get; set; }
     }
     public class HistoryOfClass
     {
         public string hocID { get; set; }
         public DateTime startTime { get; set; }
-
         public DateTime endTime { get; set; }
     }
     public class Room

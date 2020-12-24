@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using System.Globalization;
+
 namespace AppEducation.Hubs
 {
     // connectionhub
@@ -136,7 +138,12 @@ namespace AppEducation.Hubs
             if (callingRoom.UserCalls.Count <= 1)
             {
                 // do something
-                //_context.Classes.Find(callingRoom.RoomIF.ClassID).HOC.endTime = DateTime.Now;
+                var hoc = _context.HOClasses.Find(callingRoom.RoomIF.ClassID);
+                var format = "yyyy-MM-dd HH:mm:ss.fff";
+                var stringDate = DateTime.Now.ToString(format);
+                var convertedBack = DateTime.ParseExact(stringDate, format, CultureInfo.InvariantCulture);
+                hoc.endTime = convertedBack;
+
                 _rooms.Remove(callingRoom);
                 await _context.SaveChangesAsync();
             }
