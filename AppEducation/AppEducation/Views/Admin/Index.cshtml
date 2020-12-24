@@ -1,26 +1,34 @@
-
+﻿@model TotalInformation
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var numberUserOnline = 0;
+  var numberClassOnline = 0;
+  foreach(Room room in Model.Rooms){
+    numberUserOnline += room.UserCalls.Count() ;
+  }
+  numberClassOnline = Model.Rooms.Count();
 }
 <div class="container-fluid">
-    <h1 class="mt-4">Dashboard</h1>
+    <h1 class="mt-4">Thông Tin</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">Thông Tin</li>
     </ol>
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Primary Card</div>
+                <div class="card-body">Người Dùng</div>
+                <div class="card-body">@Model.Users.Count()</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" asp-action="UserManager" asp-controller="Admin">View Details</a>
+                    <a class="small text-white stretched-link" asp-action="UserManager" asp-controller="Admin">Chi Tiết</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Warning Card</div>
+                <div class="card-body">Đang Online</div>
+                <div class="card-body">@numberUserOnline</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="#">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -29,16 +37,8 @@
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-success text-white mb-4">
-                <div class="card-body">Success Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Danger Card</div>
+                <div class="card-body">Lớp Online</div>
+                <div class="card-body">@numberClassOnline</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="#">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
