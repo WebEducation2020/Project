@@ -2,7 +2,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace AppEducation.Models.Users {
+
     public class UserProfile
     {
         [Key]

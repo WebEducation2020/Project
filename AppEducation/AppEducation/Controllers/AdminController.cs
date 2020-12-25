@@ -62,20 +62,26 @@ namespace AppEducation.Controllers
                         return Json(null);
                     }
                 }*/
-        public async Task<ViewResult> EditProfile(string id)
+        public async Task<IActionResult> EditProfile(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
             UserProfile profile = context.UserProfiles.SingleOrDefault(p => p.UserId == user.Id);
 
-            return View("SaveProfile",profile);
+            return RedirectToAction("SaveProfile","Admin", profile);
         }
-        public async Task<IActionResult> SaveProfile(UserProfile profile)
+        public IActionResult SaveProfile(UserProfile profile)
+        {
+            return View(profile);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveProfilePost(UserProfile profile)
         {
             if (ModelState.IsValid)
             {
 
-                AppUser appUser =await context.Users.FindAsync(profile.UserId);
-                UserProfile old = context.UserProfiles.SingleOrDefault(p => p.UserProfileId == profile.UserProfileId);
+                AppUser appUser = await context.Users.FindAsync(profile.UserId);
+                UserProfile old = context.UserProfiles.SingleOrDefault(p => p.Email == profile.Email);
                 if (old != null)
                 {
                     if (old.FullName != profile.FullName)

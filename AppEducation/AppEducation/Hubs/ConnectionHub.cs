@@ -139,6 +139,7 @@ namespace AppEducation.Hubs
             {
                 // do something
                 _context.Classes.Find(callingRoom.RoomIF.ClassID).isActive = false;
+                _context.Classes.Find(callingRoom.RoomIF.ClassID).OnlineStudent = 0;
                 var hoc = _context.HOClasses.Find(callingRoom.RoomIF.hocID);
                 hoc.endTime = DateTime.Now;
 
