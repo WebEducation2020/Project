@@ -12,6 +12,7 @@ using AppEducation.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authentication;
+
 namespace AppEducation.Controllers
 {
     public class AccountController : Controller
@@ -160,13 +161,31 @@ namespace AppEducation.Controllers
             return RedirectToAction("Index", "Home");
         }
         #endregion 
-        [Authorize(Roles = "Student,Teacher")]
+
         public async Task<IActionResult> Profile()
         {
-
             AppUser currentUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            UserProfile profile = context.UserProfiles.First(p => p.UserId == currentUser.Id);
-            return View(profile);
+            if (currentUser != null)
+            {
+                try
+                {
+                    var profile = context.UserProfiles.First(p => p.UserId == currentUser.Id);
+                    if (profile != null)
+                        return View(profile);
+                }
+                catch
+                {
+                    UserProfile newProfile = new UserProfile();
+                    newProfile.UserId = currentUser.Id;
+                    return View(newProfile);
+                };
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+
         }
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Student,Teacher")]
@@ -222,6 +241,53 @@ namespace AppEducation.Controllers
             }
             return RedirectToAction("Profile");
         }
+        [AllowAnonymous]
+        public IActionResult GoogleLogin()
+        {
+            string redirectUrl = Url.Action("GoogleResponse", "Account");
+            var properties = signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+            return new ChallengeResult("Google", properties);
+        }
+        [AllowAnonymous]
+        public IActionResult AccessDenied(string error)
+        {
+            return View(error);
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleResponse(string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor:true);
+            string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
+            if (result.Succeeded)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                AppUser user = new AppUser
+                {
+                    Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    UserName = info.Principal.FindFirst(ClaimTypes.Email).Value
+                };
 
+                IdentityResult identResult = await userManager.CreateAsync(user);
+                if (identResult.Succeeded)
+                {
+                    identResult = await userManager.AddLoginAsync(user, info);
+                    if (identResult.Succeeded)
+                    {
+                        await signInManager.SignInAsync(user, false);
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                return RedirectToAction("AccessDenied");
+            }
+        }
     }
 }

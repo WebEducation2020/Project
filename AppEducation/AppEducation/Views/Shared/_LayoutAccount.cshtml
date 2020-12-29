@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -66,21 +66,20 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown-toggle dropdown" data-toggle="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                    <a id="aChangeLanguage" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                         aria-haspopup="true" aria-expanded="false">
-                                        <img src="~/pages/profile/images/flag_vi.png" alt="language_flag" class="flag_uk mr-2">
+                                        <img  src="~/pages/profile/images/flag_vi.png" alt="language_flag" class="flag_uk mr-2">
                                         Tiếng Việt
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" style="min-width: fit-content;">
                                         <li>
-                                            <a href="#">
-                                                <img src="~/pages/profile/images/flag_uk.png" alt="flag uk" class="flag_uk">
+                                            <a id="TiengAnh">
                                                 Tiếng Anh
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#"><img src="~/pages/profile/images/flag_vi.png" alt="flag vn" class="flag_uk">
+                                            <a id="TiengViet">
                                                 Tiếng Việt
                                             </a>
                                         </li>
@@ -90,7 +89,7 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                         aria-haspopup="true" aria-expanded="false">
                                         <img src="~/pages/profile/images/bell.png" class="bell-notify">
-                                        <span class="text-notify">
+                                        <span id="ThongBao" class="text-notify">
                                             Thông báo
                                         </span>
                                     </a>
@@ -132,16 +131,16 @@
                         <nav class="navbar navbar-inverse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a href="#">Chuẩn bị bài</a>
+                                    <a hef="#" id="ChuanBiBai">Chuẩn bị bài</a>
                                 </li>
                                 <li>
-                                    <a asp-controller="JoinClass" asp-action="Create">Học trực tuyến</a>
+                                    <a id="HocTrucTuyen" asp-controller="JoinClass" asp-action="Create">Học trực tuyến</a>
                                 </li>
                                 <li>
-                                    <a href="#">Kiểm tra</a>
+                                    <a hef="#" id="KiemTra">Kiểm tra</a>
                                 </li>
                                 <li>
-                                    <a href="#">Hỗ trợ</a>
+                                    <a href="#" id="HoTro">Hỗ trợ</a>
                                 </li>
                             </ul>
                         </nav>
@@ -153,7 +152,7 @@
 
     @RenderBody()
 
-    @* <footer class="footer">
+    <footer class="footer">
         <div class="container" style="padding-top: 70px;">
             <div class="row">
 
@@ -172,8 +171,8 @@
                     </div>
                 </div>
             </div>
-    </footer> *@
-
+        </div>
+    </footer> 
 
     @RenderSection("Script", required: false)
     <script>
@@ -190,6 +189,7 @@
     <script src="~/pages/profile/js/OneSignalSDK.js" async=""></script>
     <script src="~/pages/profile/js/main_vendor.chunkhash.101202010.bundle.js"></script>
     <script src="~/pages/profile/js/jquery.3.4.1.js"></script>
+    <script src="~/pages/profile/js/changelanguage.js"></script>
 </body>
 
 </html>

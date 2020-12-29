@@ -41,4 +41,12 @@ namespace AppEducation.Models
         public bool InCall { get; set; }
         public bool IsCaller { get; set; }
     }
+    public class Notification
+    {
+        public string UserId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public DateTime Date { get; set; }
+        public AppUser User { get; set; }
+    }
 }

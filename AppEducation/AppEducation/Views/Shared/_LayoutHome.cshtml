@@ -40,11 +40,8 @@
                         <div class="account-area text-right">
                             @if (User.Identity.IsAuthenticated)
                             {
+                                <i class="fa fa-user"></i>
                                 <span>@User.Identity.Name</span>
-                                <ul>
-                                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Đăng ký</a></li>
-                                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">Đăng Xuất</a></li>
-                                </ul>
                             }
                             @if(!User.Identity.IsAuthenticated) {
                             <ul>
@@ -70,62 +67,69 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
+                    <!--<div class="col-lg-6 col-md-6 col-sm-4 col-xs-12">
                         <div class="logo-area text-center logo-xs-mrg">
                             <a href="index.html"><img src="~/pages/login/img/logo.png" alt="logo" /></a>
                         </div>
-                    </div>
+                    </div> <-->
                 </div>
-            </div>
         </div>
-        <!-- header-mid-area-end -->
-        <!-- main-menu-area-start -->
-        <div class="main-menu-area hidden-sm hidden-xs sticky-header-1" id="header-sticky">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="text-center" style="margin-left: 300px;">
-                            <div class="menu-area">
-                                <div class="safe-area">
-                                    <a asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
-                                </div>
-                                <div class="safe-area">
-                                    <a asp-area="" asp-controller="Account" asp-action="Register">Đăng Kí</a>
-                                </div>
-                                <div class="safe-area">
-                                    <a asp-area="" asp-controller="Account" asp-action="Login">Đăng Nhập</a>
-                                </div>
-                                <div class="safe-area">
-                                    <a href="#">Liên Hệ</a>
+    </div>
+    <!-- header-mid-area-end -->
+                    <!-- main-menu-area-start -->
+                    <div class="main-menu-area hidden-sm hidden-xs sticky-header-1" id="header-sticky">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="text-center" style="margin-left: 300px;">
+                                        <div class="menu-area">
+                                            <div class="safe-area">
+                                                <a asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                                            </div>
+                                            @if (!User.Identity.IsAuthenticated)
+                                            {
+                                                <div class="safe-area">
+                                                    <a asp-area="" asp-controller="Account" asp-action="Register">Đăng Kí</a>
+                                                </div>
+                                                <div class="safe-area">
+                                                    <a asp-area="" asp-controller="Account" asp-action="Login">Đăng Nhập</a>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="safe-area">
+                                            <a asp-action="Create" asp-controller="JoinClass">Học Tập</a>
+                                        </div>
+                                        <div class="safe-area">
+                                            <a href="#LienHe">Liên Hệ</a>
+                                        </div>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- main-menu-area-end -->
-        <!-- mobile-menu-area-start -->
-        <div class="mobile-menu-area hidden-md hidden-lg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="mobile-menu">
-                            <nav id="mobile-menu-active">
-                                <ul id="nav">
-                                    <li class=""> <a asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a> </li>
-                                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Đăng Kí</a>li>
-                                    <li><a asp-area="" asp-controller="Account" asp-action="Login">Đăng Nhập</a></li>
-                                    <li><a href="#">Liên Hệ</a></li>
-                                </ul>
-                            </nav>
+                    <!-- main-menu-area-end -->
+                    <!-- mobile-menu-area-start -->
+                    <div class="mobile-menu-area hidden-md hidden-lg">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mobile-menu">
+                                        <nav id="mobile-menu-active">
+                                            <ul id="nav">
+                                                <li class=""> <a asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a> </li>
+                                                <li><a asp-area="" asp-controller="Account" asp-action="Register">Đăng Kí</a>li>
+                                                <li><a asp-area="" asp-controller="Account" asp-action="Login">Đăng Nhập</a></li>
+                                                <li><a href="#">Liên Hệ</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- mobile-menu-area-end -->
-    </header>
+                    <!-- mobile-menu-area-end -->
+</header>
 
     @RenderSection("Login", required: false)
 

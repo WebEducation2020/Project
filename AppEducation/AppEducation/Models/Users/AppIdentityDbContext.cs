@@ -18,6 +18,8 @@ namespace AppEducation.Models.Users{
 
         public DbSet<Classes> Classes { get; set; }
         public DbSet<HistoryOfClass> HOClasses { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,15 +37,18 @@ namespace AppEducation.Models.Users{
                 .HasKey(t => t.ClassID);
             modelBuilder.Entity<HistoryOfClass>()
                 .HasKey(t => t.hocID);
-
+            
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<UserProfile>().ToTable("UserProfiles");
             modelBuilder.Entity<UserProfile>().HasKey( t => t.UserProfileId);
-          
+            modelBuilder.Entity<Notification>().ToTable("Notifications");
+            modelBuilder.Entity<Notification>().HasKey(t => t.UserId);
+
             modelBuilder.Entity<AppUser>()
                 .HasOne( u => u.Profile)
                 .WithOne( p => p.User)
                 .HasForeignKey<UserProfile>( p => p.UserId);
+
         }
 
     }

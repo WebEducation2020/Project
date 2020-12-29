@@ -39,7 +39,6 @@ namespace AppEducation
 
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
-                options.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnm1234567890";
                 options.User.RequireUniqueEmail = true;
             }
             )
@@ -48,7 +47,14 @@ namespace AppEducation
 
             services.AddMvc();
             services.AddControllersWithViews();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie()
+                .AddGoogle(opts =>
+                {
+                    opts.ClientId = "42250284828-ec0bt3ov0geeo3s3s8chmphft3eaqgll.apps.googleusercontent.com";
+                    opts.ClientSecret = "3tCpNThsUM9EP4E_5qXTVXrR";
+                    opts.SignInScheme = IdentityConstants.ExternalScheme;
+                });
             services.AddAuthorization();
             services.AddSignalR();
             services.AddSingleton<List<Room>>();

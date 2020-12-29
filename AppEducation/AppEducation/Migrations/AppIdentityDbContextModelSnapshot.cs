@@ -67,6 +67,25 @@ namespace AppEducation.Migrations
                     b.ToTable("HOClasses");
                 });
 
+            modelBuilder.Entity("AppEducation.Models.Notification", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("AppEducation.Models.Users.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -313,6 +332,15 @@ namespace AppEducation.Migrations
                     b.HasOne("AppEducation.Models.HistoryOfClass", "HOC")
                         .WithMany()
                         .HasForeignKey("hocID");
+                });
+
+            modelBuilder.Entity("AppEducation.Models.Notification", b =>
+                {
+                    b.HasOne("AppEducation.Models.Users.AppUser", "User")
+                        .WithOne("Notifications")
+                        .HasForeignKey("AppEducation.Models.Notification", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AppEducation.Models.Users.UserProfile", b =>

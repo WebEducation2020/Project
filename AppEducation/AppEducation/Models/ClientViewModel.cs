@@ -9,4 +9,5 @@ namespace AppEducation.Models
       public IEnumerable<Classes> AvailableClasses {get; set;}
       public Classes NewClass {get; set;}
   }
+
 }
