@@ -10,3 +10,204 @@ label {
     margin-bottom: 5px;
     font-weight: 700;
 }
+/*  11. Social group area
+/*----------------------------------------*/
+
+.social-group-area {
+    background: #F6F6F6;
+}
+.section-title-3 h3 {
+    color: #2d2d2d;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+.twitter-content .twitter-icon {
+    float: left;
+    width: 20%;
+}
+.twitter-content .twitter-icon a {
+    background: #f07c29 none repeat scroll 0 0;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 24px;
+    height: 70px;
+    left: 0;
+    line-height: 70px;
+    text-align: center;
+    width: 70px;
+    display: inline-block;
+}
+.twitter-content .twitter-text {
+    float: left;
+    width: 80%;
+}
+.twitter-text p {
+    color: #333;
+    font-family: "Rufina", serif;
+    font-size: 16px;
+    line-height: 21px;
+    margin: 0;
+    padding-top: 3px;
+}
+.twitter-text a {
+    color: #f07c29;
+    font-family: "Rufina", serif;
+    font-size: 16px;
+    font-style: italic;
+    padding-top: 3px;
+}
+.twitter-text a:hover {
+    color: #232323;
+}
+.twitter-content .twitter-text p.link a:hover,
+.twitter-content .twitter-text p > a:hover,
+.footer-top-menu ul li a:hover {
+    color: #f07c29;
+}
+.link-follow ul li {
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: 5px;
+}
+.link-follow ul li a {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 100%;
+    color: #333333;
+    font-size: 18px;
+    display: inline-block;
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    transition: .5s;
+    width: 52px;
+    text-decoration: none;
+    transition: .3s;
+}
+.link-follow ul li a:hover {
+    background: #333333 none repeat scroll 0 0;
+    color: #fff;
+}
+
+/*----------------------------------------*/
+/*  12. Footer
+/*----------------------------------------*/
+
+footer {
+    background: #222222;
+}
+.footer-top-menu {
+    padding: 15px 0;
+    overflow: hidden;
+}
+.footer-top-menu ul li {
+    display: inline-block;
+    margin-right: 25px;
+    padding-right: 25px;
+    position: relative;
+}
+.footer-top-menu ul li:before {
+    background: #808080 none repeat scroll 0 0;
+    content: "";
+    height: 13px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+}
+.footer-top-menu ul li:last-child:before {
+    display: none;
+}
+.footer-top-menu ul li a {
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    line-height: 24px;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: .3s;
+    font-weight: 400;
+}
+.bb-2 {
+    border-bottom: 2px solid #393939;
+}
+.single-footer .footer-title h3 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-transform: uppercase;
+}
+.footer-mid-menu ul li a {
+    color: #fff;
+    display: block;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.5s ease 0s;
+    line-height: 30px;
+    font-family: 'Rufina', serif;
+    font-weight: 400;
+}
+.footer-mid-menu ul li a:hover {
+    color: #f07c29;
+}
+.br-2 {
+    border-right: 1px solid #393939;
+}
+.footer-contact p {
+    color: #fff;
+    font-family: 'Rufina', serif;
+    font-weight: 400;
+}
+.footer-contact p:last-child {
+    margin-bottom: 0;
+}
+.footer-contact p span {
+    color: #fff;
+}
+.footer-contact p.adress span {
+    display: block;
+    margin-bottom: 6px;
+}
+.bt-2 {
+    border-top: 2px solid #393939;
+    padding: 30px 0;
+}
+.copy-right-area p {
+    color: #fff;
+    margin-bottom: 0;
+    margin-top: 8px;
+    font-family: 'Rufina', serif;
+    font-weight: 400;
+}
+.copy-right-area p a {
+    color: #fff;
+}
+.copy-right-area p a:hover {
+    text-decoration: underline;
+}
+a#scrollUp {
+    background: #333 none repeat scroll 0 0;
+    border: 2px solid #fff;
+    border-radius: 100%;
+    bottom: 35px;
+    color: #fff;
+    display: none;
+    font-size: 20px;
+    height: 40px;
+    line-height: 32px;
+    position: fixed;
+    right: 12px;
+    text-align: center;
+    width: 40px;
+    z-index: 9999;
+    transition: .3s;
+}
+a#scrollUp:hover {
+    background: #f07c29 none repeat scroll 0 0;
+    border-color: #f07c29;
+}
+

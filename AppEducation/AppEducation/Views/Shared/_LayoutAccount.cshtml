@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="~/pages/profile/css/HeaderUser.css">
     <link rel="stylesheet" href="~/pages/profile/css/FooterUser.css">
     <link rel="stylesheet" href="~/pages/profile/css/MainUser.css">
-    
+ 
+
 </head>
 
 <body>
-     <header class="header-fixed header-boxshadow-active">
+    <header class="header-fixed header-boxshadow-active">
         <div class="#wrapper40-scroll" id="#wrapper">
             <div class="container">
                 <div class="row top-header">
@@ -34,7 +35,7 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="user-information dropdown-toggle dropdown">
                                     <a class="dropdown-toggle text-classy" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
+                                       aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-user-circle"></i>
                                         <span id="username"></span>
                                     </a>
@@ -67,8 +68,8 @@
                                 </li>
                                 <li class="dropdown-toggle dropdown" data-toggle="dropdown">
                                     <a id="aChangeLanguage" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <img  src="~/pages/profile/images/flag_vi.png" alt="language_flag" class="flag_uk mr-2">
+                                       aria-haspopup="true" aria-expanded="false">
+                                        <img src="~/pages/profile/images/flag_vi.png" alt="language_flag" class="flag_uk mr-2">
                                         Tiếng Việt
                                         <span class="caret"></span>
                                     </a>
@@ -87,7 +88,7 @@
                                 </li>
                                 <li class="notify-header dropdown-toggle dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">
+                                       aria-haspopup="true" aria-expanded="false">
                                         <img src="~/pages/profile/images/bell.png" class="bell-notify">
                                         <span id="ThongBao" class="text-notify">
                                             Thông báo
@@ -100,10 +101,10 @@
                                             </div>
                                             <div class="col-md-8 menu-notify dropdown">
                                                 <img src="~/pages/profile/images/three-dots.png" class="menu-dots dropdown-toggle"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
+                                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                     aria-expanded="false">
                                                 <div class="mark-read-menu dropdown-menu"
-                                                    aria-labelledby="dropdownMenuButton">
+                                                     aria-labelledby="dropdownMenuButton">
                                                     <img src="~/pages/profile/images/polygon-white.png">
                                                     <div class="content-mark-read">
                                                         <img src="~/pages/profile/images/check-gray.png">
@@ -118,7 +119,8 @@
                                         <div class="table-notify-footer">
                                             <a href="#/user/notification">
                                                 <span>Xem tất cả thông báo</span>
-                                                <img src="~/pages/profile/images/arrow-right.png" class="img-arrow-right"></a>
+                                                <img src="~/pages/profile/images/arrow-right.png" class="img-arrow-right">
+                                            </a>
                                         </div>
                                     </div>
                                 </li>
@@ -152,29 +154,84 @@
 
     @RenderBody()
 
-    <footer class="footer">
-        <div class="container" style="padding-top: 70px;">
-            <div class="row">
-
+    @RenderSection("Script", required: false)
+    <footer>
+        <div class="footer-mid ptb-50">
+            <div class="container">
                 <div class="row">
-                    <div class="col-sm-6 col-xs-12">
-                        <p class="copy-right" style="margin-top: 10px; color: azure;">Bản quyền © 2020 MTA Education -
-                            Version Demo </p>
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-footer br-2 xs-mb">
+                                    <div class="footer-title mb-20">
+                                        <h3>Chương Trình</h3>
+                                    </div>
+                                    <div class="footer-mid-menu">
+                                        <ul>
+                                            <li><a href="contact.html">Quy Định</a></li>
+                                            <li><a href="#">Chính Sách Dịch Vụ</a></li>
+                                            <li><a href="#">Chính Sách Bảo Mật</a></li>
+                                            <li><a href="register.html">Kiểm Tra Trình Độ </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-footer br-2 xs-mb">
+                                    <div class="footer-title mb-20">
+                                        <h3>Tài Nguyên Miễn Phí</h3>
+                                    </div>
+                                    <div class="footer-mid-menu">
+                                        <ul>
+                                            <li><a href="contact.html">Tài liệu</a></li>
+                                            <li><a href="#">Blog</a></li>
+                                            <li><a href="#"> Bài test</a></li>
+                                            <li><a href="#">Nhận học miễn phí qua gmail</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-6 col-xs-12 text-right">
-                        <a class="btn btn-facebook btn-social mr-4" href="https://www.facebook.com" target="_blank">
-                            <i style="color:cyan;" class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a class="btn btn-youtube btn-social mr-4" href="https://www.youtube.com" target="_blank">
-                            <i style="color: crimson;" class="fa fa-youtube"></i>
-                        </a>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="single-footer mrg-sm">
+                            <div class="footer-title mb-20">
+                                <h3>Liên Hệ</h3>
+                            </div>
+                            <div class="footer-contact">
+                                <p class="adress">
+                                    <span>Địa Chỉ</span>
+                                    236 Hoàng Quốc Việt
+                                </p>
+                                <p><span>Số Điện Thoại:</span> (+84)0123456789</p>
+                                <p><span>Gmail:</span>  Education@gmail.com</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </footer> 
-
-    @RenderSection("Script", required: false)
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row bt-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="link-follow">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                <li><a href="#"><i class="fa fa-flickr"></i></a></li>
+                                <li class="hidden-sm"><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                                <li class="hidden-sm"><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End footer Area -->
+    </footer>
     <script>
         document.getElementById("username").innerHTML = "@User.Identity.Name";
     </script>
