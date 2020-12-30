@@ -14,7 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-
+using System.Data.SqlClient;
 namespace AppEducation.Controllers
 {
 
@@ -51,6 +51,55 @@ namespace AppEducation.Controllers
             joinClassInfor.AvailableClasses = await page.CreateAsync(classes, joinClassInfor.PageIndex, 6);
             joinClassInfor.TotalPages = page.TotalPages;
             return View(joinClassInfor);
+        }
+        public async Task<IActionResult> Search(string InfoClass , int pageNumber = 1)
+        {
+            IQueryable<Classes> classes = _context.Classes.Where(c => c.ClassName.Contains(InfoClass) && c.isActive == true).Select(c => c);
+            if(classes.Count() != 0)
+            {
+                JoinClassInfor joinClassInfor = new JoinClassInfor();
+                joinClassInfor.AvailableClasses = classes;
+                joinClassInfor.AvailableClasses.ToList().ForEach(c => {
+                    c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
+                    c.HOC = _context.HOClasses.SingleOrDefault(u => u.hocID == c.ClassID);
+                });
+                joinClassInfor.PageIndex = pageNumber;
+                PaginatedList<Classes> page = new PaginatedList<Classes>(classes.ToList(), classes.Count(), joinClassInfor.PageIndex, 6);
+                joinClassInfor.AvailableClasses = await page.CreateAsync(classes, joinClassInfor.PageIndex, 6);
+                joinClassInfor.TotalPages = page.TotalPages;
+                return View(joinClassInfor);
+            }
+            IQueryable<Classes> classesTopic = _context.Classes.Where(c => c.Topic.Contains(InfoClass) && c.isActive == true).Select(c => c);
+            if (classesTopic.Count() != 0)
+            {
+                JoinClassInfor joinClassInfor = new JoinClassInfor();
+                joinClassInfor.AvailableClasses = classesTopic;
+                joinClassInfor.AvailableClasses.ToList().ForEach(c => {
+                    c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
+                    c.HOC = _context.HOClasses.SingleOrDefault(u => u.hocID == c.ClassID);
+                });
+                joinClassInfor.PageIndex = pageNumber;
+                PaginatedList<Classes> page = new PaginatedList<Classes>(classesTopic.ToList(), classesTopic.Count(), joinClassInfor.PageIndex, 6);
+                joinClassInfor.AvailableClasses = await page.CreateAsync(classesTopic, joinClassInfor.PageIndex, 6);
+                joinClassInfor.TotalPages = page.TotalPages;
+                return View(joinClassInfor);
+            }
+            IQueryable<Classes> classesTeacher = _context.Classes.Where(c => c.User.UserName.Contains(InfoClass) && c.isActive == true).Select(c => c);
+            if (classesTeacher.Count() != 0)
+            {
+                JoinClassInfor joinClassInfor = new JoinClassInfor();
+                joinClassInfor.AvailableClasses = classesTeacher;
+                joinClassInfor.AvailableClasses.ToList().ForEach(c => {
+                    c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
+                    c.HOC = _context.HOClasses.SingleOrDefault(u => u.hocID == c.ClassID);
+                });
+                joinClassInfor.PageIndex = pageNumber;
+                PaginatedList<Classes> page = new PaginatedList<Classes>(classesTeacher.ToList(), classesTeacher.Count(), joinClassInfor.PageIndex, 6);
+                joinClassInfor.AvailableClasses = await page.CreateAsync(classesTeacher, joinClassInfor.PageIndex, 6);
+                joinClassInfor.TotalPages = page.TotalPages;
+                return View(joinClassInfor);
+            }
+            return View(new JoinClassInfor());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

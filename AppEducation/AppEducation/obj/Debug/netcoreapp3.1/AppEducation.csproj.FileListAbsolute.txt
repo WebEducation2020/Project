@@ -338,7 +338,6 @@ D:\WEB\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.pd
 D:\WEB\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csprojAssemblyReference.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.AssemblyInfoInputs.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.AssemblyInfo.cs
-E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.MvcApplicationPartsAssemblyInfo.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.RazorAssemblyInfo.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.RazorAssemblyInfo.cs
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.TagHelpers.input.cache
@@ -515,3 +514,10 @@ E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\st
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.genruntimeconfig.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csprojAssemblyReference.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\JoinClass\AvailableClasses.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Antlr3.Runtime.dll
+E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Iesi.Collections.dll
+E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\NHibernate.dll
+E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Remotion.Linq.dll
+E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Remotion.Linq.EagerFetching.dll
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.MvcApplicationPartsAssemblyInfo.cache
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\JoinClass\Search.cshtml.g.cs
