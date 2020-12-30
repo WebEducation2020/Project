@@ -141,7 +141,7 @@ namespace AppEducation.Controllers
                             return RedirectToAction(loginModel.RequestPath ?? "Index", "Admin");
                         }
                         else
-                            return Redirect(loginModel.RequestPath ?? "/JoinClass/Create");
+                            return Redirect(loginModel.RequestPath ?? "/JoinClass/AvailableClasses");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
@@ -256,7 +256,7 @@ namespace AppEducation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GoogleResponse(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/JoinClass/Create");
+            returnUrl = returnUrl ?? Url.Content("~/JoinClass/AvailableClasses");
             ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {

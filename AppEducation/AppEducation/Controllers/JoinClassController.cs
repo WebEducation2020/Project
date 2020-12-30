@@ -35,23 +35,26 @@ namespace AppEducation.Controllers
 
         public IActionResult Index()
         {
-                
             return View();
         }
-        public IActionResult Create()
+        public async Task<IActionResult> AvailableClasses(int pageNumber = 1)
         {
-            IEnumerable<Classes> classes = _context.Classes;
+            IQueryable<Classes> classes = _context.Classes.Where(c => c.isActive == true); 
             JoinClassInfor joinClassInfor = new JoinClassInfor();
-            joinClassInfor.AvailableClasses = classes.Where(c => c.isActive == true);
-            joinClassInfor.AvailableClasses.ToList().ForEach( c => {
+            joinClassInfor.AvailableClasses = classes;
+            joinClassInfor.AvailableClasses.ToList().ForEach(c => {
                 c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
                 c.HOC = _context.HOClasses.SingleOrDefault(u => u.hocID == c.ClassID);
             });
+            joinClassInfor.PageIndex = pageNumber;
+            PaginatedList<Classes> page = new PaginatedList<Classes>(classes.ToList(),classes.Count(),joinClassInfor.PageIndex, 6);
+            joinClassInfor.AvailableClasses = await page.CreateAsync(classes, joinClassInfor.PageIndex, 6);
+            joinClassInfor.TotalPages = page.TotalPages;
             return View(joinClassInfor);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Teacher")]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Create(JoinClassInfor joinClassInfor)
         {
             if (ModelState.IsValid)
@@ -76,15 +79,16 @@ namespace AppEducation.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles="Student,Teacher")]
+        [Authorize(Roles = "Student,Teacher")]
         public IActionResult Join(JoinClassInfor joinClassInfor)
         {
             if (ModelState.IsValid)
             {
                 Classes cls = _context.Classes.Find(joinClassInfor.NewClass.ClassID);
                 if (cls == null)
-                    return RedirectToAction("Create","JoinClass", joinClassInfor);
-                else {
+                    return RedirectToAction("Create", "JoinClass", joinClassInfor);
+                else
+                {
                     WriteCookies("ClassName", cls.ClassName, true);
                     WriteCookies("ClassID", cls.ClassID, true);
                     WriteCookies("Topic", cls.Topic, true);
@@ -93,17 +97,21 @@ namespace AppEducation.Controllers
                     return RedirectToAction("Present", "JoinClass", cls);
                 }
             }
-            return RedirectToAction("Create","JoinClass", joinClassInfor);
+            return RedirectToAction("Create", "JoinClass", joinClassInfor);
         }
         [Authorize]
         public IActionResult Present(Classes cls)
         {
             Classes oldClass = ReadCookies();
-            if(cls.ClassName == null){
-                if( oldClass != null){
+            if (cls.ClassName == null)
+            {
+                if (oldClass != null)
+                {
                     return View(oldClass);
-                }else{
-                    return RedirectToAction("Create","JoinClass");
+                }
+                else
+                {
+                    return RedirectToAction("Create", "JoinClass");
                 }
             }
             return View(cls);
@@ -118,39 +126,42 @@ namespace AppEducation.Controllers
         static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
-            using (SHA256 sha256Hash = SHA256.Create())  
-            {  
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
                 // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));  
-  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
                 // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();  
-                for (int i = 0; i < bytes.Length; i++)  
-                {  
-                    builder.Append(bytes[i].ToString("x2"));  
-                }  
-                return builder.ToString();  
-            }  
-            
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+
         }
         #region Cookies 
-        public void WriteCookies(string setting, string settingValue, bool isPersistent) {
-            if(isPersistent)
+        public void WriteCookies(string setting, string settingValue, bool isPersistent)
+        {
+            if (isPersistent)
             {
-                CookieOptions options= new CookieOptions();
+                CookieOptions options = new CookieOptions();
                 options.Expires = DateTime.Now.AddMinutes(60);
-                Response.Cookies.Append(setting,settingValue, options);
-            }else
+                Response.Cookies.Append(setting, settingValue, options);
+            }
+            else
             {
-                Response.Cookies .Append(setting, settingValue);
+                Response.Cookies.Append(setting, settingValue);
             }
             ViewBag.Message = "Cookie Written Successfully!";
         }
-        public Classes ReadCookies(){
+        public Classes ReadCookies()
+        {
             var ClassInfo = new Classes();
-            ClassInfo.ClassName  = Request.Cookies["ClassName"];
+            ClassInfo.ClassName = Request.Cookies["ClassName"];
             ClassInfo.ClassID = Request.Cookies["ClassID"];
-            ClassInfo.Topic =  Request.Cookies["Topic"];
+            ClassInfo.Topic = Request.Cookies["Topic"];
             return ClassInfo;
             // hihihi
         }
