@@ -514,4 +514,4 @@ E:\WebEducation2020\Project\AppEducation\AppEducation\bin\Debug\netcoreapp3.1\Mi
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.MvcApplicationPartsAssemblyInfo.cache
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Account\GoogleResponse.cshtml.g.cs
 E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\AppEducation.csprojAssemblyReference.cache
-E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Account\AccessDenied.cshtml.g.cs
+E:\WebEducation2020\Project\AppEducation\AppEducation\obj\Debug\netcoreapp3.1\Razor\Views\Shared\AccessDenied.cshtml.g.cs

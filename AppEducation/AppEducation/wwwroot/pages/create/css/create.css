@@ -55,6 +55,7 @@
 .product-grid{
 	padding-bottom: 20px;
 	padding-top: 20px;
+    padding-left: 0px;
 }
 .swiper-slide{
     width:250px !important;
@@ -152,7 +153,6 @@
 }
 .link-follow {
     float: right;
-    margin-right: 20px;
 }
 
 .link-follow ul li {
@@ -181,3 +181,12 @@
     color: #fff;
 }
 
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+.jsgrid, .jsgrid *, .jsgrid :after, .jsgrid :before {
+    box-sizing: border-box;
+}

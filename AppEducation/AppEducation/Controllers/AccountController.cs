@@ -118,7 +118,7 @@ namespace AppEducation.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel loginModel, string returnUrl)
+        public async Task<IActionResult> Login(LoginModel loginModel)
         {
             if (string.IsNullOrEmpty(loginModel.UserName))
             {
@@ -256,7 +256,7 @@ namespace AppEducation.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GoogleResponse(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content("~/JoinClass/Create");
             ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
