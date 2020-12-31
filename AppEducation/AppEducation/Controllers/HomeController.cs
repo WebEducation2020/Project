@@ -30,7 +30,10 @@ namespace AppEducation.Controllers
         
         public IActionResult Index()
         {
-            
+            if(HttpContext.User.Identity.Name == "admin")
+            {
+                return LocalRedirect("Admin/Index");
+            }
             return View();
         }
         #region Cookies 

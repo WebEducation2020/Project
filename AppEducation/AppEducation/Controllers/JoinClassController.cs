@@ -99,7 +99,24 @@ namespace AppEducation.Controllers
                 joinClassInfor.TotalPages = page.TotalPages;
                 return View(joinClassInfor);
             }
-            return View(new JoinClassInfor());
+            IQueryable<Classes> classesAll = _context.Classes.Where(c => c.isActive == true);
+            if(InfoClass == null)
+            {
+                JoinClassInfor joinClassInfor_ = new JoinClassInfor();
+                joinClassInfor_.AvailableClasses = classesAll;
+                joinClassInfor_.AvailableClasses.ToList().ForEach(c => {
+                    c.User = _context.Users.SingleOrDefault(u => u.Id == c.UserId);
+                    c.HOC = _context.HOClasses.SingleOrDefault(u => u.hocID == c.ClassID);
+                });
+                joinClassInfor_.PageIndex = pageNumber;
+                PaginatedList<Classes> page_ = new PaginatedList<Classes>(classesAll.ToList(), classesAll.Count(), joinClassInfor_.PageIndex, 6);
+                joinClassInfor_.AvailableClasses = await page_.CreateAsync(classesAll, joinClassInfor_.PageIndex, 6);
+                joinClassInfor_.TotalPages = page_.TotalPages;
+                return View(joinClassInfor_);
+            }
+            JoinClassInfor joinClassInfor_1 = new JoinClassInfor();
+            joinClassInfor_1.AvailableClasses = classesAll;
+            return View(joinClassInfor_1);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

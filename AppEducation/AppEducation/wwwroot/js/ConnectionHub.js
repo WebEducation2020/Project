@@ -446,20 +446,26 @@ wsconn.on('updateUserList', (UserCalls) => {
             <div class=\"box-number-noti\"></div></li></a>";
             }
         }
+        /*
+                                    <div title="Mic" id="micStudent">
+                                            <i class="fa fa-microphone"></i>
+                                        </div>
+                                        */
         else {
             strTmp3 += "<li class=\"contact-list-item\">\
                             <div class=\"group-icon-device\">\
                                 <div class=\"box-icon-device\">\
                                     <div class=\"icon-network connect-good\"></div>\
                                     <div class=\"icon-user icon-teacher\">\
-                                            <svg class=\"icon icon-px_ic__Device__Website\"><i class=\"fas fa-user-graduate\"></i></svg>\
+                                            <svg class=\"icon icon-px_ic__Device__Website\"><i class=\"fa fa-user-circle-o\"></i></svg>\
                                     </div>\
                                 </div>\
                             </div>\
                             <div class=\"contact-list-item-name\">\
                                 <span data-title=\"student\" class=\"user-role\">\
                                 <span class=\"role-device\">student</span><br>\
-                                </span><span class=\"user-name\" title=\""+ user.fullName + "\"> "+ user.fullName+ "</span>\
+                                </span><span class=\"user-name\" title=\""+ user.fullName + "\"> " + user.fullName + "</span>\
+                                  <i id=\"micStudent\" class=\"fa fa - microphone\"></i>\
                             </div>\
                         </li>";
             if (user.fullName != username) {
@@ -476,6 +482,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                 <span title=\"STUDENT\" class=\"user-role\">\
                     <span class=\"role-device\">STUDENT</span><br></span>\
                     <span class=\"user-name\" title=\""+ user.fullName + "\">" + user.fullName + "</span >\
+                    <i id=\"micStudent\" class=\"fa fa - microphone\"></i>\
             </div>\
             <div class=\"box-number-noti\"></div></li></a>";
             }

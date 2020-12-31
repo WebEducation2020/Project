@@ -10,7 +10,7 @@ $(document).ready(function () {
         var ThongBao = document.getElementById('ThongBao')
         var HoTro = document.getElementById('HoTro')
         var HocTrucTuyen = document.getElementById('HocTrucTuyen')
-        var ChuanBiBai = document.getElementById('ChuanBiBai')
+        var TinTuc = document.getElementById('TinTuc')
         var KiemTra = document.getElementById('KiemTra')
         var aChangelanguage = document.getElementById('aChangeLanguage')
         var DanhSachLop = document.getElementById('DanhSachLop')
@@ -23,7 +23,7 @@ $(document).ready(function () {
         ThongBao.innerHTML = 'Notification'
         HoTro.innerHTML = 'Support'
         HocTrucTuyen.innerHTML = 'Learning Online'
-        ChuanBiBai.innerHTML = 'Homework'
+        TinTuc.innerHTML = 'News'
         aChangelanguage.innerHTML = '<img src="/pages/profile/images/flag_uk.png" alt="language_flag" class="flag_uk mr-2">English'
         })
     $("#TiengViet").click(function () {
@@ -33,7 +33,7 @@ $(document).ready(function () {
         var ThongBao = document.getElementById('ThongBao')
         var HoTro = document.getElementById('HoTro')
         var HocTrucTuyen = document.getElementById('HocTrucTuyen')
-        var ChuanBiBai = document.getElementById('ChuanBiBai')
+        var TinTuc = document.getElementById('TinTuc')
         var DangKyLop = document.getElementById('DangKyLop')
         DangKyLop.innerHTML = 'Đăng ký lớp'
         TiengAnh.innerHTML = 'Tiếng Anh'
@@ -41,7 +41,7 @@ $(document).ready(function () {
         ThongBao.innerHTML = 'Thông báo'
         HoTro.innerHTML = 'Hỗ Trợ'
         HocTrucTuyen.innerHTML = 'Học Trực Tuyến'
-        ChuanBiBai.innerHTML = 'Chuẩn bị bài'
+        TinTuc.innerHTML = 'Tin tức'
         KiemTra.innerHTML = 'Kiểm Tra'
         var DanhSachLop = document.getElementById('DanhSachLop')
         DanhSachLop.innerHTML = 'Danh Sách Lớp'

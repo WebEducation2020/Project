@@ -58,7 +58,6 @@ namespace AppEducation.Controllers
             if (string.IsNullOrEmpty(model.Email))
             {
                 ModelState.AddModelError(nameof(model.Email), "Please enter your email");
-
             }
             if (ModelState.IsValid)
             {
@@ -85,14 +84,7 @@ namespace AppEducation.Controllers
                     AppUser usernew = await userManager.FindByNameAsync(user.UserName);
                     profile.UserId = usernew.Id;
                     context.UserProfiles.Add(profile);
-                    if (profile.Job == "Teacher")
-                    {
-                        var roleResult = await userManager.AddToRoleAsync(usernew, "Teacher");
-                    }
-                    else
-                    {
-                        var roleResult = await userManager.AddToRoleAsync(usernew, "Student");
-                    }
+                    var roleResult = await userManager.AddToRoleAsync(usernew, "Student");
                     context.SaveChanges();
                     return RedirectToAction("Index", "Home");
                 }
@@ -266,6 +258,11 @@ namespace AppEducation.Controllers
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
             if (result.Succeeded)
             {
+                AppUser user = await userManager.FindByEmailAsync(info.Principal.FindFirst(ClaimTypes.Email).Value);
+                if(user.UserName == "admin")
+                {
+                    return LocalRedirect("~/Admin/Index");
+                }
                 return LocalRedirect(returnUrl);
             }
             else
@@ -283,6 +280,7 @@ namespace AppEducation.Controllers
                     if (identResult.Succeeded)
                     {
                         await signInManager.SignInAsync(user, false);
+                        var roleResult = await userManager.AddToRoleAsync(user, "Student");
                         return LocalRedirect(returnUrl);
                     }
                 }
