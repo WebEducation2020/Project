@@ -417,7 +417,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                                 <div class=\"box-icon-device\">\
                                     <div class=\"icon-network connect-good\"></div>\
                                     <div class=\"icon-user icon-teacher\">\
-                                            <svg class=\"icon icon-px_ic_teacher\"><i class=\"fas fa-user-edit\"></i>\
+                                            <svg class=\"icon icon-px_ic_teacher\">\
                                             </svg>\
                                     </div>\
                                 </div>\
@@ -434,7 +434,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
                         <div class=\"icon-user icon-teacher\">\
-                            <svg class=\"icon icon-px_ic_teacher\"><i class=\"fas fa-user-edit\"></i></svg>\
+                            <svg class=\"icon icon-px_ic_teacher\"></svg>\
                         </div>\
                     </div>\
                  </div>\
@@ -446,18 +446,13 @@ wsconn.on('updateUserList', (UserCalls) => {
             <div class=\"box-number-noti\"></div></li></a>";
             }
         }
-        /*
-                                    <div title="Mic" id="micStudent">
-                                            <i class="fa fa-microphone"></i>
-                                        </div>
-                                        */
         else {
             strTmp3 += "<li class=\"contact-list-item\">\
                             <div class=\"group-icon-device\">\
                                 <div class=\"box-icon-device\">\
                                     <div class=\"icon-network connect-good\"></div>\
                                     <div class=\"icon-user icon-teacher\">\
-                                            <svg class=\"icon icon-px_ic__Device__Website\"><i class=\"fa fa-user-circle-o\"></i></svg>\
+                                            <svg class=\"icon icon-px_ic__Device__Website\"></svg>\
                                     </div>\
                                 </div>\
                             </div>\
@@ -474,7 +469,7 @@ wsconn.on('updateUserList', (UserCalls) => {
                 <div class=\"group-icon-device\">\
                     <div class=\"box-icon-device\">\
                         <div class=\"icon-user icon-teacher\">\
-                            <svg class=\"icon icon-px_ic_teacher\"><i class=\"fas fa-user-edit\"></i></svg>\
+                            <svg class=\"icon icon-px_ic_teacher\"></svg>\
                         </div>\
                     </div>\
                  </div>\

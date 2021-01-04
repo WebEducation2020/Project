@@ -5,13 +5,7 @@
 }
 @model JoinClassInfor
 @section Head {
-    <link rel="stylesheet" href="~/pages/profile/css/all.min.css">
-    <link rel="stylesheet" href="~/pages/profile/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="~/pages/create/css/create.css" />
-    <link type="text/css" rel="stylesheet" href="~/pages/create/css/mdb.min.css" />
-    <link type="text/css" rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+ 
 }
 
 <section>
@@ -125,20 +119,16 @@
             </div>
             <div class="modal-body mx-3">
                 <div class="md-form mb-5">
-                    <input type="text" id="form3" class="form-control validate" asp-for="NewClass.ClassID">
-                    <label data-error="wrong" data-success="right" for="form3">Mã Phòng</label>
+                    <input type="text" id="form3" class="form-control validate" asp-for="NewClass.ClassID" placeholder="Mã Phòng">
                 </div>
 
                 <div class="md-form mb-4">
-                    <input type="text" id="form2" class="form-control validate" asp-for="NewClass.ClassName">
-                    <label data-error="wrong" data-success="right" for="form2">Tên Lớp</label>
+                    <input type="text" id="form2" class="form-control validate" asp-for="NewClass.ClassName" placeholder="Tên Lớp">
                 </div>
 
                 <div class="md-form mb-4">
-                    <input type="text" id="form1" class="form-control validate" asp-for="NewClass.Topic">
-                    <label data-error="wrong" data-success="right" for="form1">Chủ Đề</label>
+                    <input type="text" id="form1" class="form-control validate" asp-for="NewClass.Topic" placeholder="Chủ Đề">
                 </div>
-
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="submit" class="btn btn-indigo">Tạo Lớp<i class="fas fa-paper-plane-o ml-1"></i></button>
@@ -169,7 +159,6 @@
     </div>
 </div>
 
-<script src="~/pages/create/bootstrap.min.js"></script>
-<script type="text/javascript" src="~/js/Jquery3.4.1.min.js"></script>
+
 
 

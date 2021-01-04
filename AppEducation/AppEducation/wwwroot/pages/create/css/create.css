@@ -62,8 +62,8 @@
 }
 .slider-box{
     margin:20px;
-    height:350px;
-    width:250px;
+    height:370px !important; 
+    width:225px !important;
     position:relative;
     background-color:#FFFFFF;
     border-radius:5px;
